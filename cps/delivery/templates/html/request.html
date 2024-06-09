@@ -1,0 +1,46 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+              @font-face {
+        font-family: "CustomFont";
+        src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+        body{
+            background-color: #1c1e25;
+            color: white;
+        }
+        #CPS{
+            font-family: 'CustomFont';
+            color: #61b124;
+        }
+    </style>
+    <title>CPS</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between;">
+        <h1 id="CPS" style="margin-right: 20px;">CPS</h1>
+        <div style="display: flex; flex-direction: row; align-items: center; gap: 10px; margin-right: 20px;">
+            <i class="material-icons" style="color: white;">
+              account_circle
+            </i>
+            <span>{{request.user}}</span>
+        </div>
+    </div>
+<div class="container">
+    <form method="post" class="uniForm">
+        {{ DeliveryRequestFormCreator|crispy }}
+        <input type="submit" name="createRequest" class="btn btn-primary" style="background-color: #61b124; color: white; border: none; float: right;" value="Request">
+    </form>
+</div>
+    
+</body>
+</html>
