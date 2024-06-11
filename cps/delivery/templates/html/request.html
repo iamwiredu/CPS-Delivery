@@ -36,7 +36,8 @@
         </div>
     </div>
 <div class="container">
-    <form method="post" class="uniForm">
+    <form method="POST" class="uniForm">
+        {% csrf_token %}
         {{ DeliveryRequestFormCreator|crispy }}
         <input type="submit" name="createRequest" class="btn btn-primary" style="background-color: #61b124; color: white; border: none; float: right;" value="Request">
     </form>
