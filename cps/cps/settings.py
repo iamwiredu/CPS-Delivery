@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'delivery',
     'crispy_forms',
     'crispy_bootstrap4',
+    'adminConsole',
    
   
 ]
@@ -64,7 +65,7 @@ ROOT_URLCONF = 'cps.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR / 'templates' )],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,8 +142,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend'
-    
+    'django.contrib.auth.backends.ModelBackend',
+        # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend"
     ]
 
 SOCIALACCOUNT_PROVIDERS = {}
@@ -150,3 +152,7 @@ SOCIALACCOUNT_PROVIDERS = {}
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True 
+
+LOGIN_REDIRECT_URL = "/"
+
+ACCOUNT_FORMS = {'signup': 'delivery.forms.MyCustomSignupForm'}

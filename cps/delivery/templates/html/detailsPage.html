@@ -1,0 +1,131 @@
+{% extends 'html/base_view.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block header %}
+<style>
+        @font-face {
+      font-family: "CustomFont";
+      src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+      }
+      *{
+        margin: 0;
+        padding: 0;
+        color: white;
+      }
+    body{
+      background-color:#1c1e25;
+      margin: 0;
+      padding: 0;
+    }
+
+    #CPS{
+      
+      font-family: "CustomFont";
+
+
+    }
+    #CPS a{
+      text-decoration: none;
+      color: #61b124;
+    }
+    .line{
+        width: 100%%;
+        height: 2px;
+        background-color: white;
+    }
+    .status{
+        display: flex;
+        justify-content: space-around;
+    }
+    .container{
+        margin-bottom: 25px;
+    }
+    .set{
+        vertical-align: middle;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="status">
+    <div>
+        <div>
+            <span class="set">Assigned</span>
+            <span class="material-icons set" style="color: red;">
+                close
+            </span>
+        </div>
+
+    </div>
+    <div>
+        <div>
+            <span class="set">Picked up</span>
+            <span class="material-icons set" style="color: red;">
+                close
+            </span>
+        </div>
+
+    </div>
+    <div>
+        <div>
+            <span class="set">enroute</span>
+            <span class="material-icons set" style="color: red;">
+                close
+            </span>
+        </div>
+
+    </div>
+    <div>
+        <div>
+            <span class="set">delivered</span>
+            <span class="material-icons set" style="color: red;">
+                close
+            </span>
+
+        </div>
+
+    </div>
+</div>
+<div style="display: flex; justify-content: center;">
+    <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;"></div>
+    <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;"></div>
+    <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;" ></div>
+    <div style="width: 30%; height: 2px; background-color: red;"></div>
+</div>
+<div class="container">
+    <div>
+        <div>OrderQuantity</div>
+        <div class="container-fluid">{{DeliveryRequested.orderQuantity}}</div>
+    </div>
+    <div>
+        <div>PickupNumber</div>
+        <div class="container-fluid">{{DeliveryRequested.pickupNumber}}</div>
+    </div>
+    <div>
+        <div>Delivery Point</div>
+        <div class="container-fluid">{{DeliveryRequested.deliveryPoint}}</div>
+    </div>
+    <div>
+        <div>Dropoff Number</div>
+        <div class="container-fluid">{{DeliveryRequested.dropoffNumber}}</div>
+    </div>
+    <div>
+        <div>Pickup Point</div>
+        <div class="container-fluid">{{DeliveryRequested.pickupPoint}}</div>
+    </div>
+    <div>
+        <div>Sender Number</div>
+        <div class="container-fluid">{{DeliveryRequested.senderNumber}}</div>
+    </div>
+    <div>
+        <div>Product Fee</div>
+        <div class="container-fluid">{{DeliveryRequested.productFee}}</div>
+    </div>
+    <div>
+        <div>Additional Info</div>
+        <div class="container-fluid">{{DeliveryRequested.deliveryPoint}}</div>
+    </div>
+
+</div>
+{% endblock %}
