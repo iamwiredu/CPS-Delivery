@@ -2,11 +2,18 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import DeliveryRequestForm
 from .models import DeliveryRequest
+from adminConsole.views import adminConsole
 
 # Create your views here.
 
 def homePage(request):
-    return render(request,'html/homepage.html')
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            return redirect(adminConsole)
+        else:
+            return render(request,'html/homepage.html')
+    else:
+        return render(request,'html/homepage.html')
 
 def requestPage(request):
     DeliveryRequestFormCreator = DeliveryRequestForm()
@@ -27,7 +34,7 @@ def requestPage(request):
 
 def pendingRequest(request):
     DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,enroute=False).values()
-    print(DeliveryRequests)
+    
     context = {
         'DeliveryRequests':DeliveryRequests,
     }
@@ -46,3 +53,28 @@ def activeRequest(request):
         'DeliveryRequests':DeliveryRequests,
     }
     return render(request,'html/activeRequest.html',context)
+
+def detailsPage(request,unique_id):
+    DeliveryRequested = DeliveryRequest.objects.get(unique_id=unique_id)
+    DeliveryRequestedForm = DeliveryRequestForm(instance=DeliveryRequested)
+    print(DeliveryRequested)
+    context={
+        'DeliveryRequested':DeliveryRequested,
+        'DeliveryRequestedForm':DeliveryRequestedForm,
+    }
+    return render(request,'html/detailsPage.html',context)
+
+
+def ShopPage(request):
+    context = {
+
+    }
+
+    return render(request,'html/shopPage.html',context)
+
+def StoragePage(request):
+    context = {
+
+    }
+
+    return render(request,'html/storagePage.html',context)

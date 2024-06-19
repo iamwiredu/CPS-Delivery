@@ -1,0 +1,201 @@
+{% extends 'html/base_view_admin.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block header %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+              @font-face {
+        font-family: "CustomFont";
+        src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+        body{
+            background-color: #1c1e25;
+            color: white;
+        }
+        #CPS{
+            font-family: 'CustomFont';
+            color: #61b124;
+        }
+        #CPS a{
+            text-decoration: none;
+            color: #61b124;
+        }
+        table{
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container">
+    <h1>RiderUpdate</h1>
+    <table class="table" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Assignment</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>{{rider.name}}</td>
+            <td>{{rider.phone}}</td>
+            <td>3</td>
+            <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                style="background-color: #61b124; border-color: #61b124;">
+                Delete
+              </button>
+              </td>
+          </tr>
+          <!-- Button trigger modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="color: #1c1e25;">
+          Are you sure you want to remove '{{rider.name}}' as a rider for CPS?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" style="background-color: #61b124; border-color:#61b124; border-radius: 0.25rem;"><a href="{% url 'riderDelete' rider.unique_id %}" 
+            style="color: white;"
+            >Delete</a></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+        </tbody>
+      </table>
+</div>
+<div class=" container container-fluid" style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 60px;">
+    <div><h2>Update Rider details</h2></div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{RiderFormUpdate| crispy}}
+        <input type="submit" value="Update" name="updateRider" style="float: right; background-color: #61b124; border: 1px solid #61b124; border-radius: 0.25rem; padding: 5px; color: white;">
+    </form>
+</div>
+<div class="container container-fluid">
+    <div><h2>Assign Requests to Rider</h2></div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Pickup</th>
+            <th scope="col">Dropoff</th>
+            <th scope="col">PickupNumber</th>
+            <th scope="col">Dropoff Number</th>
+            <th>Assign</th>
+          </tr>
+        </thead>
+        <tbody>
+    {% for unassigned in DeliveryRequestsUnassigned %}
+
+
+          <tr>
+            <th scope="row">1</th>
+            <td>{{unassigned.pickupPoint}}</td>
+            <td>{{unassigned.deliveryPoint}}</td>
+            <td>{{unassigned.pickupNumber}}</td>
+            <td>{{unassigned.dropoffNumber}}</td>
+            <td> <span>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{unassigned.unique_id}}" name="unique_id">
+                    <input type="submit" value="Assign" name="assignRider" style="background-color: #61b124; padding: 5px; color: white; border: 1px solid #61b124; border-radius: 0.25rem;">
+                </form>
+            </span></td>
+          </tr>
+ 
+    {% endfor %}
+</tbody>
+</table>     
+</div>
+<div class="container container-fluid" style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 60px;">
+<h2>Assigned Requests</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Pickup</th>
+        <th scope="col">Dropoff</th>
+        <th scope="col">PickupNumber</th>
+        <th scope="col">Dropoff Number</th>
+        <th scope="col">Unassign</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for assigned in DeliveryRequestsAssigned %}
+
+
+      <tr>
+        <th scope="row">1</th>
+        <td>{{assigned.pickupPoint}}</td>
+        <td>{{assigned.deliveryPoint}}</td>
+        <td>{{assigned.pickupNumber}}</td>
+        <td>{{assigned.dropoffNumber}}</td>
+        <td> <span>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{assigned.unique_id}}" name="unique_id">
+                <input type="submit" value="Unassign" name="unassignRider" style="background-color: #61b124; padding: 5px; color: white; border: 1px solid #61b124; border-radius: 0.25rem;">
+            </form>
+        </span></td>
+      </tr>
+
+{% endfor %}
+</tbody>
+</table>     
+</div>
+
+<div class="container container-fluid" style="margin-bottom: 20px; margin-top: 20px; padding-bottom: 60px;">
+<h2>Delivered Requests</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Pickup</th>
+        <th scope="col">Dropoff</th>
+        <th scope="col">PickupNumber</th>
+        <th scope="col">Dropoff Number</th>
+        <th scope="col">Delivered</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for delivered in DeliveryRequestsDelivered %}
+
+
+      <tr>
+        <th scope="row">1</th>
+        <td>{{delivered.pickupPoint}}</td>
+        <td>{{delivered.deliveryPoint}}</td>
+        <td>{{delivered.pickupNumber}}</td>
+        <td>{{delivered.dropoffNumber}}</td>
+        <td><span class="material-icons" style="color: #61b124;">
+            check
+        </span></td>
+      </tr>
+
+{% endfor %}
+</tbody>
+</table>    
+</div>
+{% endblock %}

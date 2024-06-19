@@ -1,112 +1,151 @@
+{% extends 'html/base_view.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Document</title>
-    <style>
-      @font-face {
-        font-family: "CustomFont";
-        src: url("{% static 'font/Boge.ttf' %}") format('truetype');
-        }
-        *{
-          margin: 0;
-          padding: 0;
-          color: white;
-        }
-      body{
-        background-color:#1c1e25;
+
+{% block header %}
+  <style>
+    @font-face {
+      font-family: "CustomFont";
+      src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+      }
+      *{
         margin: 0;
         padding: 0;
+        color: white;
       }
-      #CPS{
-        font-family: "CustomFont";
-        color: #61b124;
+    body{
+      background-color:#1c1e25;
+      margin: 0;
+      padding: 0;
+    }
+    a{
+
+    }
+    #CPS{
+      
+      font-family: "CustomFont";
+
+
+    }
+    #CPS a{
+      text-decoration: none;
+      color: #61b124;
+    }
+    .container{
+      margin-bottom: 50px;
+    }
+    .card{
+      background-color: #313339;
+    }
+    @media only screen and (max-width: 400px) {
+      body{
+        font-size: 16px;
+      }
+      .imagebox, .imagebox img{
+        width: 100px;
+        height: 100px;
       }
       .container{
-        margin-bottom: 50px;
+        gap: 30px;
       }
-      .card{
-        background-color: #313339;
-      }
-      @media only screen and (max-width: 400px) {
-        body{
-          font-size: 16px;
-        }
-        .imagebox, .imagebox img{
-          width: 100px;
-          height: 100px;
-        }
-        .container{
-          gap: 30px;
-        }
-       
+     
 }
-    </style>
-</head>
-<body>
-   <div style="display: flex; justify-content: space-between;">
-    <h1 id="CPS" style="margin-right: 20px;">CPS</h1>
-    <div style="display: flex; flex-direction: row; align-items: center; gap: 10px; margin-right: 20px;">
-        <i class="material-icons" style="color: white;">
-          account_circle
-        </i>
-        <span>Login</span>
-        <span>SignUp</span>
-    </div>
-   </div>
-    <div>
-        <div class="container" style="display: flex; justify-content: space-evenly;">
-            
-            <div class="card" style="width: 18rem; background-color: #313339;" >
-                <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;" >
-                  <img style="width: 100%; height: 100%; object-fit: cover;" src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
-                </div>
-                <div class="card-body">
-                  <!-- <h5 class="card-title">Request Delivery</h5> -->
-                  <p class="card-text"> Have a parcel to deliver? Click below to request a delivery to your place ASAP!</p>
-                  <a href="{% url 'deliveryRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">Request delivery</a>
-                </div>
-              </div>
+  </style>
+  {% endblock %}
+  
 
-              <div class="card" style="width: 18rem;">
-                <div class="imagebox"  style="width: 300px; height: 200px; padding-right: 15px;">
-                  <img src="{% static 'images/c2.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
-                </div>
-                <div class="card-body">
-                  <p class="card-text">Have you already placed a delivery with us? Click below to follow up on them.</p>
-                  <a href="{% url 'activeRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Active Deliveries</a>
-                </div>
-              </div>
-        </div>
-        <div class="container" style="display: flex; justify-content: space-evenly;">
-            
-          <div class="card" style="width: 18rem;">
-            <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
-              <img src="{% static 'images/c3.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
-            </div>
-            <div class="card-body">
-              <p class="card-text">Want to go over your past delivery History with us? Click Below.</p>
-              <a href="{% url 'pastRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Past Deliveries</a>
-            </div>
+
+{% block content %}
+
+<div>
+  <div class="container" style="display: flex; justify-content: space-evenly;">
+      
+      <div class="card" style="width: 18rem; background-color: #313339;" >
+          <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;" >
+            <img style="width: 100%; height: 100%; object-fit: cover;" src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
           </div>
-          <div class="card" style="width: 18rem;">
-            <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
-              <img src="{% static 'images/c4.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
-            </div>
-            <div class="card-body">
-              <p class="card-text">Get our Price Quotes for your reqeusted deliviers here. Click Below</p>
-              <a href="{% url 'pendingRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Pending Delivery Requests</a>
-            </div>
+          <div class="card-body">
+            <!-- <h5 class="card-title">Request Delivery</h5> -->
+            <p class="card-text"> Have a parcel to deliver? Click below to request a delivery to your place ASAP!</p>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'deliveryRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">Request delivery</a>
+            {% else %}
+            <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">Request delivery</a>
+            {% endif %}
           </div>
         </div>
-        
-        
+
+        <div class="card" style="width: 18rem;">
+          <div class="imagebox"  style="width: 300px; height: 200px; padding-right: 15px;">
+            <img src="{% static 'images/c2.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+          </div>
+          <div class="card-body">
+            <p class="card-text">Have you already placed a delivery with us? Click below to follow up on them.</p>
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'activeRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Active Deliveries</a>
+          {% else %}
+          <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">View Active Deliveries</a>
+          {% endif %}
+          </div>
+        </div>
+  </div>
+  <div class="container" style="display: flex; justify-content: space-evenly;">
+      
+    <div class="card" style="width: 18rem;">
+      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
+        <img src="{% static 'images/c3.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+      </div>
+      <div class="card-body">
+        <p class="card-text">Want to go over your past delivery History with us? Click Below.</p>
+       {% if request.user.is_authenticated %}
+       <a href="{% url 'pastRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Past Deliveries</a>
+       {% else %}
+       <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">View Past Deliveries</a>
+       {% endif %}
+      </div>
     </div>
-</body>
-</html>
+    <div class="card" style="width: 18rem;">
+      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
+        <img src="{% static 'images/c4.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+      </div>
+      <div class="card-body">
+        <p class="card-text">Get our Price Quotes for your reqeusted deliviers here. Click Below</p>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'pendingRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Pending Delivery Requests</a>
+        {% else %}
+        <a href="{% url 'account_signup' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Pending Delivery Requests</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="container" style="display: flex; justify-content: space-evenly;">
+      
+    <div class="card" style="width: 18rem;">
+      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
+        <img src="{% static 'images/c3.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+      </div>
+      <div class="card-body">
+        <p class="card-text">Have items you want to put in storage? Click Below.</p>
+       {% if request.user.is_authenticated %}
+       <a href="{% url 'StoragePage' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Storage Center</a>
+       {% else %}
+       <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">View Storage Center</a>
+       {% endif %}
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
+        <img src="{% static 'images/c4.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+      </div>
+      <div class="card-body">
+        <p class="card-text">Click Below to explore our online shop.</p>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'StoragePage' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Online Shop</a>
+        {% else %}
+        <a href="{% url 'account_signup' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Online Shop</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+</div>
+{% endblock %}
