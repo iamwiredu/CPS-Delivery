@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from delivery.models import DeliveryRequest, Rider
-from .forms import RiderForm
+from .forms import RiderForm, ShopItemForm
+from delivery.models import ShopItem
 
 # Create your views here.
 
@@ -87,3 +88,20 @@ def riderUpdate(request,unique_id):
 
     return render(request,'html/riderUpdate.html',context)
 
+def addShopItem(request):
+    ShopItemFormCreator = ShopItemForm()
+    ShopItems  = ShopItem.objects.all()
+    if request.method == 'POST': 
+        if 'addShopItem'  in request.POST:
+            form = ShopItemForm(request.POST, request.FILES)  
+            if form.is_valid():  
+                form.save()
+                return redirect(addShopItem)
+            else:
+                print('Error')
+        
+    context={
+        'ShopItemFormCreator':ShopItemFormCreator,
+        'ShopItems':ShopItems,
+    }
+    return render(request,'html/addShopItem.html',context)

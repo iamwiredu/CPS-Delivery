@@ -156,3 +156,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 LOGIN_REDIRECT_URL = "/"
 
 ACCOUNT_FORMS = {'signup': 'delivery.forms.MyCustomSignupForm'}
+
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR/'media'  

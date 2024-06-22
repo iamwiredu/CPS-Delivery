@@ -3,6 +3,22 @@
 {% load crispy_forms_tags %}
 {% block header %}
     <style>
+                    @font-face {
+        font-family: "CustomFont";
+        src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+        body{
+            background-color: #1c1e25;
+            color: white;
+        }
+        #CPS{
+            font-family: 'CustomFont';
+            color: #61b124;
+        }
+        #CPS a{
+            text-decoration: none;
+            color: #61b124;
+        }
 .product-filter {
   display: flex;
 }
@@ -19,6 +35,7 @@
 .holder{
     display: flex;
     justify-content: center;
+    margin-top: 50px;
 }
 .products {
   display: flex;
@@ -82,25 +99,28 @@
 {% block content %}
 
 <nav class="product-filter">
-
-    <h1>Jackets</h1>
   
     <div class="sort">
   
-      <div class="collection-sort">
+      <!-- <div class="collection-sort">
         <label>Filter by:</label>
         <select>
           <option value="/">All Jackets</option>
         </select>
-      </div>
+      </div> -->
   
-      <div class="collection-sort">
+      <!-- <div class="collection-sort">
         <label>Sort by:</label>
         <select>
           <option value="/">Featured</option>
         </select>
-      </div>
+      </div> -->
   
+    </div>
+    <div>
+      <span class="material-icons" style="color: white;">
+        Shopping Cart
+      </span>
     </div>
   
   </nav>
@@ -109,51 +129,28 @@
 
     <!-- It's likely you'll need to link the card somewhere. You could add a button in the info, link the titles, or even wrap the entire card in an <a href="..."> -->
   
-    <div class="product-card">
-      <div class="product-image">
-        <img src="p.jpg">
-      </div>
-      <div class="product-info">
-        <h5>Winter Jacket</h5>
-        <h6>$99.99</h6>
-      </div>
-    </div>
-    <div class="product-card">
-        <div class="product-image">
-          <img src="p.jpg">
-        </div>
-        <div class="product-info">
-          <h5>Winter Jacket</h5>
-          <h6>$99.99</h6>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-image">
-          <img src="p.jpg">
-        </div>
-        <div class="product-info">
-          <h5>Winter Jacket</h5>
-          <h6>$99.99</h6>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-image">
-          <img src="p.jpg">
-        </div>
-        <div class="product-info">
-          <h5>Winter Jacket</h5>
-          <h6>$99.99</h6>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-image">
-          <img src="p.jpg">
-        </div>
-        <div class="product-info">
-          <h5>Winter Jacket</h5>
-          <h6>$99.99</h6>
-        </div>
-      </div>
+{% for shopItem in ShopItems %}
+<div class="product-card">
+  <div class="product-image">
+    <img src="{{shopItem.image.url}}">
+  </div>
+  <div class="product-info">
+    <h5>Winter Jacket</h5>
+    <h6>$99.99</h6>
+  </div>
+</div>
+{% endfor %}
+{% for items in ShopItems_left %}
+<div class="product-card" style="visibility: hidden;">
+  <div class="product-image">
+    <img src="p.jpg">
+  </div>
+  <div class="product-info">
+    <h5>Winter Jacket</h5>
+    <h6>$99.99</h6>
+  </div>
+</div>
+{% endfor %}
     <!-- more products -->
   
   </section>

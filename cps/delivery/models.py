@@ -81,3 +81,16 @@ def create_profile(sender,instance,created,**kwargs):
         user_profile.save()
 
 post_save.connect(create_profile, sender=User)
+
+
+class ShopItem(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    price = models.IntegerField()
+    image = models.ImageField(upload_to='images/shopItems')
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
+

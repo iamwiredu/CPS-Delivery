@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import DeliveryRequestForm
-from .models import DeliveryRequest
+from .models import DeliveryRequest, ShopItem
 from adminConsole.views import adminConsole
 
 # Create your views here.
@@ -66,7 +66,16 @@ def detailsPage(request,unique_id):
 
 
 def ShopPage(request):
+    ShopItems = ShopItem.objects.all()
+    print(len(ShopItems))
+    ShopItems_left = []
+    for i in range(0,4-len(ShopItems)):
+        ShopItems_left.append({'name':'none'})
+    print(ShopItems_left)
+        
     context = {
+        'ShopItems':ShopItems,
+        'ShopItems_left':ShopItems_left,
 
     }
 
