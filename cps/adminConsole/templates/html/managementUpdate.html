@@ -1,0 +1,129 @@
+{% extends 'html/base_view_admin.html' %}
+{% load static %}
+{% load adminConsole_extras %}
+{% load crispy_forms_tags %}
+{% block header %}
+
+<style>
+    @font-face {
+font-family: "CustomFont";
+src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+}
+body{
+  background-color: #1c1e25;
+  color: white;
+}
+#CPS{
+  font-family: 'CustomFont';
+  color: #61b124;
+}
+table{
+color: black;
+}
+td{
+color: black;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div style="display: flex; justify-content: space-between;">
+    <h1 id="CPS" style="margin-right: 20px;">CPS</h1>
+    <div style="display: flex; flex-direction: row; align-items: center; gap: 10px; margin-right: 20px;">
+        <i class="material-icons" style="color: white;">
+          account_circle
+        </i>
+        <span>{{request.user}}</span>
+    </div>
+</div>
+<div>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Pickup</th>
+            <th scope="col">Dropoff</th>
+            <th scope="col">PickupNumber</th>
+            <th scope="col">Dropoff Number</th>
+            <th scope="col">Assigned</th>
+            <th scope="col">Picked Up</th>
+            <th scope="col">Enroute</th>
+            <th scope="col">Delivered</th>
+          </tr>
+        </thead>
+        <tbody>
+
+    
+    
+          <tr style="color: black;">
+            <th scope="row">1</th>
+            <td>{{DeliveryRequested.pickupPoint}}</td>
+            <td>{{DeliveryRequested.deliveryPoint}}</td>
+            <td>{{DeliveryRequested.pickupNumber}}</td>
+            <td>{{DeliveryRequested.dropoffNumber}}</td>
+            <td>{% if DeliveryRequested.assigned == False %}
+                <span class="material-icons" style="color: #970808;">
+                    close
+                </span>
+                {% else %}
+                <span class="material-icons" style="color: #61b124;">
+                    check
+                </span>
+                {% endif %}
+            </td>
+            <td>{% if DeliveryRequested.pickedUp == False %}
+                <span class="material-icons" style="color: #970808;">
+                    close
+                </span>
+                {% else %}
+                <span class="material-icons" style="color: #61b124;">
+                    check
+                </span>
+                {% endif %}
+            </td>
+            <td>{% if DeliveryRequested.enroute == False %}
+                <span class="material-icons" style="color: #970808;">
+                    close
+                </span>
+                {% else %}
+                <span class="material-icons" style="color: #61b124;">
+                    check
+                </span>
+                {% endif %}
+            </td>
+            <td>{% if DeliveryRequested.delivered == False %}
+                <span class="material-icons" style="color: #970808;">
+                    close
+                </span>
+                {% else %}
+                <span class="material-icons" style="color: #61b124;">
+                    check
+                </span>
+                {% endif %}
+            </td>
+          </tr>
+    
+
+    </tbody>
+    </table>   
+</div>
+
+<div class="container container-fluid">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{RequestStatusUpdateFormUpdater|crispy}}
+        <input type="submit" name="UpdateRequest" id="">
+    </form>
+</div>
+
+<div class=" container container-fluid">
+    <h2>Assign</h2>
+    <div>
+        <form action="" method="POST">
+            {% csrf_token %}
+           {{RidersAssignmentFormUpdater}}
+           <input type="submit" name="UdpateAssignment" value="Update">
+        </form>
+    </div>
+</div>
+</body>
+{% endblock %}

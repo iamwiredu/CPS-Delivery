@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from delivery.models import Rider
-from delivery.models import ShopItem
+from delivery.models import ShopItem, DeliveryRequest
 
 class RiderForm(forms.ModelForm):
     class Meta:
@@ -13,4 +13,13 @@ class ShopItemForm(forms.ModelForm):
         model = ShopItem
         fields = ['name','description','price','image']
 
+class RequestStatusUpdateForm(forms.ModelForm):
+    class Meta:
+        model = DeliveryRequest
+        fields = ['pickedUp','delivered']
+
+class RidersAssignmentForm(forms.ModelForm):
+    class Meta:
+        model = DeliveryRequest
+        fields = ['rider']
 

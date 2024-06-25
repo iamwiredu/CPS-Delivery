@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from delivery.models import DeliveryRequest, Rider
-from .forms import RiderForm, ShopItemForm
+from .forms import RiderForm, ShopItemForm, RequestStatusUpdateForm, RidersAssignmentForm
 from delivery.models import ShopItem
 
 # Create your views here.
@@ -18,10 +18,45 @@ def requestManagementConsole(request):
     }
     return render(request,'html/requestsManagementConsole.html',context)
 
+def pastProcessedRequest(request):
+    DeliveryRequests = DeliveryRequest.objects.filter(delivered=True).values()
+    context ={
+        'DeliveryRequests':DeliveryRequests,
+
+    }
+    return render(request,'html/pastProcessedRequest.html',context)
+
 def managementUpdate(request,unique_id):
+    Riders = Rider.objects.all()
     DeliveryRequested = DeliveryRequest.objects.get(unique_id=unique_id)
+    RequestStatusUpdateFormUpdater = RequestStatusUpdateForm(instance=DeliveryRequested)
+    RidersAssignmentFormUpdater = RidersAssignmentForm(instance=DeliveryRequested)
+
+    if request.method == 'POST':
+        if 'UdpateAssignment' in request.POST:
+            form = RidersAssignmentForm(request.POST,instance=DeliveryRequested)
+            if form.is_valid():
+                form.save()
+                print('Done')
+            else:
+                print('Error')
+            return redirect(managementUpdate,unique_id)
+        if 'UpdateRequest' in request.POST:
+            form = RequestStatusUpdateForm(request.POST,instance=DeliveryRequested)
+            print('a')
+            if form.is_valid():
+                form.save()
+                print('Done')
+            else:
+                print('Error')
+            return redirect(managementUpdate,unique_id)
+
+
     context = {
-        'DeliveryRequest':DeliveryRequested,
+        'DeliveryRequested':DeliveryRequested,
+        'RequestStatusUpdateFormUpdater':RequestStatusUpdateFormUpdater,
+        'Riders':Riders,
+        'RidersAssignmentFormUpdater':RidersAssignmentFormUpdater,
 
     }
     return render(request,'html/managementUpdate.html',context)

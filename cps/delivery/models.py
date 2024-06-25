@@ -16,6 +16,9 @@ class Rider(models.Model):
     phone = models.PositiveIntegerField()
     assigned = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class DeliveryRequest(models.Model):
     class DeliveryLocations(models.TextChoices):

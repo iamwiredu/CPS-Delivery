@@ -1,5 +1,6 @@
 {% load static %}
 {% load adminConsole_extras %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +63,7 @@
                         {% if data.assigned == False %}
                             <input type="checkbox" name="assigned" disabled>
                         {% else %}
-                            <input type="checkbox" name="assigned" checked>{{data}}
+                            <input type="checkbox" name="assigned" checked>
                         {% endif %}
                     </td>
                     <td>
