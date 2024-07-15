@@ -8,7 +8,6 @@ import requests
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    phone = models.IntegerField(null=True,blank=True)
 
 class Rider(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
@@ -48,7 +47,6 @@ class DeliveryRequest(models.Model):
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
     dropoffNumber = models.PositiveIntegerField()
     pickupPoint = models.CharField(max_length=10, choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
-    senderNumber = models.PositiveIntegerField()
     productFee = models.FloatField()
     additionalInfo = models.TextField()
     delivered = models.BooleanField(default=False)
@@ -57,17 +55,35 @@ class DeliveryRequest(models.Model):
     pickedUp = models.BooleanField(default=False)
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='assignments',default=None,null=True,blank=True)
 
-    
+    @property
+    def id_curator(self):    
+        id_value = str(self.id)
+        start = ''
+        if len(id_value) < 4:
+            for i in range(4-len(id_value)):
+                start += '0'
+            return start+id_value
+        else:
+            return id_value
 
 def send_sms(sender,instance,created,**kwargs):
+    def id_curator(id):
+        id_value = str(id)
+        start = ''
+        if len(id_value) < 4:
+            for i in range(4-len(id_value)):
+                start += '0'
+            return start+id_value
+        else:
+            return id_value
+
     if created:
         endPoint = 'https://api.mnotify.com/api/sms/quick'
         apiKey = '	SncBkQH0xepW3ACOlCty3AjUX'
         data = {
         'recipient[]': [str(instance.pickupNumber)],
         'sender': 'CPS',
-        'message': f'Your request with order id {instance.unique_id} has been created. Waiting Assignment.',
-        'is_schedule': False,
+        'message': f'Your request has been sent waiting for rider assignment .Use  ORDER ID - {id_curator(instance.id)} to track your order.Insist on identification or for help call #0534583364',
         'schedule_date': ''
         }
         url = endPoint + '?key=' + apiKey
@@ -80,7 +96,6 @@ post_save.connect(send_sms,sender=DeliveryRequest)
 def create_profile(sender,instance,created,**kwargs):
     if created:
         user_profile=Profile(user=instance)
-        user_profile.phone = User.phone
         user_profile.save()
 
 post_save.connect(create_profile, sender=User)

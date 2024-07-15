@@ -52,46 +52,87 @@
     <div>
         <div>
             <span class="set">Assigned</span>
+            {% if DeliveryRequested.assigned == False %}
             <span class="material-icons set" style="color: red;">
                 close
             </span>
+            {% else %}
+            <span class="material-icons set" style="color: green;">
+                check
+            </span>
+            {% endif %}
         </div>
 
     </div>
     <div>
         <div>
             <span class="set">Picked up</span>
+            {% if DeliveryRequested.pickedUp == False %}
             <span class="material-icons set" style="color: red;">
                 close
             </span>
+            {% else %}
+            <span class="material-icons set" style="color: green;">
+                check
+            </span>
+            {% endif %}
         </div>
 
     </div>
     <div>
         <div>
             <span class="set">enroute</span>
+            {% if DeliveryRequested.enroute == False %}
             <span class="material-icons set" style="color: red;">
                 close
             </span>
+            {% else %}
+            <span class="material-icons set" style="color: green;">
+                check
+            </span>
+            {% endif %}
         </div>
 
     </div>
     <div>
         <div>
             <span class="set">delivered</span>
+            {% if DeliveryRequested.delivered == False %}
             <span class="material-icons set" style="color: red;">
                 close
             </span>
+            {% else %}
+            <span class="material-icons set" style="color: green;">
+                check
+            </span>
+            {% endif %}
 
         </div>
 
     </div>
 </div>
 <div style="display: flex; justify-content: center;">
+    {% if DeliveryRequested.assigned == False %}
     <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;"></div>
+    {% else %}
+    <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
+    {% endif %}
+    {% if DeliveryRequested.pickedUp == False %}
     <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;"></div>
+    {% else %}
+    <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
+    {% endif %}
+    {% if DeliveryRequested.enroute == False %}
     <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;" ></div>
+    {% else %}
+    <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;" ></div>
+    {% endif %}
+    {% if DeliveryRequested.delivered == False %}
     <div style="width: 30%; height: 2px; background-color: red;"></div>
+    {% else %}
+    <div style="width: 30%; height: 2px; background-color: green;"></div>
+    {% endif %}
+  
 </div>
 <div class="container">
     <div>
@@ -114,10 +155,7 @@
         <div>Pickup Point</div>
         <div class="container-fluid">{{DeliveryRequested.pickupPoint}}</div>
     </div>
-    <div>
-        <div>Sender Number</div>
-        <div class="container-fluid">{{DeliveryRequested.senderNumber}}</div>
-    </div>
+
     <div>
         <div>Product Fee</div>
         <div class="container-fluid">{{DeliveryRequested.productFee}}</div>

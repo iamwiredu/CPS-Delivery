@@ -52,7 +52,7 @@
           <tr>
             <th scope="row">1</th>
             <td>{{rider.name}}</td>
-            <td>{{rider.phone}}</td>
+            <td>+233{{rider.phone}}</td>
             <td>3</td>
             <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                 style="background-color: #61b124; border-color: #61b124;">
@@ -146,21 +146,22 @@
 {% for assigned in DeliveryRequestsAssigned %}
 
 
-      <tr>
-        <th scope="row">1</th>
-        <td>{{assigned.pickupPoint}}</td>
-        <td>{{assigned.deliveryPoint}}</td>
-        <td>{{assigned.pickupNumber}}</td>
-        <td>{{assigned.dropoffNumber}}</td>
-        <td> <span>
-            <form action="" method="POST">
-                {% csrf_token %}
-                <input type="hidden" value="{{assigned.unique_id}}" name="unique_id">
-                <input type="submit" value="Unassign" name="unassignRider" style="background-color: #61b124; padding: 5px; color: white; border: 1px solid #61b124; border-radius: 0.25rem;">
-            </form>
-        </span></td>
-      </tr>
-
+{% if assigned.delivered == False %}
+<tr>
+  <th scope="row">1</th>
+  <td>{{assigned.pickupPoint}}</td>
+  <td>{{assigned.deliveryPoint}}</td>
+  <td>{{assigned.pickupNumber}}</td>
+  <td>{{assigned.dropoffNumber}}</td>
+  <td> <span>
+      <form action="" method="POST">
+          {% csrf_token %}
+          <input type="hidden" value="{{assigned.unique_id}}" name="unique_id">
+          <input type="submit" value="Unassign" name="unassignRider" style="background-color: #61b124; padding: 5px; color: white; border: 1px solid #61b124; border-radius: 0.25rem;">
+      </form>
+  </span></td>
+</tr>
+{% endif %}
 {% endfor %}
 </tbody>
 </table>     
@@ -187,8 +188,8 @@
         <th scope="row">1</th>
         <td>{{delivered.pickupPoint}}</td>
         <td>{{delivered.deliveryPoint}}</td>
-        <td>{{delivered.pickupNumber}}</td>
-        <td>{{delivered.dropoffNumber}}</td>
+        <td>+233{{delivered.pickupNumber}}</td>
+        <td>+233{{delivered.dropoffNumber}}</td>
         <td><span class="material-icons" style="color: #61b124;">
             check
         </span></td>

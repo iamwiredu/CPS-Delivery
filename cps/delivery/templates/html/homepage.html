@@ -35,15 +35,34 @@
     }
     .card{
       background-color: #313339;
+      width: 18rem;
     }
-    @media only screen and (max-width: 400px) {
+    .imagebox{
+      width: 300px; 
+      height: 200px; 
+      
+    }
+    .imagebox img{
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover;
+    
+    }
+ 
+    @media only screen and (max-width: 767px)  {
       body{
         font-size: 16px;
       }
-      .imagebox, .imagebox img{
-        width: 100px;
-        height: 100px;
-      }
+      .imagebox{
+      width: 177px; 
+      height: 200px; 
+    }
+    .imagebox img{
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover;
+    }
+ 
       .container{
         gap: 30px;
       }
@@ -60,8 +79,8 @@
   <div class="container" style="display: flex; justify-content: space-evenly;">
       
       <div class="card" style="width: 18rem; background-color: #313339;" >
-          <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;" >
-            <img style="width: 100%; height: 100%; object-fit: cover;" src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
+          <div class="imagebox" >
+            <img  src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
           </div>
           <div class="card-body">
             <!-- <h5 class="card-title">Request Delivery</h5> -->
@@ -74,54 +93,26 @@
           </div>
         </div>
 
-        <div class="card" style="width: 18rem;">
-          <div class="imagebox"  style="width: 300px; height: 200px; padding-right: 15px;">
-            <img src="{% static 'images/c2.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+        <div class="card" >
+          <div class="imagebox"  >
+            <img src="{% static 'images/c2.jpg' %}"  alt="">
           </div>
           <div class="card-body">
-            <p class="card-text">Have you already placed a delivery with us? Click below to follow up on them.</p>
+            <p class="card-text">Click below to check out our Online Pharmacy for quick health remedies.</p>
           {% if request.user.is_authenticated %}
-          <a href="{% url 'activeRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">Online Pharmacy</a>
+          <a href="{% url 'OnlinePharmacy' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">Online Pharmacy</a>
           {% else %}
           <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">Online Pharmacy</a>
           {% endif %}
           </div>
         </div>
   </div>
-  <!-- <div class="container" style="display: flex; justify-content: space-evenly;">
-      
-    <div class="card" style="width: 18rem;">
-      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
-        <img src="{% static 'images/c3.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
-      </div>
-      <div class="card-body">
-        <p class="card-text">Want to go over your past delivery History with us? Click Below.</p>
-       {% if request.user.is_authenticated %}
-       <a href="{% url 'pastRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Past Deliveries</a>
-       {% else %}
-       <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">View Past Deliveries</a>
-       {% endif %}
-      </div>
-    </div>-->
-    <!-- <div class="card" style="width: 18rem;"> Pending Delivery Requests 
-      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
-        <img src="{% static 'images/c4.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
-      </div>
-      <div class="card-body">
-        <p class="card-text">Get our Price Quotes for your reqeusted deliviers here. Click Below</p>
-        {% if request.user.is_authenticated %}
-        <a href="{% url 'pendingRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Pending Delivery Requests</a>
-        {% else %}
-        <a href="{% url 'account_signup' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Pending Delivery Requests</a>
-        {% endif %}
-      </div>
-    </div>
-  </div> -->
+
   <div class="container" style="display: flex; justify-content: space-evenly;">
       
-    <div class="card" style="width: 18rem;">
-      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
-        <img src="{% static 'images/c3.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+    <div class="card" >
+      <div class="imagebox" >
+        <img src="{% static 'images/c3.jpg' %}"  alt="">
       </div>
       <div class="card-body">
         <p class="card-text">Have items you want to put in storage? Click Below.</p>
@@ -132,9 +123,9 @@
        {% endif %}
       </div>
     </div>
-    <div class="card" style="width: 18rem;">
-      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
-        <img src="{% static 'images/c4.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+    <div class="card" >
+      <div class="imagebox" >
+        <img src="{% static 'images/c4.jpg' %}"  alt="">
       </div>
       <div class="card-body">
         <p class="card-text">Click Below to explore our online shop.</p>

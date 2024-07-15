@@ -29,12 +29,92 @@
 {% endblock %}
 
 {% block content %}
+<div class="container" style="text-align: center;">
+    <a href="{% url 'pastRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Past Deliveries</a>
+    <a href="{% url 'pendingRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Pending Delivery Requests</a>
+</div>
 <div class="container">
     <form method="POST" class="uniForm">
         {% csrf_token %}
         {{ DeliveryRequestFormCreator|crispy }}
-        <input type="submit" name="createRequest" class="btn btn-primary" style="background-color: #61b124; color: white; border: none; float: right;" value="Request">
+    <div id="price">
+
+    </div>
+        <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary" style="background-color: #61b124; color: white; border: none; float: right;" value="Request">
     </form>
 </div>
+<script>
+    dataset = {
+  "KumasiAccra": 37,
+  "KumasiCape Coast": 37,
+  "KumasiTakoradi": 37,
+  "KumasiKoforidua": 40,
+  "KumasiHo": 40,
+  "KumasiSunyani": 40,
+  "KumasiTarkwa": 40,
+  "KumasiObuasi": 45,
+  "KumasiAkosombo": 40,
+  "KumasiTechiman": 40,
+  "KumasiNsawam": 40,
+  "KumasiNkwakaw": 40,
+  "KumasiWinneba": 40,
+  "KumasiMankessim": 40,
+  "KumasiSuhum": 40,
+  "KumasiKonongo": 37
+}
+pickUpPoint = document.getElementById('id_pickupPoint')
+deliveryPoint = document.getElementById('id_deliveryPoint')
+price = document.getElementById('price')
+request = document.getElementById('createRequest')
+
+pickUpPoint.onchange = () => {
+    deliveryPoint = document.getElementById('id_deliveryPoint')
+    if (dataset[pickUpPoint.value+deliveryPoint.value] == undefined){
+        text = pickUpPoint.value+deliveryPoint.value 
+        if (text.includes('Select') ){
+        price.textContent = 'Choose a location other than Select.'
+        request.disabled = 'disabled'
+        request.style.backgroundColor = 'red'
+        }
+        else{
+        price.textContent = "We donot deliver from " + pickUpPoint.value + " to " + deliveryPoint.value
+        request.disabled = 'disabled'
+        request.style.backgroundColor = 'red'
+        }
+
+    }
+    else{
+        price.textContent = pickUpPoint.value + " to " + deliveryPoint.value + " is GHs" + dataset[pickUpPoint.value+deliveryPoint.value]
+        request.disabled = false
+        request.style.backgroundColor = 'green'
+    }
     
+}
+
+deliveryPoint.onchange = () => {
+    pickUpPoint = document.getElementById('id_pickupPoint')
+    if (dataset[pickUpPoint.value+deliveryPoint.value] == undefined){
+        text = pickUpPoint.value+deliveryPoint.value 
+        if (text.includes('Select') ){
+        price.textContent = 'Choose a location other than Select.'
+        request.disabled = 'disabled'
+        request.style.backgroundColor = 'red'
+        }
+        else{
+        price.textContent = "We donot deliver from " + pickUpPoint.value + " to " + deliveryPoint.value
+        request.disabled = 'disabled'
+        request.style.backgroundColor = 'red'
+        }
+
+    }
+    else{
+        price.textContent = pickUpPoint.value + " to " + deliveryPoint.value + " is GHs" + dataset[pickUpPoint.value+deliveryPoint.value]
+        request.disabled = false
+        request.style.backgroundColor = 'green'
+    }
+
+}
+
+
+</script>
 {% endblock %}

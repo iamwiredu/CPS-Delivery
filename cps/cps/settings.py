@@ -83,14 +83,18 @@ WSGI_APPLICATION = 'cps.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get("POSTGRES_DATABASE"),
+        "URL":os.environ.get("POSTGRES_URL"),
+        "PRISMA_URL":os.environ.get("POSTGRES_PRISMA_URL"),
+        "URL_NON_POOLING":os.environ.get("POSTGRES_URL_NON_POOLING"),
+        'USER': "default",
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
+        'HOST': os.environ.get("POSTGRES_HOST"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -128,11 +132,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = BASE_DIR / 'productionfiles'
+STATICFILES_DIRS =(
+os.path.join(BASE_DIR, 'static'),
+) 
+STATIC_ROOT = os.path.join(BASE_DIR, 'apps_static', 'static')
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'mystaticfiles'
-]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -154,10 +158,10 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True 
 
 LOGIN_REDIRECT_URL = "/"
-
-ACCOUNT_FORMS = {'signup': 'delivery.forms.MyCustomSignupForm'}
+ACCOUNT_SIGNUP_REDIRECT_URL = '/automatic/logout'
 
 
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR/'media'  
+

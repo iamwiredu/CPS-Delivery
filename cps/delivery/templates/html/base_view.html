@@ -23,13 +23,17 @@
         background-color: #61b124;
 
       }
+      a{
+        text-decoration: none;
+        color: white;
+      }
     </style>
     {% block header %}
 
     {% endblock %}
 </head>
 <body>
-    <div style="display: flex; justify-content: space-between;">
+    <div id="mainBox" style="display: flex; justify-content: space-between;">
         <h1 id="CPS" style="margin-right: 20px;"><a href="{% url 'homePage' %}">CPS</a></h1>
         <div><a href="{% url 'homePage' %}"><span class="material-icons" style="color: #61b124;">
           home
@@ -40,7 +44,7 @@
             </i>
             {% if request.user.is_authenticated %}
             {{request.user}}{{request.user.phone}}a
-            <span><a href="{% url 'account_logout' %}">Logout</a></span>
+            <span style="background-color: #61b124; border: 1px solid #61b124; padding: 5px; border-radius: 0.25rem;"><a href="{% url 'account_logout' %}" style="color: white; ">Logout</a></span>
             {% else %}
             <span><a href="{% url 'account_login' %}" id="login_link">Login</a></span>
             <span><a href="{% url 'account_signup' %}" id="signup_link">SignUp</a></span>

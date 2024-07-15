@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from delivery.models import DeliveryRequest, Rider
 from .forms import RiderForm, ShopItemForm, RequestStatusUpdateForm, RidersAssignmentForm
 from delivery.models import ShopItem
-
+import requests
 # Create your views here.
 
 def adminConsole(request):
@@ -25,6 +25,20 @@ def pastProcessedRequest(request):
 
     }
     return render(request,'html/pastProcessedRequest.html',context)
+def AssignedRiderMsg(instance,rider):
+    endPoint = 'https://api.mnotify.com/api/sms/quick'
+    apiKey = '	SncBkQH0xepW3ACOlCty3AjUX'
+    data = {
+    'recipient[]': [str(instance.pickupNumber)],
+    'sender': 'CPS',
+    'message': f'Your request for CPS deliveries service with ORDER ID: 00{instance.id} has been assigned to rider {rider.name} .Contact him on 0{rider.phone}',
+    'schedule_date': '',
+    }
+    url = endPoint + '?key=' + apiKey
+    response = requests.post(url, data)
+    data = response.json() 
+    print(data,str(instance.pickupNumber))
+
 
 def managementUpdate(request,unique_id):
     Riders = Rider.objects.all()
@@ -32,21 +46,41 @@ def managementUpdate(request,unique_id):
     RequestStatusUpdateFormUpdater = RequestStatusUpdateForm(instance=DeliveryRequested)
     RidersAssignmentFormUpdater = RidersAssignmentForm(instance=DeliveryRequested)
 
+
+    
     if request.method == 'POST':
         if 'UdpateAssignment' in request.POST:
             form = RidersAssignmentForm(request.POST,instance=DeliveryRequested)
+            rider = request.POST.get('rider')
+            AssignedRider = Rider.objects.get(id=rider)
+            
             if form.is_valid():
                 form.save()
+                AssignedRiderMsg(DeliveryRequested,AssignedRider)
+                DeliveryRequested.assigned = True
+                DeliveryRequested.save()
                 print('Done')
             else:
                 print('Error')
             return redirect(managementUpdate,unique_id)
         if 'UpdateRequest' in request.POST:
             form = RequestStatusUpdateForm(request.POST,instance=DeliveryRequested)
-            print('a')
+
+
             if form.is_valid():
                 form.save()
-                print('Done')
+                if DeliveryRequested.pickedUp == True:
+                    DeliveryRequested.enroute = True
+                    DeliveryRequested.save()
+                else:
+                    DeliveryRequested.enroute = False
+                    DeliveryRequested.save()
+                if DeliveryRequested.delivered == True:
+                    DeliveryRequested.pickedUp = True
+                    DeliveryRequested.enroute = True
+                    DeliveryRequested.save()
+                    
+                
             else:
                 print('Error')
             return redirect(managementUpdate,unique_id)
@@ -101,6 +135,7 @@ def riderUpdate(request,unique_id):
             DeliveryRequested.rider = rider
             DeliveryRequested.assigned = True
             DeliveryRequested.save()
+            AssignedRiderMsg(DeliveryRequested,rider)
             print(DeliveryRequested.rider)
             return redirect(riderUpdate,unique_id)
         if 'unassignRider' in request.POST:

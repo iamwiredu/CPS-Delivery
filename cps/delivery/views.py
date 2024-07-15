@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.contrib.auth import logout
 from .forms import DeliveryRequestForm
 from .models import DeliveryRequest, ShopItem
 from adminConsole.views import adminConsole
@@ -33,7 +34,8 @@ def requestPage(request):
     return render(request,'html/request.html',context)
 
 def pendingRequest(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,enroute=False).values()
+    DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=False)
+    print(DeliveryRequests)
     
     context = {
         'DeliveryRequests':DeliveryRequests,
@@ -41,7 +43,7 @@ def pendingRequest(request):
     return render(request,'html/pendingRequest.html',context)
 
 def pastRequest(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=True).values()
+    DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=True)
     context={
         'DeliveryRequests':DeliveryRequests,
     }
@@ -79,11 +81,26 @@ def ShopPage(request):
 
     }
 
-    return render(request,'html/shopPage.html',context)
+    # return render(request,'html/shopPage.html',context)
+    return render(request,'html/comingSoon.html',context)
 
 def StoragePage(request):
     context = {
 
     }
 
-    return render(request,'html/storagePage.html',context)
+    # return render(request,'html/storagePage.html',context)
+    return render(request,'html/comingSoon.html',context)
+
+def OnlinePharmacy(request):
+    context = {
+
+    }
+
+    # return render(request,'html/storagePage.html',context)
+    return render(request,'html/comingSoon.html',context)
+
+
+def automaticLogout(request):
+    logout(request)
+    return redirect('/accounts/login')

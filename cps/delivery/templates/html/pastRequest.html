@@ -38,19 +38,14 @@
             <tbody class="table-dark" style="text-align: center;">
                 {% for data in DeliveryRequests %}
                 <tr>
-                    <td>{{data.id}}</td>
+                    <td>{{data.id_curator}}</td>
                     <td>{{data.pickupPoint}}</td>
                     <td>{{data.deliveryPoint}}</td>
                     <td>{{data.dropoffNumber}}</td>
                     <td>
-                        {% if data.enroute == False %}
-                            not picked up
-                        {% else %}
-                            picked up
-                        {% endif %}
+                        delivered
                     </td>
-                    <td><a href="#">details</a></td>
-
+                    <td><a href="{% url 'detailsPage' data.unique_id %}">details</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

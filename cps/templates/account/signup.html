@@ -1,9 +1,10 @@
 {% extends "account/base_entrance.html" %}
 {% load crispy_forms_tags %}
 {% load allauth i18n %}
-
+{% block head_title %}
+    {% trans "Signup" %}
+{% endblock head_title %}
 {% block content %}
-<div class="container">
     {% element h1 %}
         {% trans "Sign Up" %}
     {% endelement %}
@@ -17,15 +18,16 @@
         {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
     {% endelement %}
     {% if not SOCIALACCOUNT_ONLY %}
-        {% url 'account_signup' as action_url %}
-        <form method="post" action=login_url tags="entrance,signup">
+    <div class="container">
+        <form method="post" action="{% url 'account_signup' %}" tags="entrance,signup">
             {% csrf_token %}
-            {{form | crispy }}
-            <button type="submit" tags="prominent,signup" style=" margin: 10px 0 25px 0; float:right; width:100% ; border: 2px solid #61b121; border-radius: 0.25rem; padding: 5px; background-color: #61b121;">Sign Up</button>
+                {{form | crispy }}
+                <button type="submit" class="btn btn-primary w-100 py-3 bg-accent" style="border-color: #61b124; background-color: #61b124; margin: 20px 0 20px 0;" tags="prominent,signup">Sign Up</button>
+    
         </form>
+    </div>
     {% endif %}
     {% if SOCIALACCOUNT_ENABLED %}
         {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
     {% endif %}
-</div>
 {% endblock content %}

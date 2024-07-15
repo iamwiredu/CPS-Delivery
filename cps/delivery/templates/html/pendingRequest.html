@@ -40,8 +40,7 @@
                 {% for data in DeliveryRequests %}
 
                 <tr>
-                    <td>{{data.user.phone}}</td>
-                    <td>{{data.unique_id|stringformat:'s'|split:5}}...</td>
+                    <td>{{data.id_curator}}</td>
                     <td>{{data.pickupPoint}}</td>
                     <td>{{data.deliveryPoint}}</td>
                     <td>{{data.dropoffNumber}}</td>

@@ -20,18 +20,26 @@
     color: #61b124;
 
     }
+    #mainBox{
+        margin-bottom: -58px;
+    }
 </style>
 {% endblock %}
 {% block content %}
 
-    <p>Are you Sure You want to logout?</p>
+<div class="container d-flex align-items-center justify-content-center min-vh-100 ">
+   
 
-    <form method="POST" action="{% url 'account_logout' %}">
+    <form method="POST" action="{% url 'account_logout' %}" style="display: flex; flex-direction: column; justify-content: center;">
         {% csrf_token %}
         {{form | crispy }}
 
-
-    <button type="submit">Logout</button>
+        <p>Are you Sure You want to logout?</p>
+    <button type="submit" style="color: white; background-color: #61b124; border: 1px solid #61b124; padding: 5px; border-radius: 0.25rem;">Logout</button>
 
     </form>
+</div>
 {% endblock content %}
+<div style="text-align: center; ">
+    <h1>Coming Soon</h1>
+</div>
