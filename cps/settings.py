@@ -94,18 +94,19 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get("POSTGRES_DATABASE"),
-#         "URL":os.environ.get("POSTGRES_URL"),
-#         "PRISMA_URL":os.environ.get("POSTGRES_PRISMA_URL"),
-#         "URL_NON_POOLING":os.environ.get("POSTGRES_URL_NON_POOLING"),
-#         'USER': "default",
-#         'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
-#         'HOST': os.environ.get("POSTGRES_HOST"),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "verceldb",
+        'URL_NO_SSL':"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb",
+        "URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+        "PRISMA_URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15",
+        "URL_NON_POOLING":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+        'USER': "default",
+        'PASSWORD':"dN0ShxHPfqa9",
+        "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
+    }
+}
 
 
 # Password validation
