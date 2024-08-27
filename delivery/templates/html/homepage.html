@@ -98,11 +98,11 @@
             <img src="{% static 'images/c2.jpg' %}"  alt="">
           </div>
           <div class="card-body">
-            <p class="card-text">Click below to check out our Online Pharmacy for quick health remedies.</p>
+            <p class="card-text">Click below to check out our  Pharmacy for quick health remedies.</p>
           {% if request.user.is_authenticated %}
-          <a href="{% url 'OnlinePharmacy' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">Online Pharmacy</a>
+          <a href="{% url 'OnlinePharmacy' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;"> Pharmacy</a>
           {% else %}
-          <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">Online Pharmacy</a>
+          <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;"> Pharmacy</a>
           {% endif %}
           </div>
         </div>
