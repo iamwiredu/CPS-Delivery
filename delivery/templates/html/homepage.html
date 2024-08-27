@@ -35,15 +35,18 @@
     }
     .card{
       background-color: #313339;
-      width: 18rem;
+      width: 18.3rem;
+      padding-top: 1rem;
     }
     .imagebox{
       width: 300px; 
       height: 200px; 
+      display: flex;
+      justify-content: center;
       
     }
     .imagebox img{
-      width: 100%; 
+      width: 80%; 
       height: 100%; 
       object-fit: cover;
     
@@ -54,13 +57,16 @@
         font-size: 16px;
       }
       .imagebox{
-      width: 177px; 
+      width: 200px; 
       height: 200px; 
+      display: flex;
+      justify-content: center;
     }
     .imagebox img{
-      width: 100%; 
+      width: 80%; 
       height: 100%; 
       object-fit: cover;
+      
     }
  
       .container{
@@ -78,7 +84,7 @@
 <div>
   <div class="container" style="display: flex; justify-content: space-evenly;">
       
-      <div class="card" style="width: 18rem; background-color: #313339;" >
+      <div class="card" >
           <div class="imagebox" >
             <img  src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
           </div>
