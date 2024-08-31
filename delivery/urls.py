@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import requestPage, homePage, pendingRequest, pastRequest,automaticLogout, OnlinePharmacy,activeRequest, detailsPage, ShopPage, StoragePage
+from .views import requestPage, homePage, pendingRequest, signUp,pastRequest,automaticLogout, OnlinePharmacy,activeRequest, detailsPage, ShopPage, StoragePage
 
 urlpatterns = [
     path('request/',requestPage,name='deliveryRequest'),
@@ -11,5 +11,6 @@ urlpatterns = [
     path('shopPage/',ShopPage,name='ShopPage'),
     path('storage/',StoragePage,name='StoragePage'),
     path('onlinePharmacy/',OnlinePharmacy,name='OnlinePharmacy'),
-    path('automatic/logout/',automaticLogout,name='automaticLogout')
+    path('automatic/logout/',automaticLogout,name='automaticLogout'),
+    path('signup/',signUp,name='signUp')
 ]

@@ -1,13 +1,31 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser,Permission, Group
 import uuid
 from django.db.models.signals import post_save
 import requests
+
 # Create your models here.
 
 
+
+class CustomUser(AbstractUser):
+    activePhoneNumber = models.CharField(max_length=255)
+    groups = models.ManyToManyField(
+        Group,
+        related_name='customuser_set',  # Change this to avoid conflicts with auth.User
+        blank=True
+    )
+    
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='customuser_set_permissions',  # Similarly, set a related_name for permissions
+        blank=True
+    )
+
+
+
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
 
 class Rider(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
@@ -40,7 +58,7 @@ class DeliveryRequest(models.Model):
         KONONGO = 'Konongo', 'Konongo'
     
     
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     orderQuantity = models.PositiveIntegerField()
     pickupNumber = models.PositiveIntegerField()
@@ -98,7 +116,7 @@ def create_profile(sender,instance,created,**kwargs):
         user_profile=Profile(user=instance)
         user_profile.save()
 
-post_save.connect(create_profile, sender=User)
+post_save.connect(create_profile, sender=CustomUser)
 
 
 class ShopItem(models.Model):

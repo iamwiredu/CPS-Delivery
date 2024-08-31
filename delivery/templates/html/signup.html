@@ -1,0 +1,20 @@
+{% extends "base_entrance.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>SignUp main</h1>
+        <a href="{{ login_url }}">
+        </a>
+   <p>
+    Already have an account? Then please {{ link }}sign in{{ end_link }}.
+    </p>
+    <div class="container">
+        <form method="post" action="{% url 'account_signup' %}" tags="entrance,signup">
+            {% csrf_token %}
+                {{form | crispy }}
+                <button type="submit" class="btn btn-primary w-100 py-3 bg-accent" style="border-color: #61b124; background-color: #61b124; margin: 20px 0 20px 0;" tags="prominent,signup">Sign Up</button>
+    
+        </form>
+    </div>
+    {% endif %}
+
+{% endblock content %}

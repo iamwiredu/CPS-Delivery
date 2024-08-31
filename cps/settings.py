@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'adminConsole',
+    'django_extensions',
    
   
 ]
@@ -158,11 +159,7 @@ AUTHENTICATION_BACKENDS = [
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True 
-
-LOGIN_REDIRECT_URL = "/"
-ACCOUNT_SIGNUP_REDIRECT_URL = '/automatic/logout'
+AUTH_USER_MODEL = 'delivery.CustomUser'
 
 
 MEDIA_URL = '/media/'

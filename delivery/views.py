@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import logout
-from .forms import DeliveryRequestForm
+from .forms import DeliveryRequestForm, CustomUserCreationForm
 from .models import DeliveryRequest, ShopItem
 from adminConsole.views import adminConsole
+
 
 # Create your views here.
 
@@ -104,3 +105,10 @@ def OnlinePharmacy(request):
 def automaticLogout(request):
     logout(request)
     return redirect('/accounts/login')
+
+def signUp(request):
+    form =  CustomUserCreationForm()
+    context ={
+        'form':form,
+    }
+    return render(request,'html/signup.html',context)
