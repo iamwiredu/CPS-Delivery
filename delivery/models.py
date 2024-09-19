@@ -1,31 +1,8 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser,Permission, Group
 import uuid
-from django.db.models.signals import post_save
 import requests
+from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
-
-
-
-class CustomUser(AbstractUser):
-    activePhoneNumber = models.CharField(max_length=255)
-    groups = models.ManyToManyField(
-        Group,
-        related_name='customuser_set',  # Change this to avoid conflicts with auth.User
-        blank=True
-    )
-    
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        related_name='customuser_set_permissions',  # Similarly, set a related_name for permissions
-        blank=True
-    )
-
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
 
 class Rider(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
@@ -58,7 +35,7 @@ class DeliveryRequest(models.Model):
         KONONGO = 'Konongo', 'Konongo'
     
     
-    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     orderQuantity = models.PositiveIntegerField()
     pickupNumber = models.PositiveIntegerField()
@@ -109,16 +86,6 @@ def send_sms(sender,instance,created,**kwargs):
         data = response.json() 
         print(data,str(sender.pickupNumber))
 
-post_save.connect(send_sms,sender=DeliveryRequest)
-
-def create_profile(sender,instance,created,**kwargs):
-    if created:
-        user_profile=Profile(user=instance)
-        user_profile.save()
-
-post_save.connect(create_profile, sender=CustomUser)
-
-
 class ShopItem(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -128,5 +95,4 @@ class ShopItem(models.Model):
 
     def __str__(self):
         return f'{self.name}'
-
 

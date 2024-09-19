@@ -1,114 +1,65 @@
-from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from django.contrib.auth import logout
-from .forms import DeliveryRequestForm, CustomUserCreationForm
-from .models import DeliveryRequest, ShopItem
-from adminConsole.views import adminConsole
-
+from django.shortcuts import render, redirect
+from django.views import View
+from .models import DeliveryRequest
+from .forms import DeliveryRequestForm
 
 # Create your views here.
 
-def homePage(request):
-    if request.user.is_authenticated:
-        if request.user.is_superuser:
-            return redirect(adminConsole)
-        else:
-            return render(request,'html/homepage.html')
-    else:
-        return render(request,'html/homepage.html')
+class accountHome(View):
 
-def requestPage(request):
+    def get(self,request):
+        return render(request,'accountHome.html')
+    
+
+class RequestPage(View):
     DeliveryRequestFormCreator = DeliveryRequestForm()
     context = {
-        'DeliveryRequestFormCreator':DeliveryRequestFormCreator,
+            'DeliveryRequestFormCreator':DeliveryRequestFormCreator,
 
-    }
-    if request.method == 'POST':
-        if 'createRequest' in request.POST:
-            DeliveryRequestFormCreator = DeliveryRequestForm(request.POST)
-            if DeliveryRequestFormCreator.is_valid():
-                event = DeliveryRequestFormCreator.save(commit=False)
-                event.user = request.user
-                event.save()
-            return redirect(pendingRequest) 
-        
-    return render(request,'html/request.html',context)
-
-def pendingRequest(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=False)
-    print(DeliveryRequests)
+        }
+    def get(self,request):
     
-    context = {
-        'DeliveryRequests':DeliveryRequests,
-    }
-    return render(request,'html/pendingRequest.html',context)
 
-def pastRequest(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=True)
-    context={
-        'DeliveryRequests':DeliveryRequests,
-    }
-    return render(request,'html/pastRequest.html',context)
+        return render(request,'request.html',self.context)
+    
+    def post(self,request):
+        if request.method == 'POST':
+            if 'createRequest' in request.POST:
+                DeliveryRequestFormCreator = DeliveryRequestForm(request.POST)
+                if DeliveryRequestFormCreator.is_valid():
+                    event = DeliveryRequestFormCreator.save(commit=False)
+                    event.user = request.user
+                    event.save()
+                return redirect('/accounthome/')  #pending Request
+            
+        return render(request,'request.html',self.context)
+    
 
-def activeRequest(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,enroute=True).values()
-    context={
-        'DeliveryRequests':DeliveryRequests,
-    }
-    return render(request,'html/activeRequest.html',context)
-
-def detailsPage(request,unique_id):
-    DeliveryRequested = DeliveryRequest.objects.get(unique_id=unique_id)
-    DeliveryRequestedForm = DeliveryRequestForm(instance=DeliveryRequested)
-    print(DeliveryRequested)
-    context={
-        'DeliveryRequested':DeliveryRequested,
-        'DeliveryRequestedForm':DeliveryRequestedForm,
-    }
-    return render(request,'html/detailsPage.html',context)
+class pastDeliveries(View):
+    def get(self,request):
+        DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=True)
+        context={
+            'DeliveryRequests':DeliveryRequests,
+        }
+        return render(request,'pastDeliveries.html',context)
+    
+    
 
 
-def ShopPage(request):
-    ShopItems = ShopItem.objects.all()
-    print(len(ShopItems))
-    ShopItems_left = []
-    for i in range(0,4-len(ShopItems)):
-        ShopItems_left.append({'name':'none'})
-    print(ShopItems_left)
-        
-    context = {
-        'ShopItems':ShopItems,
-        'ShopItems_left':ShopItems_left,
-
-    }
-
-    # return render(request,'html/shopPage.html',context)
-    return render(request,'html/comingSoon.html',context)
-
-def StoragePage(request):
-    context = {
-
-    }
-
-    # return render(request,'html/storagePage.html',context)
-    return render(request,'html/comingSoon.html',context)
-
-def OnlinePharmacy(request):
-    context = {
-
-    }
-
-    # return render(request,'html/storagePage.html',context)
-    return render(request,'html/comingSoon.html',context)
-
-
-def automaticLogout(request):
-    logout(request)
-    return redirect('/accounts/login')
-
-def signUp(request):
-    form =  CustomUserCreationForm()
-    context ={
-        'form':form,
-    }
-    return render(request,'html/signup.html',context)
+class pendingRequest(View):
+    def get(self,request):
+        DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=False)
+        context={
+            'DeliveryRequests':DeliveryRequests,
+        }
+        return render(request,'pendingRequests.html',context)
+    
+class detailsPage(View):
+    def get(self,request,pk):
+        DeliveryRequested = DeliveryRequest.objects.get(pk=pk)
+        DeliveryRequestedForm = DeliveryRequestForm(instance=DeliveryRequested)
+        context={
+            'DeliveryRequested':DeliveryRequested,
+            'DeliveryRequestedForm':DeliveryRequestedForm,
+        }
+        return render(request,'requestDetails.html',context)

@@ -1,8 +1,5 @@
 from django.contrib import admin
-from .models import DeliveryRequest, Profile, ShopItem
+from .models import DeliveryRequest
 # Register your models here.
 
-
 admin.site.register(DeliveryRequest)
-admin.site.register(Profile)
-admin.site.register(ShopItem)

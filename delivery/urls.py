@@ -1,16 +1,10 @@
 from django.urls import path
-from .views import requestPage, homePage, pendingRequest, signUp,pastRequest,automaticLogout, OnlinePharmacy,activeRequest, detailsPage, ShopPage, StoragePage
+from .views import accountHome, RequestPage,pastDeliveries, pendingRequest, detailsPage
 
 urlpatterns = [
-    path('request/',requestPage,name='deliveryRequest'),
-    path('',homePage,name='homePage'),
-    path('pendingRequest/',pendingRequest,name='pendingRequest'),
-    path('pastRequest/',pastRequest,name='pastRequest'),
-    path('activeRequest/',activeRequest,name='activeRequest'),
-    path('detailsPage/<str:unique_id>/',detailsPage,name='detailsPage'),
-    path('shopPage/',ShopPage,name='ShopPage'),
-    path('storage/',StoragePage,name='StoragePage'),
-    path('onlinePharmacy/',OnlinePharmacy,name='OnlinePharmacy'),
-    path('automatic/logout/',automaticLogout,name='automaticLogout'),
-    path('signup/',signUp,name='signUp')
+    path('accounthome/',accountHome.as_view(),name='accountHome'),
+    path('deliveryRequest/',RequestPage.as_view(),name='requestPage'),
+    path('pastdeliveries/',pastDeliveries.as_view(),name='pastDeliveries'),
+    path('pendingRequest',pendingRequest.as_view(),name='pendingRequests'),
+     path('detailsPage/<int:pk>/',detailsPage.as_view(),name='detailsPage'),
 ]

@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import requestManagementConsole, managementUpdate,adminConsole, riderAddition, riderDelete, pastProcessedRequest, riderUpdate, addShopItem
+from .views import adminConsole, managementUpdate,adminConsole, riderAddition, riderDelete, pastProcessedRequest, riderUpdate, addShopItem, requestManagementConsole
+
 
 urlpatterns = [
     path('requestmanagement/',requestManagementConsole,name='requestManagement'),
@@ -10,4 +11,7 @@ urlpatterns = [
     path('riderUpdate/<str:unique_id>/',riderUpdate,name="riderUpdate"),
     path('addShopItem/',addShopItem,name='addShopItem'),
     path('pastRequests/',pastProcessedRequest,name='pastProcessedRequest')
+]
+urlpatterns += [
+    path('adminconsole/',adminConsole,name='adminConsole'),
 ]

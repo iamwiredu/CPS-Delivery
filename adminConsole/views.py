@@ -1,3 +1,7 @@
+
+from django.views.generic import TemplateView
+# Create your views here.
+
 from django.shortcuts import render, redirect
 from delivery.models import DeliveryRequest, Rider
 from .forms import RiderForm, ShopItemForm, RequestStatusUpdateForm, RidersAssignmentForm
@@ -7,7 +11,7 @@ import requests
 
 def adminConsole(request):
 
-    return render(request,'html/adminConsole.html')
+    return render(request,'admin.html')
 
 def requestManagementConsole(request):
     DeliveryRequests = DeliveryRequest.objects.filter(delivered=False).values()

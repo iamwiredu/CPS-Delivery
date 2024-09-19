@@ -1,0 +1,748 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPS</title>
+    <meta name="theme-color" content="#0054a4">
+
+    <!-- Meta description -->
+    <meta name="description"
+        content="Welcome to RoofCraft - Your trusted roofing company providing quality roofing solutions for residential and commercial properties. Contact us for expert roof installation, repairs, and maintenance services.">
+
+    <!-- Meta keywords (Note: Some search engines may not give much weight to meta keywords, but it doesn't hurt to include them) -->
+    <meta name="keywords"
+        content="roofing, roofing company, roof installation, roof repairs, roof maintenance, residential roofing, commercial roofing">
+
+    <!-- Meta author (Optional: Include if you want to show the authorship of the page) -->
+    <meta name="author" content="Your Company Name">
+
+
+    <link rel="icon" type="image/x-icon" href="#">
+
+    <!-- Swiper -->
+    <link rel="stylesheet" href="{% static 'static/css/swiper-bundle.min.css' %}">
+
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="{% static 'site/css/magnific-popup.css' %}">
+
+    <!-- Bootstrap css -->
+    <link rel=" stylesheet" href="{% static 'site/css/bootstrap.min.css' %}">
+
+    <!-- Bootstrap icons css -->
+    <link rel="stylesheet" href="{% static 'site/css/bootstrap-icons.min.css' %}">
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="{% static 'site/css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'site/css/owl.theme.default.css' %}">
+
+    <link rel="stylesheet" href="{% static 'site/css/style.css' %}">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="topbar" style="background-color: #1c1e25;">
+        <div class="container">
+            <div class="row" style="display: flex; justify-content: space-evenly;">
+                <div class="col-md-4">
+                    <a href="tel:+233247735590 "> <span class="me-5"><i class="bi bi-telephone-fill"></i> +(233) 24 773
+                            5590 </span>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <span> <i class="bi bi-pin-map-fill"></i>Kumasi, Ghana</span>
+                </div>
+                <div class="col-md-4 text-end">
+                    <a class="mx-2" href="#"><i class="bi bi-facebook"></i></a>
+                    <a class="mx-2" href="#"><i class="bi bi-twitter"></i></a>
+                    <a class="mx-2" href="#"><i class="bi bi-instagram"></i></a>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <nav class="navbar  navbar-expand-lg bg-body-tertiary py-3">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="#">
+                <span id="wordLogo">CPS</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link " href="#introduction">About us</a>
+                    <a class="nav-link" href="#services">Services</a>
+
+                    <a class="nav-link" href="#features">Benefits</a>
+
+                    <a class="nav-link" href="#testimonials">Testimonials</a>
+
+                    <a class="nav-link" href="#contactus">Contact us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="hero" class="d-flex align-items-center ">
+        <div class="container content">
+            <div class="row">
+                <div id="herocol" class="col-md-8 p-5 ">
+                    <h1 class="mb-3 display-2">Welcome to CPS Delivery!</h1>
+                    <h4 class="mb-5 ">Your Trusted Delivery Service</h4>
+
+
+                    <a class="btn btn-primary px-5 my-2" href="{% url 'loginPage' %}" role="button">Login</a>
+                    <a class="btn btn-secondary px-4 my-2" href="{% url 'signupPage' %}">Sign Up</a>
+
+
+                </div>
+                <div class="col-md-4">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="introduction" class="scroll-reveal my-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <div id="gallery">
+                        <div id="owlc" class="owl-carousel owl-theme">
+                            <div> <a href="./images/previous/beautiful-wooden-modern-house.jpg" class="image-link"><img
+                                        class="img-fluid" src="./images/previous/beautiful-wooden-modern-house.jpg"
+                                        alt=""></a>
+                            </div>
+
+
+                            <div> <a href="./images/previous/full-shot-man-working-roof.jpg" class="image-link"><img
+                                        class="img-fluid" src="./images/previous/full-shot-man-working-roof.jpg"
+                                        alt=""></a> </div>
+
+
+
+
+                            <div> <a href="./images/previous/full-shot-roofers-working-together-with-helmets.jpg"
+                                    class="image-link"><img class="img-fluid"
+                                        src="./images/previous/full-shot-roofers-working-together-with-helmets.jpg"
+                                        alt=""></a>
+                            </div>
+
+
+
+
+
+                            <div> <a href="./images/previous/long-shot-man-with-helmet-sitting-roof.jpg"
+                                    class="image-link"><img class="img-fluid"
+                                        src="./images/previous/long-shot-man-with-helmet-sitting-roof.jpg" alt=""></a>
+                            </div>
+
+
+                            <div> <a href="./images/previous/low-angle-modern-house-roof.jpg" class="image-link"><img
+                                        class="img-fluid" src="./images/previous/low-angle-modern-house-roof.jpg"
+                                        alt=""></a> </div>
+
+
+
+
+                            <div> <a href="./images/previous/man-working-roof-with-hammer-full-shot.jpg"
+                                    class="image-link"><img class="img-fluid"
+                                        src="./images/previous/man-working-roof-with-hammer-full-shot.jpg" alt=""></a>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex align-items-center">
+                    <div>
+                        <p>At CPS, we take pride in delivering reliable and efficient package delivery solutions for all
+                            your shipping needs.
+                            Whether it's a small parcel, a bulk shipment, or a critical delivery, our team of
+                            experienced professionals is here
+                            to serve you.</p>
+
+                        <p>With a commitment to excellence and a focus on using advanced logistics and technology, we
+                            ensure that your packages
+                            are delivered safely and on time, protecting your business and personal commitments.
+                            Customer satisfaction and
+                            safety are our top priorities, and we go the extra mile to provide exceptional service that
+                            exceeds your
+                            expectations.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- servides -->
+    <div id="services" class=" scroll-reveal my-5">
+        <div class="container py-5">
+            <h3 class="text-center mb-5">Our Delivery Services</h3>
+            <div class="row row-cols-1 row-cols-lg-4 g-4">
+                <div class="col">
+                    <div class="card text-center shadow-on-hover">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Same-Day Delivery</h5>
+                            Prompt and reliable same-day delivery services, ensuring your packages reach their
+                            destination quickly.
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center shadow-on-hover">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Scheduled Deliveries</h5>
+                            Convenient scheduled deliveries to fit your time frame, ensuring your parcels arrive exactly
+                            when
+                            needed.
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center shadow-on-hover">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Express Shipping</h5>
+                            Fast and efficient express shipping for urgent packages, delivering with speed and
+                            precision.
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center shadow-on-hover">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Bulk Shipping Solutions</h5>
+                            Efficient bulk shipping options for businesses, ensuring cost-effective and timely delivery
+                            of large
+                            volumes.
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center shadow-on-hover">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Tracking and Updates</h5>
+                            Stay informed with real-time tracking and updates, giving you peace of mind throughout the
+                            delivery
+                            process.
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center shadow-on-hover">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">E-Commerce Fulfillment</h5>
+                            Streamlined e-commerce fulfillment solutions, ensuring seamless order processing and timely
+                            delivery to
+                            your customers.
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center shadow-on-hover">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Returns Management</h5>
+                            Hassle-free returns management, providing an easy and convenient process for returning
+                            items.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- key features or benefits -->
+    <div id="features" class="scroll-reveal my-5">
+        <div class="container py-5">
+            <h3 class="text-center mb-5">Why Choose CPS</h3>
+            <div class="row  row-cols-1 row-cols-lg-2">
+                <div class="col">
+                    <h4>Experienced Delivery Professionals</h4>
+                    Our team consists of skilled and experienced delivery professionals who have a deep understanding of
+                    various
+                    logistics systems. You can trust us to handle your deliveries with precision and expertise.
+                </div>
+
+                <div class="col">
+                    <h4>Timely and Efficient Service</h4>
+                    At CPS, we understand the importance of on-time deliveries. Our efficient team works diligently to
+                    ensure that your
+                    packages are delivered promptly without compromising on quality.
+                </div>
+
+                <div class="col">
+                    <h4>Premium Quality Service</h4>
+                    We believe in providing top-notch service for all deliveries. Our commitment to excellence ensures
+                    that your
+                    packages are handled with care and delivered in perfect condition.
+                </div>
+
+                <div class="col">
+                    <h4>Fully Licensed and Insured</h4>
+                    CPS is fully licensed and insured, giving you peace of mind knowing that your packages are protected
+                    throughout the
+                    delivery process.
+                </div>
+
+                <div class="col">
+                    <h4>Transparent Pricing</h4>
+                    We believe in transparency, and our pricing reflects that. You can expect fair and competitive
+                    pricing for all our
+                    delivery services, with no hidden costs or surprises.
+                </div>
+
+                <div class="col">
+                    <h4>Attention to Detail</h4>
+                    From small parcels to large shipments, we pay meticulous attention to detail. Every aspect of your
+                    delivery is
+                    handled with care and precision.
+                </div>
+
+                <div class="col">
+                    <h4>Customer-Centric Approach</h4>
+                    Your satisfaction is our top priority. We listen to your needs and concerns, tailoring our solutions
+                    to meet your
+                    specific requirements. Expect a customer-centric experience throughout the entire delivery process.
+                </div>
+
+
+                <div class="col">
+                    <h4>Eco-Friendly Practices</h4>
+                    CPS is committed to eco-friendly delivery practices. We offer green delivery solutions that minimize
+                    environmental
+                    impact while maximizing efficiency.
+                </div>
+
+                <div class="col">
+                    <h4>Local Delivery Experts</h4>
+                    As a local delivery company, we understand the unique challenges and requirements of the area. Count
+                    on us for
+                    personalized service and a thorough understanding of local logistics needs.
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="testimonials" class="scroll-reveal my-5">
+        <div class="container py-5">
+            <h3 class="text-center mb-5">Testimonials</h3>
+            <!-- Slider main container -->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Testimonial 1 -->
+                    <div class="swiper-slide d-flex align-items-center">
+                        <div>
+                            <p>"I'm extremely satisfied with the roofing service provided by RoofCraft. The team
+                                was
+                                professional, and the quality of work exceeded my expectations. Highly
+                                recommended!"</p>
+                            <p><strong>- John Doe, Homeowner</strong></p>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="swiper-slide d-flex align-items-center">
+                        <div>
+                            <p>"RoofCraft made the whole roof replacement process seamless for our business.
+                                Their
+                                attention
+                                to detail and excellent communication ensured a successful project. Thank you!"
+                            </p>
+                            <p><strong>- Jane Smith, Business Owner</strong></p>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="swiper-slide d-flex align-items-center">
+                        <div>
+                            <p>"Choosing RoofCraft was the best decision I made for my property. Their team is
+                                knowledgeable, and they delivered the project on time and within budget. I
+                                couldn't be
+                                happier!"</p>
+                            <p><strong>- Michael Johnson, Property Owner</strong></p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- If we need pagination -->
+                <!-- If we need navigation buttons -->
+                <!-- <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div> -->
+
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="contactus" class="scroll-reveal my-5">
+        <div class="container py-5">
+
+            <h3 class="text-center mb-5">
+                Get Your Free Quote Today!
+            </h3>
+            <p>Fill out the contact form below with your name, email, phone number, and a brief description of your
+                delivery needs.
+                Our team will promptly get in touch to discuss your requirements in detail and provide you with a
+                comprehensive
+                quote.</p>
+
+            <div class="row my-5">
+
+                <div class="col-md-6 mb-5">
+                    <form action="#">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputemail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="inputemail" aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tel" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="tel">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Notes</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Request Free Quote</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h4>Address</h4>
+                    <h5></h5>
+                    <h4 class="mt-4">Phone</h4>
+                    <h5> <a href="tel:+233247735590 "> <span class="me-5"> +(233) 24 773 5590</span>
+                        </a></h5>
+                    <h4 class="mt-4">Email</h4>
+                    <h5>cpsdelivery101@gmail.com</h5>
+                    <!-- socials -->
+                    <div class="mt-4">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div id="faq" class="scroll-reveal my-5">
+
+        <div class="container py-5">
+            <h3 class="text-center mb-5">
+                Frequently Asked Questions (FAQ)
+            </h3>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Are you licensed and insured?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <p>
+                                Yes, we are fully licensed and insured. Our team of roofing professionals
+                                undergoes
+                                regular training and complies with all safety standards to ensure a secure and
+                                worry-free roofing experience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            What types of roofing materials do you offer?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <p>
+                                We offer a wide range of roofing materials, including asphalt shingles, metal,
+                                tile, and
+                                more. Our experts can help you choose the best material that suits your
+                                property's
+                                style, budget, and durability requirements.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseThree" aria-expanded="false"
+                            aria-controls="flush-collapseThree">
+                            How long does a typical roofing project take?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <p>
+                                The timeline for each project varies based on its scope and complexity. Simple
+                                repairs
+                                may be completed within a few days, while complete installations or replacements
+                                might
+                                take several weeks. Rest assured, we prioritize efficiency without compromising
+                                on
+                                quality.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFour" aria-expanded="false"
+                            aria-controls="flush-collapseFour">
+                            Do you provide warranties for your roofing services?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <p>
+                                Yes, we stand behind the quality of our workmanship and offer warranties for
+                                certain
+                                roofing services. Warranties may vary depending on the type of service and
+                                materials
+                                used. Our team will provide you with detailed warranty information for your
+                                specific
+                                project.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFive" aria-expanded="false"
+                            aria-controls="flush-collapseFive">
+                            Can you assist with roof insurance claims? </button>
+                    </h2>
+                    <div id="flush-collapseFive" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <p>
+                                Absolutely! We understand that dealing with insurance claims can be
+                                overwhelming. Our
+                                team has experience working with insurance companies and can help you navigate
+                                the
+                                process, ensuring a smooth and stress-free claims experience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                            Do you offer emergency roofing services? </button>
+                    </h2>
+                    <div id="flush-collapseSix" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <p>
+                                Yes, we offer 24/7 emergency roofing services for urgent situations such as
+                                storm
+                                damage, leaks, and fallen debris. Simply give us a call, and our team will
+                                respond
+                                promptly to address your roofing needs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseSeven" aria-expanded="false"
+                            aria-controls="flush-collapseSeven">
+                            Is financing available for roofing projects? </button>
+                    </h2>
+                    <div id="flush-collapseSeven" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <p>
+                                Yes, we understand that roofing projects can be a significant investment. We
+                                offer
+                                financing options to make it easier for you to get the roofing services you
+                                need.
+                                Contact us to discuss financing details and find a plan that fits your budget.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Bootstrap Footer -->
+    <footer class="scroll-reveal text-center mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>&copy; 2024 CPS Delivery. All rights reserved.</p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top">
+        <i class="bi bi-arrow-up-circle"></i>
+    </a>
+
+
+    <script src="{% static 'site/js/code.jquery.com_jquery-3.7.0.min.js' %}"></script>
+
+    <script src="{% static 'site/js/swiper-bundle.min.js' %}"></script>
+
+
+    <script src="{% static 'site/js/scrollreveal@4.0.9_dist_scrollreveal.js' %}"></script>
+    <script src="{% static 'site/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'site/js/owl.carousel.js' %}"></script>
+
+    <!-- Bootstrap js -->
+    <script src="{% static 'site/js/bootstrap.bundle.min.js'%}"></script>
+    <script defer src="{% static 'site/js/script.js' %}"></script>
+    <style>
+        #hero {
+        background-image: url("{% static 'site/images/delivery.jpg' %}");
+
+        background-size: cover;
+        background-position: center;
+        min-height: 70vh;
+        position: relative;
+}
+        @font-face {
+            font-family: "CustomFont";
+            src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                items: 3, // Number of items to display at a time on large screens
+                loop: true,
+                margin: 10,
+                responsive: {
+                    0: {
+                        items: 1 // Number of items to display on small screens (width < 576px)
+                    },
+                    576: {
+                        items: 2 // Number of items to display on medium screens (width >= 576px)
+                    }
+
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('.image-link').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                closeBtnInside: false,
+                mainClass: 'mfp-no-margins mfp-with-zoom', // Add some custom classes for better styling
+                image: {
+                    verticalFit: true
+                },
+                zoom: {
+                    enabled: true,
+                    duration: 300
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 200) {
+                    $('.back-to-top').fadeIn();
+                } else {
+                    $('.back-to-top').fadeOut();
+                }
+            });
+
+            $('.back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 800);
+                return false;
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            ScrollReveal().reveal('.scroll-reveal', {
+                delay: 200,
+                distance: '30px',
+                origin: 'bottom',
+                opacity: 0,
+                duration: 1000,
+                easing: 'ease-in-out',
+                reset: true,
+            });
+        });
+    </script>
+</body>
+
+</html>
