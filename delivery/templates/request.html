@@ -1,0 +1,223 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Delivery Request</title>
+    <style>
+        @font-face {
+            font-family: "CustomFont";
+            src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+
+        .navbar {
+            background-color: #1c1e25;
+        }
+
+
+        .nav-link {
+            color: white;
+        }
+
+
+        .btn-primary {
+            background-color: #61b124;
+            border-color: #61b124;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a9e23;
+            border-color: #4a9e23;
+        }
+
+        .sidebar {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-item h5 {
+            color: #61b124;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            background-color: #61b124;
+        }
+
+        #CPS {
+            font-family: 'CustomFont';
+            color: #61b124;
+        }
+        .navbar-brand{
+            color: #61b124;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" id="CPS" style="color: #61b124;">CPS</a>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="#61b124" viewBox="0 0 24 24"
+                stroke="#61b124">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
+                    </path>
+                </g>
+            </svg><span style="color:white;">{{request.user}}</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">{{request.user}}</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Settings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="container" style="text-align: center;">
+                    <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
+                        style="background-color: #61b124; color: white; border: none;">View Past Deliveries</a>
+                    <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
+                        style="background-color: #61b124; color: white; border: none;">View Pending Delivery
+                        Requests</a>
+                </div>
+                <div class="container mt-4">
+                    <form method="POST" class="uniForm">
+                        {% csrf_token %}
+                        {{ DeliveryRequestFormCreator|crispy }}
+                        <div id="price"></div>
+                        <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary"
+                            style="background-color: #61b124; color: white; border: none; float: right;"
+                            value="Request">
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sidebar">
+                    <div class="info-item">
+                        <h5>Delivery Guidelines</h5>
+                        <p>Ensure all packages are properly sealed and labeled with the correct address.</p>
+                    </div>
+                    <div class="info-item">
+                        <h5>Estimated Delivery Time</h5>
+                        <p>Standard delivery: 3-5 business days<br>Express delivery: 1-2 business days</p>
+                    </div>
+                    <div class="info-item">
+                        <h5>Delivery Progress</h5>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
+                                aria-valuemin="0" aria-valuemax="100">50%</div>
+                        </div>
+                        <small class="text-muted">Current stage: In transit</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dataset = {
+            "KumasiAccra": 37,
+            "KumasiCape Coast": 37,
+            "KumasiTakoradi": 37,
+            "KumasiKoforidua": 40,
+            "KumasiHo": 40,
+            "KumasiSunyani": 40,
+            "KumasiTarkwa": 40,
+            "KumasiObuasi": 45,
+            "KumasiAkosombo": 40,
+            "KumasiTechiman": 40,
+            "KumasiNsawam": 40,
+            "KumasiNkwakaw": 40,
+            "KumasiWinneba": 40,
+            "KumasiMankessim": 40,
+            "KumasiSuhum": 40,
+            "KumasiKonongo": 37
+        };
+
+        const pickUpPoint = document.getElementById('id_pickupPoint');
+        const deliveryPoint = document.getElementById('id_deliveryPoint');
+        const price = document.getElementById('price');
+        const request = document.getElementById('createRequest');
+
+        pickUpPoint.onchange = () => {
+            const deliveryValue = deliveryPoint.value;
+            const pickUpValue = pickUpPoint.value;
+            if (dataset[pickUpValue + deliveryValue] === undefined) {
+                const text = pickUpValue + deliveryValue;
+                if (text.includes('Select')) {
+                    price.textContent = 'Choose a location other than Select.';
+                    request.disabled = true;
+                    request.style.backgroundColor = 'red';
+                } else {
+                    price.textContent = "We do not deliver from " + pickUpValue + " to " + deliveryValue;
+                    request.disabled = true;
+                    request.style.backgroundColor = 'red';
+                }
+            } else {
+                price.textContent = pickUpValue + " to " + deliveryValue + " is GHs" + dataset[pickUpValue + deliveryValue];
+                request.disabled = false;
+                request.style.backgroundColor = 'green';
+            }
+        }
+
+        deliveryPoint.onchange = () => {
+            const deliveryValue = deliveryPoint.value;
+            const pickUpValue = pickUpPoint.value;
+            if (dataset[pickUpValue + deliveryValue] === undefined) {
+                const text = pickUpPoint.value + deliveryPoint.value;
+                if (text.includes('Select')) {
+                    price.textContent = 'Choose a location other than Select.';
+                    request.disabled = true;
+                    request.style.backgroundColor = 'red';
+                } else {
+                    price.textContent = "We do not deliver from " + pickUpValue + " to " + deliveryValue;
+                    request.disabled = true;
+                    request.style.backgroundColor = 'red';
+                }
+            } else {
+                price.textContent = pickUpValue + " to " + deliveryValue + " is GHs" + dataset[pickUpValue + deliveryValue];
+                request.disabled = false;
+                request.style.backgroundColor = 'green';
+            }
+        }
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+{% extends 'html/base_view_admin.html' %}
+{% load static %}
+
+{% block header %}
+  <style>
+    @font-face {
+      font-family: "CustomFont";
+      src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+      }
+      *{
+        margin: 0;
+        padding: 0;
+        color: white;
+      }
+    body{
+      background-color:#1c1e25;
+      margin: 0;
+      padding: 0;
+    }
+    a{
+
+    }
+    #CPS{
+      
+      font-family: "CustomFont";
+
+
+    }
+    #CPS a{
+      text-decoration: none;
+      color: #61b124;
+    }
+    .container{
+      margin-bottom: 50px;
+    }
+    .card{
+      background-color: #313339;
+    }
+    @media only screen and (max-width: 400px) {
+      body{
+        font-size: 16px;
+      }
+      .imagebox, .imagebox img{
+        width: 100px;
+        height: 100px;
+      }
+      .container{
+        gap: 30px;
+      }
+     
+}
+  </style>
+  {% endblock %}
+  
+
+
+{% block content %}
+<div><h3>Management Console</h3></div>
+<div>
+  <div class="container" style="display: flex; justify-content: space-evenly;">
+      
+      <div class="card" style="width: 18rem; background-color: #313339;" >
+          <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;" >
+            <img style="width: 100%; height: 100%; object-fit: cover;" src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
+          </div>
+          <div class="card-body">
+            <!-- <h5 class="card-title">Add a Rider</h5> -->
+            <p class="card-text"> Add a rider</p>
+            <a href="{% url 'riderAddition' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">Add a Rider</a>
+
+          </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+          <div class="imagebox"  style="width: 300px; height: 200px; padding-right: 15px;">
+            <img src="{% static 'images/c2.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+          </div>
+          <div class="card-body">
+            <p class="card-text">Manage Active Requests</p>
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'requestManagement' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">Manage Pending Requests</a>
+          {% else %}
+          <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">Manage Pending Requests</a>
+          {% endif %}
+          </div>
+        </div>
+  </div>
+  <div class="container" style="display: flex; justify-content: space-evenly;">
+      
+    <div class="card" style="width: 18rem;">
+      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
+        <img src="{% static 'images/c3.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+      </div>
+      <div class="card-body">
+        <p class="card-text">Add item to Shop</p>
+       {% if request.user.is_authenticated %}
+       <a href="{% url 'addShopItem' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">Add Shop Item</a>
+       {% else %}
+       <a href="{% url 'account_signup' %}" class="btn btn-primary inactive" style="background-color: #61b124; color: white; border: none;">Add Shop Item</a>
+       {% endif %}
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="imagebox" style="width: 300px; height: 200px; padding-right: 15px;">
+        <img src="{% static 'images/c4.jpg' %}" style="width: 100%; height: 100%; object-fit: cover;" alt="">
+      </div>
+      <div class="card-body">
+        <p class="card-text">View Past processed Orders</p>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'pastProcessedRequest' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Past processed Orders</a>
+        {% else %}
+        <a href="{% url 'account_signup' %}" class="btn btn-primary" style="background-color: #61b124; color: white; border: none;">View Past processed Orders</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+  
+</div>
+{% endblock %}
