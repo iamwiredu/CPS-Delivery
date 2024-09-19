@@ -21,8 +21,11 @@ class Login(View):
     def post(self, request):
         if 'login' in request.POST:
             user = authenticate(username=request.POST.get('username'),password=request.POST.get('password'))
-            if user.is_authenticated:
+            if user is not None:
+                login(request,user)
                 print('yes')
+                return redirect('/accounthome/')
+            
             else:
                 print('no')
 
