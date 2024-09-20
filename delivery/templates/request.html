@@ -64,7 +64,13 @@
         .form-group{
             margin: 5px;
         }
-         /* The switch - the box around the slider */
+        .mt-5{
+            display: none;
+        }
+        .activeBox{
+            display: block;
+        }
+         /* The switch - the container */
 .switch {
   position: relative;
   display: inline-block;
@@ -88,10 +94,10 @@
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  transition: 0.4s;
 }
 
+/* Slider before element */
 .slider:before {
   position: absolute;
   content: "";
@@ -100,32 +106,47 @@
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  transition: 0.4s;
 }
 
+/* When the checkbox is checked, change background color */
 input:checked + .slider {
   background-color: #2196F3;
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
+/* Move the slider to the right when checked */
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
+/* Rounded slider */
 .slider.round {
   border-radius: 34px;
 }
 
 .slider.round:before {
   border-radius: 50%;
-} 
+}
+.mt-5, .no_d{
+    display: none;
+}
+.activeBox{
+    display: block;
+}
+#AAPbox {
+  overflow: hidden; /* Prevents content overflow during transition */
+  max-height: 0; /* Initial state (hidden) */
+  transition: max-height 0.5s ease; /* Animation for max-height */
+}
+
+#AAPbox.show {
+  max-height: 500px; /* Adjust to a value greater than the form height */
+}
+
+.hidden {
+  display: none; /* Completely hide the box when not shown */
+}
+
     </style>
 
 </head>
@@ -171,18 +192,20 @@ input:checked + .slider:before {
         </div>
     </div>
 </nav>
+            <div style="display: flex; justify-content: center; padding: 10px;">
+                <span style="padding-right: 5px;">Single Request</span>
+    <label class="switch">
+        <input type="checkbox" id="sliderCheckbox">
+        <span class="slider round"></span>
+    </label>
+    
 
-    <div class="container mt-5">
+                <span style="padding-left: 5px;">Bulk Request</span>
+            </div>
+    <div class="container mt-5 activeBox" id="single">
         <div class="row">
             <div class="col-md-8">
-                <div style="display: flex; justify-content: center; padding: 10px;">
-                    <span style="padding-right: 5px;">Single Request</span>
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    <span style="padding-left: 5px;">Bulk Request</span>
-                </div>
+ 
                 <div class="container" style="text-align: center;">
                     <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
                         style="background-color: #61b124; color: white; border: none; margin: 5px;">View Past Deliveries</a>
@@ -204,7 +227,58 @@ input:checked + .slider:before {
  
         </div>
     </div>
+    <div class="container mt-5" id="bulk">
+        <h3 style="color:black;">Base Details</h3>
+        {{BulkDeliveryRequestFormCreator|crispy}}
+        <div style="display: flex; justify-content: space-between;">
+            <input type="button" value="Add Base Details">
+            <input type="button" value="Add Another Point" id="AAP">
+        </div> 
+        <div id="AAPbox" class="hidden">
+            <h3 style="color: #1c1e25;">Individual Orders</h3>
+            {{BulkDeliveryPointFormCreator|crispy}}
+        </div>
+    </div>
+        <script>
+            slider =  document.getElementById('sliderCheckbox')
+            window.onload = () => {
+                if (slider.checked){
+                    slider.click()
+                }
+                
+            }
+            single = document.getElementById('single')
+            bulk = document.getElementById('bulk')
+            document.getElementById('sliderCheckbox').addEventListener('change', function () {
+                    const status = document.getElementById('status');
 
+                    if (this.checked) {
+                       bulk.classList.add('activeBox')
+                       single.classList.remove('activeBox')
+                    } else {
+                        bulk.classList.remove('activeBox')
+                        single.classList.add('activeBox')
+                        
+                    }
+                });
+            AAP = document.getElementById('AAP')
+            AAPbox = document.getElementById('AAPbox')
+            AAP.addEventListener('click', () => {
+                if (AAPbox.classList.contains('show')) {
+                    AAPbox.classList.remove('show');
+                    // Wait for the transition to complete before hiding it completely
+                    setTimeout(() => {
+                        AAPbox.classList.add('hidden');
+                    }, 500); // Match the duration of the CSS transition
+                } else {
+                    AAPbox.classList.remove('hidden');
+                    setTimeout(() => {
+                        AAPbox.classList.add('show');
+                    }, 10); // Small delay to trigger the CSS transition
+                }
+            });
+
+        </script>
     <script>
         const dataset = {
             "KumasiAccra": 37,
@@ -275,6 +349,7 @@ input:checked + .slider:before {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+ 
 </body>
 
 </html>
