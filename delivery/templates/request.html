@@ -109,9 +109,9 @@
             <div class="col-md-8">
                 <div class="container" style="text-align: center;">
                     <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
-                        style="background-color: #61b124; color: white; border: none;">View Past Deliveries</a>
+                        style="background-color: #61b124; color: white; border: none; margin: 5px;">View Past Deliveries</a>
                     <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
-                        style="background-color: #61b124; color: white; border: none;">View Pending Delivery
+                        style="background-color: #61b124; color: white; border: none; margin: 5px;">View Pending Delivery
                         Requests</a>
                 </div>
                 <div class="container mt-4">
@@ -120,31 +120,12 @@
                         {{ DeliveryRequestFormCreator|crispy }}
                         <div id="price"></div>
                         <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary"
-                            style="background-color: #61b124; color: white; border: none; float: right;"
+                            style="background-color: #61b124; color: white; border: none; float: right; margin-top: 5px;"
                             value="Request">
                     </form>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="sidebar">
-                    <div class="info-item">
-                        <h5>Delivery Guidelines</h5>
-                        <p>Ensure all packages are properly sealed and labeled with the correct address.</p>
-                    </div>
-                    <div class="info-item">
-                        <h5>Estimated Delivery Time</h5>
-                        <p>Standard delivery: 3-5 business days<br>Express delivery: 1-2 business days</p>
-                    </div>
-                    <div class="info-item">
-                        <h5>Delivery Progress</h5>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100">50%</div>
-                        </div>
-                        <small class="text-muted">Current stage: In transit</small>
-                    </div>
-                </div>
-            </div>
+ 
         </div>
     </div>
 

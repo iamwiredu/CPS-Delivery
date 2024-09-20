@@ -134,46 +134,27 @@
                     <div class="card">
                         <img src="{% static 'images/c2.jpg' %}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-text small">Short text</p>
-                            <input class="btn btn-primary" type="button" value="Submit">
+                            <p class="card-text small">Need a place to store items? Click here.</p>
+                            <input class="btn btn-primary" type="button" value="Storage">
                         </div>
                     </div>
                     <div class="card">
                         <img src="{% static 'images/c3.jpg' %}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <p class="card-text small">Short</p>
-                            <input class="btn btn-primary" type="button" value="Submit">
+                            <p class="card-text small">Click here to shop from our online store.</p>
+                            <input class="btn btn-primary" type="button" value="Online Store">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="sidebar">
-                    <div class="info-item">
-                        <h5>Delivery Guidelines</h5>
-                        <p>Ensure all packages are properly sealed and labeled with the correct address.</p>
-                    </div>
-                    <div class="info-item">
-                        <h5>Estimated Delivery Time</h5>
-                        <p>Standard delivery: 3-5 business days<br>Express delivery: 1-2 business days</p>
-                    </div>
-                    <div class="info-item">
-                        <h5>Delivery Progress</h5>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100">50%</div>
-                        </div>
-                        <small class="text-muted">Current stage: In transit</small>
-                    </div>
-                </div>
-            </div>
+       
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <footer class="bg-light text-dark py-5">
+    <footer class="bg-light text-dark py-5" style="margin-top: 50px;">
         <div class="container footerBox">
             <div class="row">
                 <div class="col-6 col-md-2 mb-3">
@@ -181,27 +162,21 @@
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">Home</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">Features</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">FAQs</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">About</a></li>
                     </ul>
                 </div>
     
                 <div class="col-6 col-md-2 mb-3">
                     <h5>Section</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">Home</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">Features</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">Pricing</a></li>
-                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">FAQs</a></li>
                         <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-dark">About</a></li>
                     </ul>
                 </div>
     
-                <div class="col-md-5 offset-md-1 mb-3">
+                <div class="col-md-5 offset-md-1 mb-3" >
                     <h5>Make Inquiries</h5>
                     <p>Have any Inquiries about a delivery? Contact us.</p>
-                    <form id="inquiryForm">
+                    <form id="inquiryForm" style="display: flex; flex-direction: column; gap: 5px;">
                         <div class="d-flex flex-column flex-sm-row w-100 gap-2">
                             <label for="newsletter1" class="visually-hidden">Email address</label>
                             <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
@@ -212,7 +187,7 @@
                                 style="height: 100px"></textarea>
                             <label for="floatingTextarea2">Inquiry</label>
                         </div>
-                        <button class="btn btn-primary" type="button">Send</button>
+                        <button class="btn btn-primary" type="button" style="width: fit-content; background-color: #61b124; border-color: #61b124;">Send</button>
                     </form>
                 </div>
             </div>
