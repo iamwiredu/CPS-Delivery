@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import DeliveryRequest
-from .forms import DeliveryRequestForm
+from .forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
 
 # Create your views here.
 
@@ -13,8 +13,12 @@ class accountHome(View):
 
 class RequestPage(View):
     DeliveryRequestFormCreator = DeliveryRequestForm()
+    BulkDeliveryRequestFormCreator = BulkDeliveryRequestForm()
+    BulkDeliveryPointFormCreator = BulkDeliveryPointForm()
     context = {
             'DeliveryRequestFormCreator':DeliveryRequestFormCreator,
+            'BulkDeliveryRequestFormCreator':BulkDeliveryRequestFormCreator,
+            'BulkDeliveryPointFormCreator':BulkDeliveryPointFormCreator,
 
         }
     def get(self,request):

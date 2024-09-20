@@ -96,3 +96,60 @@ class ShopItem(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+class BulkDeliveryRequest(models.Model):
+    class DeliveryLocations(models.TextChoices):
+        Select = 'Select', 'Select'
+        KUMASI = 'Kumasi', 'Kumasi'
+        CAPE_COAST = 'Cape Coast', 'Cape Coast'
+        TAKORADI = 'Takoradi', 'Takoradi'
+        KOTORIDUA = 'Kotoridua', 'Kotoridua'
+        HO = 'Ho', 'Ho'
+        SUNYANI = 'Sunyani', 'Sunyani'
+        TARKWA = 'Tarkwa', 'Tarkwa'
+        OBUASI = 'Obuasi', 'Obuasi'
+        AKOSOMBO = 'Akosombo', 'Akosombo'
+        TECHIMAN = 'Techiman', 'Techiman'
+        NSAWAM = 'Nsawam', 'Nsawam'
+        NKWAKAW = 'Nkwakaw', 'Nkwakaw'
+        WINNEBA = 'Winneba', 'Winneba'
+        MANKESSIM = 'Mankessim', 'Mankessim'
+        SUHUM = 'Suhum', 'Suhum'
+        KONONGO = 'Konongo', 'Konongo'
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    orderQuantity = models.PositiveIntegerField()
+    pickupNumber = models.PositiveIntegerField()
+    pickupPoint = models.CharField(max_length=10, choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
+    productFee = models.FloatField()
+    delivered = models.BooleanField(default=False)
+    assigned = models.BooleanField(default=False)
+    enroute = models.BooleanField(default=False)
+    pickedUp = models.BooleanField(default=False)
+    rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='bulk_assignments',default=None,null=True,blank=True)
+
+    
+class BulkDeliveryPoint(models.Model):
+    class DeliveryLocations(models.TextChoices):
+        Select = 'Select', 'Select'
+        KUMASI = 'Kumasi', 'Kumasi'
+        CAPE_COAST = 'Cape Coast', 'Cape Coast'
+        TAKORADI = 'Takoradi', 'Takoradi'
+        KOTORIDUA = 'Kotoridua', 'Kotoridua'
+        HO = 'Ho', 'Ho'
+        SUNYANI = 'Sunyani', 'Sunyani'
+        TARKWA = 'Tarkwa', 'Tarkwa'
+        OBUASI = 'Obuasi', 'Obuasi'
+        AKOSOMBO = 'Akosombo', 'Akosombo'
+        TECHIMAN = 'Techiman', 'Techiman'
+        NSAWAM = 'Nsawam', 'Nsawam'
+        NKWAKAW = 'Nkwakaw', 'Nkwakaw'
+        WINNEBA = 'Winneba', 'Winneba'
+        MANKESSIM = 'Mankessim', 'Mankessim'
+        SUHUM = 'Suhum', 'Suhum'
+        KONONGO = 'Konongo', 'Konongo'
+    
+    bulkDeliveryRequest = models.ForeignKey(BulkDeliveryRequest,on_delete=models.CASCADE,null=True,blank=True)
+    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
+    dropoffNumber = models.PositiveIntegerField()
+    pickupPoint = models.CharField(max_length=10, choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
+    additionalInfo = models.TextField()
