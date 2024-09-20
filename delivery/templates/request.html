@@ -64,9 +64,7 @@
         .form-group{
             margin: 5px;
         }
-        .mt-5{
-            display: none;
-        }
+
         .activeBox{
             display: block;
         }
@@ -194,36 +192,31 @@ input:checked + .slider:before {
 </nav>
             <div style="display: flex; justify-content: center; padding: 10px;">
                 <span style="padding-right: 5px;">Single Request</span>
-    <label class="switch">
-        <input type="checkbox" id="sliderCheckbox">
-        <span class="slider round"></span>
-    </label>
-    
-
+                    <label class="switch">
+                        <input type="checkbox" id="sliderCheckbox">
+                        <span class="slider round"></span>
+                    </label>
                 <span style="padding-left: 5px;">Bulk Request</span>
             </div>
-    <div class="container mt-5 activeBox" id="single">
+    <div class="container mt-5 activeBox" id="single" >
         <div class="row">
-            <div class="col-md-8">
- 
-                <div class="container" style="text-align: center;">
-                    <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
-                        style="background-color: #61b124; color: white; border: none; margin: 5px;">View Past Deliveries</a>
-                    <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
-                        style="background-color: #61b124; color: white; border: none; margin: 5px;">View Pending Delivery
-                        Requests</a>
-                </div>
-                <div class="container mt-4">
-                    <form method="POST" class="uniForm">
-                        {% csrf_token %}
-                        {{ DeliveryRequestFormCreator|crispy }}
-                        <div id="price"></div>
-                        <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary"
-                            style="background-color: #61b124; color: white; border: none; float: right; margin: 5px 0 5px 0;"
-                            value="Request">
-                    </form>
-                </div>
-            </div>
+                    <div class="container" style="text-align: center;">
+                        <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
+                            style="background-color: #61b124; color: white; border: none; margin: 5px;">View Past Deliveries</a>
+                        <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
+                            style="background-color: #61b124; color: white; border: none; margin: 5px;">View Pending Delivery
+                            Requests</a>
+                    </div>
+                    <div>
+                        <form method="POST" class="uniForm">
+                            {% csrf_token %}
+                            {{ DeliveryRequestFormCreator|crispy }}
+                            <div id="price"></div>
+                            <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary"
+                                style="background-color: #61b124; color: white; border: none; float: right; margin: 5px 0 5px 0;"
+                                value="Request">
+                        </form>
+                    </div>
  
         </div>
     </div>
