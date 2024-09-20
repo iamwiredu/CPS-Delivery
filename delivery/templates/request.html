@@ -15,7 +15,9 @@
             font-family: "CustomFont";
             src: url("{% static 'font/Boge.ttf' %}") format('truetype');
         }
-
+        .asteriskField {
+            display: none;
+        }
         .navbar {
             background-color: #1c1e25;
         }
@@ -59,7 +61,11 @@
         .navbar-brand{
             color: #61b124;
         }
+        .form-group{
+            margin: 5px;
+        }
     </style>
+
 </head>
 
 <body>
@@ -120,7 +126,7 @@
                         {{ DeliveryRequestFormCreator|crispy }}
                         <div id="price"></div>
                         <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary"
-                            style="background-color: #61b124; color: white; border: none; float: right; margin-top: 5px;"
+                            style="background-color: #61b124; color: white; border: none; float: right; margin: 5px 0 5px 0;"
                             value="Request">
                     </form>
                 </div>
