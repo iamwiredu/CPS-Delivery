@@ -3,8 +3,8 @@ from django.views.generic import TemplateView
 # Create your views here.
 
 from django.shortcuts import render, redirect
-from delivery.models import DeliveryRequest, Rider
-from .forms import RiderForm, ShopItemForm, RequestStatusUpdateForm, RidersAssignmentForm
+from delivery.models import DeliveryRequest, Rider, BulkDeliveryRequest, BulkDeliveryPoint
+from .forms import RiderForm, ShopItemForm, RequestStatusUpdateForm, RidersAssignmentForm, BulkRidersAssignmentForm, BulkRequestStatusUpdateForm
 from delivery.models import ShopItem
 import requests
 # Create your views here.
@@ -14,10 +14,12 @@ def adminConsole(request):
     return render(request,'admin.html')
 
 def requestManagementConsole(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(delivered=False).values()
+    DeliveryRequests = DeliveryRequest.objects.filter(delivered=False)
+    BulkDeliveryRequests = BulkDeliveryRequest.objects.filter(delivered=False)
     print(DeliveryRequests)
     context ={
         'DeliveryRequests':DeliveryRequests,
+        'BulkDeliveryRequests':BulkDeliveryRequests,
 
     }
     return render(request,'html/requestsManagementConsole.html',context)
@@ -179,3 +181,50 @@ def addShopItem(request):
         'ShopItems':ShopItems,
     }
     return render(request,'html/addShopItem.html',context)
+
+def managementUpdateBulk(request,unique_id):
+    DeliveryRequested = BulkDeliveryRequest.objects.get(unique_id=unique_id)
+    BulkRequestStatusUpdateFormUpdater = BulkRequestStatusUpdateForm()
+    BulkRidersAssignmentFormUpdater = BulkRidersAssignmentForm()
+    if request.method == 'POST':
+        if 'UdpateAssignment' in request.POST:
+            form = RidersAssignmentForm(request.POST,instance=DeliveryRequested)
+            rider = request.POST.get('rider')
+            AssignedRider = Rider.objects.get(id=rider)
+            
+            if form.is_valid():
+                form.save()
+                AssignedRiderMsg(DeliveryRequested,AssignedRider)
+                DeliveryRequested.assigned = True
+                DeliveryRequested.save()
+                print('Done')
+            else:
+                print('Error')
+            return redirect(managementUpdate,unique_id)
+        if 'UpdateRequest' in request.POST:
+            form = BulkRequestStatusUpdateForm(request.POST,instance=DeliveryRequested)
+
+
+            if form.is_valid():
+                form.save()
+                if DeliveryRequested.pickedUp == True:
+                    DeliveryRequested.enroute = True
+                    DeliveryRequested.save()
+                else:
+                    DeliveryRequested.enroute = False
+                    DeliveryRequested.save()
+                if DeliveryRequested.delivered == True:
+                    DeliveryRequested.pickedUp = True
+                    DeliveryRequested.enroute = True
+                    DeliveryRequested.save()
+                    
+                
+            else:
+                print('Error')
+            return redirect(managementUpdate,unique_id)
+    context ={
+        'DeliveryRequested':DeliveryRequested,
+        'BulkRequestStatusUpdateFormUpdater':BulkRequestStatusUpdateFormUpdater,
+        'BulkRidersAssignmentFormUpdater':BulkRidersAssignmentFormUpdater,
+        }
+    return render(request,'html/managementUpdateBulk.html',context)

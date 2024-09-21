@@ -128,12 +128,12 @@ input:checked + .slider:before {
             </nav>
         <div class="container" style="display: flex; justify-content: center;">
             <div style="display: flex; justify-content: center; padding: 10px;">
-                <span style="padding-right: 5px;">Single Requests</span>
+                <span style="padding-right: 5px;">Single Requests <span style="color: red;">{{DeliveryRequests.count}}</span></span>
                 <label class="switch">
                     <input type="checkbox" id="sliderCheckbox">
                     <span class="slider round"></span>
                 </label>
-                <span style="padding-left: 5px;">Bulk Requests</span>
+                <span style="padding-left: 5px;">Bulk Requests <span style="color: red;">{{BulkDeliveryRequests.count}}</span></span>
             </div>
         </div>
     <div class="table-responsive container" style="margin-top: 30px;" id="single">
@@ -154,7 +154,8 @@ input:checked + .slider:before {
             <tbody class="table" style="text-align: center;">
                 {% for data in DeliveryRequests %}
                 <tr>
-                    <td>{{data.unique_id|stringformat:'s'|split:5}}...</td>
+                    <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
+                     <td>{{data.id_curator}}</td>
                     <td>{{data.pickupPoint}}</td>
                     <td>{{data.deliveryPoint}}</td>
                     <td>{{data.pickupNumber}}</td>
@@ -195,7 +196,7 @@ input:checked + .slider:before {
             </tbody>
           </table>
     </div>
-    <div class="table-responsive container" style="margin-top: 30px;" id="bulk">
+    <div class="table-responsive container" style="margin-top: 30px; display: none;" id="bulk" >
         <table class="table">
             <thead class="table-light" style="text-align: center;">
                 <th>Delivery Id</th>
@@ -211,9 +212,9 @@ input:checked + .slider:before {
     
             </thead>
             <tbody class="table" style="text-align: center;">
-                {% for data in DeliveryRequests %}
+                {% for data in BulkDeliveryRequests %}
                 <tr>
-                    <td>{{data.unique_id|stringformat:'s'|split:5}}...</td>
+                    <td>{{data.id_curator}}</td>
                     <td>{{data.pickupPoint}}</td>
                     <td>{{data.deliveryPoint}}</td>
                     <td>{{data.pickupNumber}}</td>
@@ -247,7 +248,7 @@ input:checked + .slider:before {
                     </td>
                     <td><button style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
                         border-radius: 0.5rem; color: white;">Update</button></td>
-                    <td><a href="{% url 'managementUpdate' data.unique_id %}">details</a></td>
+                    <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">details</a></td>
     
                 </tr>
                 {% endfor %}
