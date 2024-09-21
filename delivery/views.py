@@ -1,6 +1,7 @@
+import ast
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import DeliveryRequest
+from .models import DeliveryRequest, BulkDeliveryPoint
 from .forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
 
 # Create your views here.
@@ -35,6 +36,27 @@ class RequestPage(View):
                     event.user = request.user
                     event.save()
                 return redirect('/accounthome/')  #pending Request
+            if 'addBulkRequest' in request.POST:
+                form =  BulkDeliveryRequestForm(request.POST)
+                quantity = request.POST.get('quantity')
+                deliveryPoints = ast.literal_eval(request.POST.get('objectInput'))
+                print(deliveryPoints, type(deliveryPoints))
+                if form.is_valid():
+                    event = form.save(commit=False)
+                    event.user = request.user
+                    event.orderQuantity = int(quantity)
+                    event.save()
+                for deliveryPoint in deliveryPoints:
+                    deliveryPointObj = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=deliveryPoint[2],dropoffNumber=deliveryPoint[0],dropoffName=deliveryPoint[1],Location=deliveryPoint[3],additionalInfo=deliveryPoint[4])
+
+                    deliveryPointObj.save()
+                    print('saved')
+
+
+
+                    
+
+
             
         return render(request,'request.html',self.context)
     

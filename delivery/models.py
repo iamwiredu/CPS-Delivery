@@ -20,7 +20,7 @@ class DeliveryRequest(models.Model):
         KUMASI = 'Kumasi', 'Kumasi'
         CAPE_COAST = 'Cape Coast', 'Cape Coast'
         TAKORADI = 'Takoradi', 'Takoradi'
-        KOTORIDUA = 'Kotoridua', 'Kotoridua'
+        KOFORIDUA = 'Koforidua', 'Koforidua'
         HO = 'Ho', 'Ho'
         SUNYANI = 'Sunyani', 'Sunyani'
         TARKWA = 'Tarkwa', 'Tarkwa'
@@ -102,7 +102,7 @@ class BulkDeliveryRequest(models.Model):
         KUMASI = 'Kumasi', 'Kumasi'
         CAPE_COAST = 'Cape Coast', 'Cape Coast'
         TAKORADI = 'Takoradi', 'Takoradi'
-        KOTORIDUA = 'Kotoridua', 'Kotoridua'
+        KOFORIDUA = 'Koforidua', 'Koforidua'
         HO = 'Ho', 'Ho'
         SUNYANI = 'Sunyani', 'Sunyani'
         TARKWA = 'Tarkwa', 'Tarkwa'
@@ -134,7 +134,7 @@ class BulkDeliveryPoint(models.Model):
         KUMASI = 'Kumasi', 'Kumasi'
         CAPE_COAST = 'Cape Coast', 'Cape Coast'
         TAKORADI = 'Takoradi', 'Takoradi'
-        KOTORIDUA = 'Kotoridua', 'Kotoridua'
+        KOFORIDUA = 'Koforidua', 'Koforidua'
         HO = 'Ho', 'Ho'
         SUNYANI = 'Sunyani', 'Sunyani'
         TARKWA = 'Tarkwa', 'Tarkwa'
@@ -151,5 +151,6 @@ class BulkDeliveryPoint(models.Model):
     bulkDeliveryRequest = models.ForeignKey(BulkDeliveryRequest,on_delete=models.CASCADE,null=True,blank=True)
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
     dropoffNumber = models.PositiveIntegerField()
-    pickupPoint = models.CharField(max_length=10, choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
+    dropoffName = models.CharField(max_length=255)
+    Location = models.CharField(max_length=255)
     additionalInfo = models.TextField()
