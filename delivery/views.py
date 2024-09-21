@@ -1,9 +1,9 @@
 import ast
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import DeliveryRequest, BulkDeliveryPoint
+from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest
 from .forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
-
+from django.contrib.auth import logout
 # Create your views here.
 
 class accountHome(View):
@@ -35,7 +35,10 @@ class RequestPage(View):
                     event = DeliveryRequestFormCreator.save(commit=False)
                     event.user = request.user
                     event.save()
-                return redirect('/accounthome/')  #pending Request
+                    return redirect('/deliveryRequest/')
+                else:
+                    print('error')
+                    # return redirect('/deliveryRequest/')  #pending Request
             if 'addBulkRequest' in request.POST:
                 form =  BulkDeliveryRequestForm(request.POST)
                 quantity = request.POST.get('quantity')
@@ -75,8 +78,10 @@ class pastDeliveries(View):
 class pendingRequest(View):
     def get(self,request):
         DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=False)
+        DeliveryRequestBulk = BulkDeliveryRequest.objects.filter(user=request.user,delivered=False)
         context={
             'DeliveryRequests':DeliveryRequests,
+            'DeliveryRequestBulk':DeliveryRequestBulk,
         }
         return render(request,'pendingRequests.html',context)
     
@@ -89,3 +94,22 @@ class detailsPage(View):
             'DeliveryRequestedForm':DeliveryRequestedForm,
         }
         return render(request,'requestDetails.html',context)
+    
+class logoutPage(View):
+    def get(self,request):
+        logout(request)
+        return redirect('/login')
+    
+class comingSoon(View):
+    def get(self,request):
+        return render(request,'comingSoon.html')
+
+# Pending details Page
+
+class bulkPendingDetails(View):
+    def get(self,request,unique_id):
+        DeliveryRequested = BulkDeliveryRequest.objects.get(unique_id=unique_id)
+        context ={
+            'DeliveryRequested':DeliveryRequested,
+        }
+        return render(request,'bulkPendingDetails.html',context)

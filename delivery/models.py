@@ -16,7 +16,6 @@ class Rider(models.Model):
 
 class DeliveryRequest(models.Model):
     class DeliveryLocations(models.TextChoices):
-        Select = 'Select', 'Select'
         KUMASI = 'Kumasi', 'Kumasi'
         CAPE_COAST = 'Cape Coast', 'Cape Coast'
         TAKORADI = 'Takoradi', 'Takoradi'
@@ -34,14 +33,17 @@ class DeliveryRequest(models.Model):
         SUHUM = 'Suhum', 'Suhum'
         KONONGO = 'Konongo', 'Konongo'
     
+    class PickupLocations(models.TextChoices):
+        KUMASI = 'Kumasi', 'Kumasi'
     
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     orderQuantity = models.PositiveIntegerField()
+    product = models.CharField(max_length=255,null=True)
     pickupNumber = models.PositiveIntegerField()
-    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
+    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.KUMASI)
     dropoffNumber = models.PositiveIntegerField()
-    pickupPoint = models.CharField(max_length=10, choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
+    pickupPoint = models.CharField(max_length=10, choices=PickupLocations.choices,default=PickupLocations.KUMASI)
     productFee = models.FloatField()
     additionalInfo = models.TextField()
     delivered = models.BooleanField(default=False)
@@ -57,9 +59,9 @@ class DeliveryRequest(models.Model):
         if len(id_value) < 4:
             for i in range(4-len(id_value)):
                 start += '0'
-            return start+id_value
+            return 'S'+str(start+id_value)
         else:
-            return id_value
+            return 'S'+str(id_value)
 
 def send_sms(sender,instance,created,**kwargs):
     def id_curator(id):
@@ -97,29 +99,15 @@ class ShopItem(models.Model):
         return f'{self.name}'
 
 class BulkDeliveryRequest(models.Model):
-    class DeliveryLocations(models.TextChoices):
-        Select = 'Select', 'Select'
+    class PickupLocations(models.TextChoices):
         KUMASI = 'Kumasi', 'Kumasi'
-        CAPE_COAST = 'Cape Coast', 'Cape Coast'
-        TAKORADI = 'Takoradi', 'Takoradi'
-        KOFORIDUA = 'Koforidua', 'Koforidua'
-        HO = 'Ho', 'Ho'
-        SUNYANI = 'Sunyani', 'Sunyani'
-        TARKWA = 'Tarkwa', 'Tarkwa'
-        OBUASI = 'Obuasi', 'Obuasi'
-        AKOSOMBO = 'Akosombo', 'Akosombo'
-        TECHIMAN = 'Techiman', 'Techiman'
-        NSAWAM = 'Nsawam', 'Nsawam'
-        NKWAKAW = 'Nkwakaw', 'Nkwakaw'
-        WINNEBA = 'Winneba', 'Winneba'
-        MANKESSIM = 'Mankessim', 'Mankessim'
-        SUHUM = 'Suhum', 'Suhum'
-        KONONGO = 'Konongo', 'Konongo'
+
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     orderQuantity = models.PositiveIntegerField()
+    product = models.CharField(max_length=255,null=True)
     pickupNumber = models.PositiveIntegerField()
-    pickupPoint = models.CharField(max_length=10, choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
+    pickupPoint = models.CharField(max_length=10, choices=PickupLocations.choices,default=PickupLocations.KUMASI)
     productFee = models.FloatField()
     delivered = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
@@ -127,6 +115,16 @@ class BulkDeliveryRequest(models.Model):
     pickedUp = models.BooleanField(default=False)
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='bulk_assignments',default=None,null=True,blank=True)
 
+    @property
+    def id_curator(self):    
+        id_value = str(self.id)
+        start = ''
+        if len(id_value) < 4:
+            for i in range(4-len(id_value)):
+                start += '0'
+            return 'B'+str(start+id_value)
+        else:
+            return 'B'+str(id_value)
     
 class BulkDeliveryPoint(models.Model):
     class DeliveryLocations(models.TextChoices):
@@ -148,9 +146,10 @@ class BulkDeliveryPoint(models.Model):
         SUHUM = 'Suhum', 'Suhum'
         KONONGO = 'Konongo', 'Konongo'
     
-    bulkDeliveryRequest = models.ForeignKey(BulkDeliveryRequest,on_delete=models.CASCADE,null=True,blank=True)
+    bulkDeliveryRequest = models.ForeignKey(BulkDeliveryRequest,related_name='indv_orders',on_delete=models.CASCADE,null=True,blank=True)
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
     dropoffNumber = models.PositiveIntegerField()
     dropoffName = models.CharField(max_length=255)
     Location = models.CharField(max_length=255)
     additionalInfo = models.TextField()
+    orderQuantity = models.PositiveBigIntegerField(null=True)

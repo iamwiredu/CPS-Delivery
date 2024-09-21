@@ -102,7 +102,7 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Settings</a>
@@ -128,21 +128,21 @@
                         <img src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <p class="card-text small">Checkout our pharmacy.</p>
-                            <input class="btn btn-primary" type="button" value="Pharmacy">
+                           <a href="{% url 'comingSoon' %}"><input class="btn btn-primary" type="button" value="Pharmacy"></a>
                         </div>
                     </div>
                     <div class="card">
                         <img src="{% static 'images/c2.jpg' %}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <p class="card-text small">Need a place to store items? Click here.</p>
-                            <input class="btn btn-primary" type="button" value="Storage">
+                            <a href="{% url 'comingSoon' %}"><input class="btn btn-primary" type="button" value="Storage"></a>
                         </div>
                     </div>
                     <div class="card">
                         <img src="{% static 'images/c3.jpg' %}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <p class="card-text small">Click here to shop from our online store.</p>
-                            <input class="btn btn-primary" type="button" value="Online Store">
+                           <a href="{% url 'comingSoon' %}"><input class="btn btn-primary" type="button" value="Online Store"></a>
                         </div>
                     </div>
                 </div>
