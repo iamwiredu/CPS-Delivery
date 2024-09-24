@@ -53,7 +53,7 @@ class RequestPage(LoginRequiredMixin,View):
                     event.orderQuantity = int(quantity)
                     event.save()
                 for deliveryPoint in deliveryPoints:
-                    deliveryPointObj = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=deliveryPoint[2],dropoffNumber=deliveryPoint[0],dropoffName=deliveryPoint[1],Location=deliveryPoint[3],additionalInfo=deliveryPoint[4])
+                    deliveryPointObj = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=deliveryPoint[2],dropoffNumber=deliveryPoint[0],dropoffName=deliveryPoint[1],deliveryLocation=deliveryPoint[3],additionalInfo=deliveryPoint[4])
 
                     deliveryPointObj.save()
                     print('saved')
