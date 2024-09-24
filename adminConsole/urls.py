@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import adminConsole, managementUpdateBulk,managementUpdate,adminConsole, riderAddition, riderDelete, pastProcessedRequest, riderUpdate, addShopItem, requestManagementConsole
+from .views import adminConsole, managementUpdateBulk,riderLoginAddition,managementUpdate,adminConsole, riderAddition, riderDelete, pastProcessedRequest, riderUpdate, addShopItem, requestManagementConsole
 
 
 urlpatterns = [
@@ -11,7 +11,8 @@ urlpatterns = [
     path('riderUpdate/<str:unique_id>/',riderUpdate,name="riderUpdate"),
     path('addShopItem/',addShopItem,name='addShopItem'),
     path('pastRequests/',pastProcessedRequest,name='pastProcessedRequest'),
-    path('managementUpdateBulk/<str:unique_id>/',managementUpdateBulk,name='managementUpdateBulk')
+    path('managementUpdateBulk/<str:unique_id>/',managementUpdateBulk,name='managementUpdateBulk'),
+    path('riderLoginAddition/<str:unique_id>/',riderLoginAddition,name='riderLoginAddition')
 ]
 urlpatterns += [
     path('adminconsole/',adminConsole,name='adminConsole'),

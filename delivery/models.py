@@ -9,6 +9,7 @@ class Rider(models.Model):
     name = models.CharField(max_length=255)
     phone = models.PositiveIntegerField()
     assigned = models.BooleanField(default=False)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,default=None,null=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -42,8 +43,11 @@ class DeliveryRequest(models.Model):
     product = models.CharField(max_length=255,null=True)
     pickupNumber = models.PositiveIntegerField()
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.KUMASI)
+    dropoffLocation = models.CharField(max_length=255,null=True)
     dropoffNumber = models.PositiveIntegerField()
+    dropoffName = models.CharField(max_length=255,null=True)
     pickupPoint = models.CharField(max_length=10, choices=PickupLocations.choices,default=PickupLocations.KUMASI)
+    pickupLocation = models.CharField(max_length=255,null=True)
     productFee = models.FloatField()
     additionalInfo = models.TextField()
     delivered = models.BooleanField(default=False)
@@ -108,6 +112,7 @@ class BulkDeliveryRequest(models.Model):
     product = models.CharField(max_length=255,null=True)
     pickupNumber = models.PositiveIntegerField()
     pickupPoint = models.CharField(max_length=10, choices=PickupLocations.choices,default=PickupLocations.KUMASI)
+    pickupLocation = models.CharField(max_length=255,null=True)
     productFee = models.FloatField()
     delivered = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
@@ -150,6 +155,6 @@ class BulkDeliveryPoint(models.Model):
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
     dropoffNumber = models.PositiveIntegerField()
     dropoffName = models.CharField(max_length=255)
-    Location = models.CharField(max_length=255)
+    deliveryLocation = models.CharField(max_length=255)
     additionalInfo = models.TextField()
     orderQuantity = models.PositiveBigIntegerField(null=True)

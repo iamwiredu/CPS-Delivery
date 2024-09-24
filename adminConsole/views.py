@@ -3,16 +3,24 @@ from django.views.generic import TemplateView
 # Create your views here.
 
 from django.shortcuts import render, redirect
-from delivery.models import DeliveryRequest, Rider, BulkDeliveryRequest, BulkDeliveryPoint
+from delivery.models import DeliveryRequest,Rider, BulkDeliveryRequest, BulkDeliveryPoint
 from .forms import RiderForm, ShopItemForm, RequestStatusUpdateForm, RidersAssignmentForm, BulkRidersAssignmentForm, BulkRequestStatusUpdateForm
 from delivery.models import ShopItem
+from home.models import Profile
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 import requests
 # Create your views here.
 
+@login_required(login_url='/login/')
 def adminConsole(request):
+    if request.user.is_superuser:
+        return render(request,'admin.html')
+    else:
+        return redirect('/accounthome/')
 
-    return render(request,'admin.html')
 
+@login_required(login_url='/login/')
 def requestManagementConsole(request):
     DeliveryRequests = DeliveryRequest.objects.filter(delivered=False)
     BulkDeliveryRequests = BulkDeliveryRequest.objects.filter(delivered=False)
@@ -24,6 +32,9 @@ def requestManagementConsole(request):
     }
     return render(request,'html/requestsManagementConsole.html',context)
 
+
+
+@login_required(login_url='/login/')
 def pastProcessedRequest(request):
     DeliveryRequests = DeliveryRequest.objects.filter(delivered=True).values()
     context ={
@@ -45,7 +56,7 @@ def AssignedRiderMsg(instance,rider):
     data = response.json() 
     print(data,str(instance.pickupNumber))
 
-
+@login_required(login_url='/login/')
 def managementUpdate(request,unique_id):
     Riders = Rider.objects.all()
     DeliveryRequested = DeliveryRequest.objects.get(unique_id=unique_id)
@@ -101,6 +112,8 @@ def managementUpdate(request,unique_id):
     }
     return render(request,'html/managementUpdate.html',context)
 
+
+@login_required(login_url='/login/')
 def riderAddition(request):
     Riders = Rider.objects.all()
     RiderAdditionFormCreator = RiderForm()
@@ -117,11 +130,15 @@ def riderAddition(request):
 
     return render(request,'html/riderAddition.html',context)
 
+
+@login_required(login_url='/login/')
 def riderDelete(request,unique_id):
     rider = Rider.objects.get(unique_id=unique_id)
     rider.delete()
     return redirect(riderAddition)
 
+
+@login_required(login_url='/login/')
 def riderUpdate(request,unique_id):
     rider = Rider.objects.get(unique_id=unique_id)
     DeliveryRequestsUnassigned = DeliveryRequest.objects.filter(assigned=False).values()
@@ -164,6 +181,7 @@ def riderUpdate(request,unique_id):
 
     return render(request,'html/riderUpdate.html',context)
 
+@login_required(login_url='/login/')
 def addShopItem(request):
     ShopItemFormCreator = ShopItemForm()
     ShopItems  = ShopItem.objects.all()
@@ -182,6 +200,32 @@ def addShopItem(request):
     }
     return render(request,'html/addShopItem.html',context)
 
+@login_required(login_url='/login/')
+def riderLoginAddition(request,unique_id):
+    rider = Rider.objects.get(unique_id=unique_id)
+    if request.method == 'POST':
+        if 'addRider' in request.POST:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = User.objects.create(username=username)
+
+            user.set_password(password)
+            user.save()
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.user = user
+            profile.accountType = 'Rider'
+            profile.rider = rider
+            profile.save()
+
+            return redirect(f'/riderUpdate/{unique_id}')
+
+    context={
+        'rider':rider,
+    }
+    return render(request,'html/riderSignup.html',context)
+
+
+@login_required(login_url='/login/')
 def managementUpdateBulk(request,unique_id):
     DeliveryRequested = BulkDeliveryRequest.objects.get(unique_id=unique_id)
     BulkRequestStatusUpdateFormUpdater = BulkRequestStatusUpdateForm()

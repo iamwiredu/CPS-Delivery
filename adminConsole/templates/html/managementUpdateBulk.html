@@ -204,7 +204,9 @@
             </form>
         </div>
         
-        <div class=" container container-fluid">
+{% if request.user.profile.accountType == 'Nadmin' %}
+
+        <div class=" container container-fluid"></div>
             <h2>Assign</h2>
             <div style="margin-top: 5px;">
                 <form action="" method="POST">
@@ -214,6 +216,9 @@
                 </form>
             </div>
         </div>
+{% else %}
+
+{% endif %}
 
         <div class="container">
             <h2>Individual Orders</h2>

@@ -181,38 +181,67 @@ input:checked + .slider:before {
     </div>
 </div>
     <div class="container"  id="single" style="display: block;">
-        <table class="table" >
-            <thead class="table-light" style="text-align: center;">
-                <tr>
-                    <th>Delivery Id</th>
-                    <th>Product</th>
-                    <th>quantity</th>
-                    <th>Location</th>
-                    <th>Dropoff Contact</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody style="text-align: center;">
-                {% for data in DeliveryRequests %}
-                <tr>
-                    <td>{{ data.id_curator }}</td>
-                    <td>{{ data.product }}</td>
-                    <td>{{ data.orderQuantity }}</td>
-                    <td>{{ data.deliveryPoint }}</td>
-                    <td>{{ data.dropoffNumber }}</td>
-                    <td>
-                        {% if data.enroute == False %}
-                        not picked up
-                        {% else %}
-                        picked up
-                        {% endif %}
-                    </td>
-                    <td><a href="{% url 'detailsPage' data.id %}">details</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <table class="table">
+        <thead class="table-light" style="text-align: center;">
+            <th>Id</th>
+            <th>Product</th>
+            <th>Pickup Location</th>
+            <th>Pickup Number</th>
+            <th>Dropoff Name</th>
+            <th>Dropoff Location</th>
+            <th>Dropoff Contact</th>
+            <th>Assigned</th>
+            <th>Picked Up</th>
+            <th>enroute</th>
+            <th>delivered</th>
+            <th></th>
+    
+        </thead>
+        <tbody class="table" style="text-align: center;">
+            {% for data in DeliveryRequests %}
+            <tr>
+              
+                <td>{{data.id_curator}}</td>
+                <td>{{data.product}}</td>
+                <td>{{data.pickupLocation}}</td>
+                <td>{{data.pickupNumber}}</td>
+                <td>{{data.dropoffName}}</td>
+                <td>{{data.dropoffLocation}}</td>
+                <td>{{data.dropoffNumber}}</td>
+                <td>
+                    {% if data.assigned == False %}
+                    <input type="checkbox" name="assigned" disabled>
+                    {% else %}
+                    <input type="checkbox" name="assigned" checked>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data.pickedUp == False %}
+                    <input type="checkbox" name="assigned" disabled>
+                    {% else %}
+                    <input type="checkbox" name="assigned" checked>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data.enroute == False %}
+                    <input type="checkbox" name="assigned" disabled>
+                    {% else %}
+                    <input type="checkbox" name="assigned" checked>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data.delivered == False %}
+                    <input type="checkbox" name="assigned" disabled>
+                    {% else %}
+                    <input type="checkbox" name="assigned" checked>
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'detailsPage' data.id %}">details</a></td>
+    
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     </div>
 
     <div class="container"  id="bulk" style="display: none;">

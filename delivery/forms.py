@@ -15,7 +15,7 @@ class DeliveryRequestForm(ModelForm):
             "productFee":"Product Fee",
             "additionalInfo":"Additional Info",
         }
-        fields = ['orderQuantity','product','pickupNumber','pickupPoint','dropoffNumber','deliveryPoint','productFee','additionalInfo']
+        fields = ['orderQuantity','product','pickupNumber','pickupPoint','pickupLocation','dropoffName','dropoffNumber','deliveryPoint','dropoffLocation','productFee','additionalInfo']
 
 class BulkDeliveryRequestForm(ModelForm):
     class Meta:

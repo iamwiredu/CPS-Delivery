@@ -3,10 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate
 from .models import Profile
 from .forms import ProfileForm
+from rider.views import riderManagement
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class Home(View):
+class Home(LoginRequiredMixin,View):
+    login_url = '/login/'
     def get(self,request):
         return render(request,'home.html')
 
@@ -24,9 +27,17 @@ class Login(View):
             if user is not None:
                 login(request,user)
                 print('yes')
-                return redirect('/accounthome/')
+                if user.is_superuser:
+                    return redirect('/adminConsole/')
+                elif user.profile.accountType == 'Rider':
+                    return redirect(riderManagement,request.user.profile.rider.unique_id) # associate every rider profile with a rider object
+                else:
+                    print(user.profile.accountType)
+                    return redirect('/accounthome/')
+                   
             
             else:
+                print(user.profile.accountType)
                 print('no')
 
         context = {
@@ -60,6 +71,7 @@ class SignUp(View):
                 profile, created = Profile.objects.get_or_create(user=user)
                 profile.user = user
                 profile.phone = phone  # Assuming `Profile` has a `phone` field
+
                 profile.save()
             except:
                 print('error')

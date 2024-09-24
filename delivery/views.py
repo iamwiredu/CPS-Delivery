@@ -4,15 +4,18 @@ from django.views import View
 from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest
 from .forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
 from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-class accountHome(View):
+class accountHome(LoginRequiredMixin,View):
+    login_url = '/login/'
 
     def get(self,request):
         return render(request,'accountHome.html')
     
 
-class RequestPage(View):
+class RequestPage(LoginRequiredMixin,View):
+    login_url = '/login/'
     DeliveryRequestFormCreator = DeliveryRequestForm()
     BulkDeliveryRequestFormCreator = BulkDeliveryRequestForm()
     BulkDeliveryPointFormCreator = BulkDeliveryPointForm()
@@ -64,7 +67,8 @@ class RequestPage(View):
         return render(request,'request.html',self.context)
     
 
-class pastDeliveries(View):
+class pastDeliveries(LoginRequiredMixin,View):
+    login_url = '/login/'
     def get(self,request):
         DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=True)
         context={
@@ -75,7 +79,8 @@ class pastDeliveries(View):
     
 
 
-class pendingRequest(View):
+class pendingRequest(LoginRequiredMixin,View):
+    login_url = '/login/'
     def get(self,request):
         DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=False)
         DeliveryRequestBulk = BulkDeliveryRequest.objects.filter(user=request.user,delivered=False)
@@ -85,7 +90,8 @@ class pendingRequest(View):
         }
         return render(request,'pendingRequests.html',context)
     
-class detailsPage(View):
+class detailsPage(LoginRequiredMixin,View):
+    login_url = '/login/'
     def get(self,request,pk):
         DeliveryRequested = DeliveryRequest.objects.get(pk=pk)
         DeliveryRequestedForm = DeliveryRequestForm(instance=DeliveryRequested)
@@ -100,13 +106,15 @@ class logoutPage(View):
         logout(request)
         return redirect('/login')
     
-class comingSoon(View):
+class comingSoon(LoginRequiredMixin,View):
+    login_url = '/login/'
     def get(self,request):
         return render(request,'comingSoon.html')
 
 # Pending details Page
 
-class bulkPendingDetails(View):
+class bulkPendingDetails(LoginRequiredMixin,View):
+    login_url = '/login/'
     def get(self,request,unique_id):
         DeliveryRequested = BulkDeliveryRequest.objects.get(unique_id=unique_id)
         context ={

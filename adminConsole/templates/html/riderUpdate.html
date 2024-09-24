@@ -36,7 +36,7 @@
 <body>
         <nav class="navbar navbar-dark bg-dark">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">CPS</a>
+            <a class="navbar-brand" href="#" id="CPS">CPS</a>
             <div style="display: flex; align-items: center; gap: 8px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="#61b124" viewBox="0 0 24 24"
                 stroke="#61b124">
@@ -83,6 +83,7 @@
           <th scope="col">Phone</th>
           <th scope="col">Assignment</th>
           <th scope="col"></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -96,6 +97,14 @@
               Delete
             </button>
           </td>
+          <td>
+         {% if rider.profile.rider %}
+         Login assigned
+         {% else %}
+            <a href="{% url 'riderLoginAddition' rider.unique_id %}"><button type="button" class="btn btn-primary"
+                style="background-color: #61b124; border-color: #61b124;">Add Login</button></a>
+            </td>
+          {% endif %}
         </tr>
         <!-- Button trigger modal -->
         <!-- Modal -->
