@@ -20,7 +20,7 @@ class DeliveryRequestForm(ModelForm):
 class BulkDeliveryRequestForm(ModelForm):
     class Meta:
         model = BulkDeliveryRequest
-        fields = ['product','pickupNumber','pickupPoint','productFee']
+        fields = ['product','pickupNumber','pickupPoint','pickupLocation','productFee']
         helptext ={
             'productFee':'price per product'
         }

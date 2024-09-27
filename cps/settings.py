@@ -81,29 +81,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cps.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "verceldb",
-        'URL_NO_SSL':"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb",
-        "URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
-        "PRISMA_URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15",
-        "URL_NON_POOLING":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
-        'USER': "default",
-        'PASSWORD':"dN0ShxHPfqa9",
-        "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': "verceldb",
+#         'URL_NO_SSL':"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb",
+#         "URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+#         "PRISMA_URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15",
+#         "URL_NON_POOLING":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+#         'USER': "default",
+#         'PASSWORD':"dN0ShxHPfqa9",
+#         "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
