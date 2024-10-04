@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'adminConsole',
     'rider',
-    
-
+    'restaurant',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

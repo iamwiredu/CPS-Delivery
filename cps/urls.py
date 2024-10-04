@@ -22,5 +22,6 @@ urlpatterns = [
     path('',include('home.urls')),
     path('',include('delivery.urls')),
     path('',include('adminConsole.urls')),
-    path('',include('rider.urls'),)
+    path('',include('rider.urls')),
+    path('',include('restaurant.urls')),
 ]
