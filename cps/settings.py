@@ -160,7 +160,7 @@ KEY = os.getenv('key')
 
 # Google Cloud Storage settings
 GS_PROJECT_ID = 'precise-line-437900-m9'
-GS_BUCKET_NAME = 'CPS'
+GS_BUCKET_NAME = 'cps-images'
 
 # Get the JSON key data from environment variable
 google_cloud_key = os.getenv('KEY')
