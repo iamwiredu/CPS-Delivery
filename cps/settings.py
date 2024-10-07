@@ -137,9 +137,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    os.path.join(BASE_DIR, 'precise-line-437900-m9-7b47e17897a2.json')
-)
+GS_CREDENTIALS = os.getenv('data')
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'CPS'
 
