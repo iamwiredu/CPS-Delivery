@@ -137,11 +137,24 @@ USE_I18N = True
 USE_TZ = True
 
 
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    os.path.join(BASE_DIR, 'precise-line-437900-m9-7b47e17897a2.json')
-)
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+#     os.path.join(BASE_DIR, 'precise-line-437900-m9-7b47e17897a2.json')
+# )
+# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# GS_BUCKET_NAME = 'CPS'
+
+
+# Google Cloud Storage settings
+GS_PROJECT_ID = 'precise-line-437900-m9'
 GS_BUCKET_NAME = 'CPS'
+# settings.py
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    'precise-line-437900-m9-7b47e17897a2.json'
+)
+# Media files (uploads)
+GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
+MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
 
 
 # Static files (CSS, JavaScript, Images)
