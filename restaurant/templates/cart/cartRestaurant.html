@@ -32,6 +32,15 @@
         .btn-cps:hover {
             background-color: #4a8f1d;
         }
+
+        @media only screen  and (max-width:800px) {
+            .mainBox{
+                margin-bottom:20px;
+            }
+            #sideBox{
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -58,21 +67,28 @@
         <!-- Cart Items -->
         <div class="row">
             {% if cart_items %}
-            <div class="col-md-8">
+            <div class="col-md-8 mainBox" >
                 <div class="card p-4 shadow-sm">
                     <h4 class="mb-4">Items in Cart</h4>
                     <ul class="list-group">
                         {% for item in cart_items %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5>{{ item.food.name }}</h5>
-                                <p class="mb-1">GHS{{ item.food.price }} x {{ item.quantity }}</p>
-                                <form action="" method="POST"
-                                    style="display:inline-block;">
+                        <li class="list-group-item">
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5>{{ item.food.name }}</h5>
+                                    <p class="mb-1">GHS{{ item.food.price }} x {{ item.quantity }}</p>
+                                </div>
+                                <div>
+                                    <img src="{{ item.food.image.url }}" alt="{{ item.food.name }}"
+                                        style="width: 80px; height: 80px; object-fit: cover;">
+                                </div>
+                            </div>
+                            <div style="margin-top: 5px; align-items: center;">
+                                <form action="" method="POST" style="display:inline-block;"></form>
                                     {% csrf_token %}
                                     <input type="hidden" name="cartIdUpdate" value="{{item.unique_id}}">
-                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
-                                        class="form-control" style="width: 60px; display:inline-block;">
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control"
+                                        style="width: 60px; display:inline-block;">
                                     <button type="submit" class="btn btn-sm btn-primary" name="update">Update</button>
                                 </form>
                                 <form action="" method="POST" style="display:inline-block;">
@@ -81,16 +97,12 @@
                                     <button type="submit" class="btn btn-sm btn-danger" name="remove">Remove</button>
                                 </form>
                             </div>
-                            <div>
-                                <img src="{{ item.food.image.url }}" alt="{{ item.food.name }}"
-                                    style="width: 80px; height: 80px; object-fit: cover;">
-                            </div>
                         </li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" id="sideBox">
                 <!-- Order Summary -->
                 <div class="card p-4 shadow-sm">
                     <h4 class="mb-4">Order Summary</h4>

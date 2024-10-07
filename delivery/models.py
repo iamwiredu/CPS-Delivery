@@ -18,7 +18,7 @@ class Rider(models.Model):
 class CartRestaurant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
-    restaurant = models.OneToOneField(Restaurant,on_delete=models.CASCADE,null=True)
+    restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

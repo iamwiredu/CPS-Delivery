@@ -145,38 +145,38 @@ USE_TZ = True
 # GS_BUCKET_NAME = 'CPS'
 KEY = os.getenv('key')
 
-# # Google Cloud Storage settings
-# GS_PROJECT_ID = 'precise-line-437900-m9'
-# GS_BUCKET_NAME = 'CPS'
-# # settings.py
-# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-#     'precise-line-437900-m9-7b47e17897a2.json'
-# )
-# # Media files (uploads)
-# GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
-# MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
-
-
 # Google Cloud Storage settings
 GS_PROJECT_ID = 'precise-line-437900-m9'
-GS_BUCKET_NAME = 'cps-images'
-
-# Get the JSON key data from environment variable
-google_cloud_key = os.getenv('KEY')
-
-# Parse the JSON key
-google_cloud_info = json.loads(google_cloud_key)
-
+GS_BUCKET_NAME = 'CPS'
 # settings.py
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-    google_cloud_info
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    'precise-line-437900-m9-7b47e17897a2.json'
 )
-
 # Media files (uploads)
 GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
 MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
+
+
+# # Google Cloud Storage settings
+# GS_PROJECT_ID = 'precise-line-437900-m9'
+# GS_BUCKET_NAME = 'cps-images'
+
+# # Get the JSON key data from environment variable
+# google_cloud_key = os.getenv('KEY')
+
+# # Parse the JSON key
+# google_cloud_info = json.loads(google_cloud_key)
+
+# # settings.py
+# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+#     google_cloud_info
+# )
+
+# # Media files (uploads)
+# GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
+# MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
 
 
 # Static files (CSS, JavaScript, Images)
