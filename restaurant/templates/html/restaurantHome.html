@@ -132,49 +132,37 @@
         </div>
     </nav>
 <div class="container mt-5">
-    <!-- Main div -->
     <div class="row">
-        <!-- Restaurant card -->
-        <div class="col-6 col-md-3 mb-4">
-            <div class="card h-100">
-                <img src="restaurant1.jpg" class="card-img-top" alt="Restaurant 1">
-                <div class="card-body">
-                    <h5 class="card-title">Restaurant 1</h5>
-                    <p class="card-text">Some description about Restaurant 1.</p>
-                </div>
-            </div>
-        </div>
-        <!-- Restaurant card -->
-        <div class="col-6 col-md-3 mb-4">
-            <div class="card h-100">
-                <img src="restaurant2.jpg" class="card-img-top" alt="Restaurant 2">
-                <div class="card-body">
-                    <h5 class="card-title">Restaurant 2</h5>
-                    <p class="card-text">Some description about Restaurant 2.</p>
-                </div>
-            </div>
-        </div>
-        <!-- Add more cards as needed -->
-        <!-- Restaurant card -->
-        <div class="col-6 col-md-3 mb-4">
-            <div class="card h-100">
-                <img src="restaurant3.jpg" class="card-img-top" alt="Restaurant 3">
-                <div class="card-body">
-                    <h5 class="card-title">Restaurant 3</h5>
-                    <p class="card-text">Some description about Restaurant 3.</p>
-                </div>
-            </div>
-        </div>
-        <!-- Restaurant card -->
-        <div class="col-6 col-md-3 mb-4">
-            <div class="card h-100">
-                <img src="restaurant4.jpg" class="card-img-top" alt="Restaurant 4">
-                <div class="card-body">
-                    <h5 class="card-title">Restaurant 4</h5>
-                    <p class="card-text">Some description about Restaurant 4.</p>
-                </div>
-            </div>
-        </div>
+        {% for restaurant in restaurants %}
+            <a href="{% url 'restaurantOrder' restaurant.unique_id %}">
+                    <div class="col-6 col-md-3 mb-4">
+                        <div class="card h-100">
+                            <!-- Display restaurant image -->
+                            {% if restaurant.image %}
+                            <img src="{{ restaurant.image.url }}" class="card-img-top" alt="{{ restaurant.name }}">
+                            {% else %}
+                            <img src="default_image.jpg" class="card-img-top" alt="Default Image">
+                            {% endif %}
+                    
+                            <div class="card-body">
+                                <!-- Restaurant name -->
+                                <h5 class="card-title">{{ restaurant.name }}</h5>
+                                <!-- Restaurant address -->
+                                <p class="card-text">
+                                    <strong>Address:</strong> {{ restaurant.address }}<br>
+                                    <strong>Phone:</strong> {{ restaurant.user.profile.phone }}<br>
+                                    <strong>Email:</strong> <a href="mailto:{{ restaurant.email }}">{{ restaurant.user.email }}</a><br>
+                                    <strong>Hours:</strong> {{ restaurant.opening_hours }}
+                                </p>
+                                <!-- Optional description -->
+                                {% if restaurant.description %}
+                                <p class="card-text">{{ restaurant.description|truncatewords:20 }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+            </a>
+        {% endfor %}
     </div>
 </div>
 

@@ -2,6 +2,7 @@ import uuid
 import requests
 from django.db import models
 from django.contrib.auth.models import User
+from restaurant.models import Restaurant, Food
 
 
 class Rider(models.Model):
@@ -13,6 +14,46 @@ class Rider(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+    
+class CartRestaurant(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    completed = models.BooleanField(default=False)
+    restaurant = models.OneToOneField(Restaurant,on_delete=models.CASCADE,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Cart of {self.user.username}"
+
+    @property
+    def total_price(self):
+        items = self.cart_items.all()
+        return sum(item.total_price for item in items)
+
+    @property
+    def total_items(self):
+        return self.cart_items.count()
+
+class CartItemRestaurant(models.Model):
+    unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    cart = models.ForeignKey(CartRestaurant, related_name='cart_items', on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.food.name}"
+
+    @property
+    def total_price(self):
+        return self.food.price * self.quantity
+
+
+class RestaurantOrder(models.Model):
+    unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE,null=True,blank=True)
+    Cart = models.OneToOneField(CartRestaurant,on_delete=models.CASCADE,null=True,blank=True)
+
 
 
 class DeliveryRequest(models.Model):
@@ -55,6 +96,7 @@ class DeliveryRequest(models.Model):
     enroute = models.BooleanField(default=False)
     pickedUp = models.BooleanField(default=False)
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='assignments',default=None,null=True,blank=True)
+    restaurantOrder = models.OneToOneField(RestaurantOrder,default=None,null=True,blank=True,on_delete=models.CASCADE)
 
     @property
     def id_curator(self):    
@@ -119,6 +161,7 @@ class BulkDeliveryRequest(models.Model):
     enroute = models.BooleanField(default=False)
     pickedUp = models.BooleanField(default=False)
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='bulk_assignments',default=None,null=True,blank=True)
+    
 
     @property
     def id_curator(self):    

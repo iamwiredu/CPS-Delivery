@@ -4,6 +4,7 @@ from django.contrib.auth import login,authenticate
 from .models import Profile
 from .forms import ProfileForm
 from rider.views import riderManagement
+from restaurant.views import restaurantAdmin
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -31,6 +32,8 @@ class Login(View):
                     return redirect('/adminConsole/')
                 elif user.profile.accountType == 'Rider':
                     return redirect(riderManagement,request.user.profile.rider.unique_id) # associate every rider profile with a rider object
+                elif user.profile.accountType == 'Restaurant':
+                    return redirect('/restaurantAdmin/')
                 else:
                     print(user.profile.accountType)
                     return redirect('/accounthome/')
@@ -71,7 +74,7 @@ class SignUp(View):
                 profile, created = Profile.objects.get_or_create(user=user)
                 profile.user = user
                 profile.phone = phone  # Assuming `Profile` has a `phone` field
-
+                profile.accountType = 'Nuser'
                 profile.save()
             except:
                 print('error')

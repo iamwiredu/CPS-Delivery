@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from delivery.models import Rider
+from restaurant.models import Restaurant
 # Create your models here.
-class Restaurant(models.Model):
-    restaurantName = models.CharField(max_length=255)
-    restaurantLocation = models.CharField(max_length=255)
+
 
 class Profile(models.Model):
     class AccountType(models.TextChoices):

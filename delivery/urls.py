@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/',logoutPage.as_view(),name='logout'),
     path('comingSoon/',comingSoon.as_view(),name='comingSoon'),
     path('bulk/details/<str:unique_id>/',bulkPendingDetails.as_view(),name='bulkPendingDetails'),
+
 ]
