@@ -7,6 +7,7 @@ from rider.views import riderManagement
 from restaurant.views import restaurantAdmin
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 
 class Home(LoginRequiredMixin,View):
@@ -40,8 +41,8 @@ class Login(View):
                    
             
             else:
-                print(user.profile.accountType)
-                print('no')
+                messages.error(request,'Wrong Password or Username.')
+                return redirect('/login/')
 
         context = {
         }
@@ -80,3 +81,6 @@ class SignUp(View):
                 print('error')
             return redirect('/login/')
 
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)

@@ -7,7 +7,7 @@ from .models import Restaurant, Food
 from .forms import RestaurantForm, FoodForm
 from django.contrib.auth.decorators import login_required
 from .models import  Food
-from delivery.models import CartRestaurant, CartItemRestaurant
+from delivery.models import CartRestaurant, Side,CartItemRestaurant, RestaurantOrder, DeliveryRequest
 # Create your views here.
 
 class restaurantHome(View):
@@ -146,6 +146,15 @@ class restaurantFood(View):
                 return redirect(f'/restaurantFood/{unique_id}')
             else:
                 print('error')
+        if 'addSide' in request.POST:
+            food = request.POST.get('food')
+            name = request.POST.get('name')
+            food = Food.objects.get(unique_id=food)
+            side = Side(food=food,name=name)
+            side.save()
+
+            return redirect(f'/restaurantFood/{unique_id}')
+
 
 class restaurantOrder(View):
     
@@ -195,8 +204,9 @@ def add_to_cart(request, food_id):
 
 # View for displaying the cart
 @login_required
-def cart_view(request):
-    cart, created = CartRestaurant.objects.get_or_create(user=request.user,completed=False)
+def cart_view(request,unique_id):
+    restaurant = Restaurant.objects.get(unique_id=unique_id)
+    cart, created = CartRestaurant.objects.get_or_create(user=request.user,completed=False,restaurant=restaurant)
     cart_items = cart.cart_items.all()
     total_price = cart.total_price
 
@@ -218,8 +228,37 @@ def cart_view(request):
             cart_item.quantity = quantity
             cart_item.save()
             return redirect('/cart/')
+        
+        if 'placeOrder' in request.POST:
+            try:
 
+                Location = request.POST.get('Location')
+                Phone = request.POST.get('phone')
+                # create restaurant order
+                restaurant_order = RestaurantOrder(restaurant=restaurant,Cart=cart)
+                restaurant_order.save()
 
+                # set cart to complete
+                cart.completed = True
+                cart.save()
+
+                # create single request
+                delivery_request = DeliveryRequest(user=request.user)
+                delivery_request.orderQuantity = len(cart.cart_items.all())
+                delivery_request.pickupNumber = restaurant.user.profile.phone
+                delivery_request.deliveryPoint = 'Kumasi'
+                delivery_request.dropoffLocation = Location
+                delivery_request.dropoffNumber = Phone
+                delivery_request.pickupPoint = 'Kumasi'
+                delivery_request.pickupLocation = restaurant.address
+                delivery_request.productFee = cart.total_price
+
+                delivery_request.save()
+
+                return redirect(cart_view,unique_id)
+            except Exception as e:
+                print(e)
+            
     return render(request, 'cart/cartRestaurant.html', {
         'cart_items': cart_items,
         'total_price': total_price,

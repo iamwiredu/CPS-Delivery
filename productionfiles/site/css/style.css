@@ -1,0 +1,151 @@
+{% load static %}
+@font-face {
+  font-family: "CustomFont";
+  src: url('{% static 'site/fonts/Boge.ttf' %}') format('truetype');
+}
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+#topbar {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  background-color: #04bb51;
+  color: white;
+  font-size: 1rem;
+}
+
+#topbar a {
+  color: white;
+  text-decoration: none;
+}
+#wordLogo{
+  font-family: CustomFont;
+  color: #04bb51;
+}
+#hero {
+  background-image: url("{% static 'site/images/delivery.jpg' %}");
+
+  background-size: cover;
+  background-position: center;
+  min-height: 70vh;
+  position: relative;
+}
+#herocol {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  backdrop-filter: blur(5px); /* Adjust the blur radius as needed */
+}
+
+#services .card {
+  height: 100%;
+}
+
+.card.shadow-on-hover:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Customize the shadow properties as needed */
+  transition: box-shadow 0.3s ease; /* Add a smooth transition effect */
+  background-color: whitesmoke;
+}
+
+#features h4 {
+  margin-top: 2rem;
+}
+
+#testimonials {
+  background-image: url("../images/rocco-stoppoloni-oPPoyFHG11Q-unsplash.jpg");
+  background-color: ghostwhite;
+  color: white;
+  background-size: cover;
+  background-position: center;
+}
+
+.swiper {
+  width: 100%;
+  height: 300px;
+}
+
+.swiper2 {
+  width: 100%;
+  height: 300px;
+}
+.swiper-slide {
+  text-align: center;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  background-color: ghostwhite;
+  color: black;
+  border-radius: 5px;
+}
+
+#faq {
+  background-color: ghostwhite;
+}
+
+/* Optional: Add custom CSS styles for the footer */
+footer {
+  background-color: #333333;
+  color: #fff;
+  padding: 20px;
+}
+.footer-link {
+  color: #fff;
+}
+
+#services {
+  background-image: url("../images/low-angle-modern-house-roof.jpg");
+  background-color: ghostwhite;
+  color: white;
+  background-size: cover;
+
+  /* background-attachment: fixed; */
+}
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0054a4;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-to-top:hover {
+  background-color: #003070; /* Change color on hover */
+}
+
+#contactus i {
+  font-size: 2rem;
+  padding-right: 1rem;
+}
+
+#contactus a {
+  text-decoration: none;
+  color: #0054a4;
+}
+
+.btn-primary {
+  background-color: #0054a4;
+  border-color: #0054a4;
+}
+
+.btn-primary:hover {
+  background-color: #003070; /* Change color on hover */
+  border-color: #003070;
+}
+.btn-secondary {
+  background-color: #37b46c;
+  border-color: #37b46c;
+}
+
+.btn-secondary:hover {
+  background-color: #249047; /* Change color on hover */
+  border-color: #249047;
+}

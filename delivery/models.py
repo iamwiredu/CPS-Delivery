@@ -16,7 +16,7 @@ class Rider(models.Model):
         return f'{self.name}'
     
 class CartRestaurant(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
     restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -54,6 +54,19 @@ class RestaurantOrder(models.Model):
     restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE,null=True,blank=True)
     Cart = models.OneToOneField(CartRestaurant,on_delete=models.CASCADE,null=True,blank=True)
 
+class Side(models.Model):
+    food = models.ForeignKey(Food,on_delete=models.CASCADE,null=True,blank=True)
+    name = models.CharField(max_length=255)
+
+
+class SideOrder(models.Model):
+    side = models.ForeignKey(Side,on_delete=models.SET_NULL,null=True,blank=True)
+    quantity = models.IntegerField(default=1)
+    cartItemRestaurant = models.ForeignKey(CartItemRestaurant,on_delete=models.CASCADE,null=True,blank=True)
+
+    
+
+
 
 
 class DeliveryRequest(models.Model):
@@ -81,7 +94,7 @@ class DeliveryRequest(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     orderQuantity = models.PositiveIntegerField()
-    product = models.CharField(max_length=255,null=True)
+    product = models.CharField(max_length=255,null=True,blank=True)
     pickupNumber = models.PositiveIntegerField()
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.KUMASI)
     dropoffLocation = models.CharField(max_length=255,null=True)

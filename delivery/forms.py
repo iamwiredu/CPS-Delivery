@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest
+from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest, Side
 
 
 
@@ -29,3 +29,8 @@ class BulkDeliveryPointForm(ModelForm):
     class Meta:
         model = BulkDeliveryPoint
         fields = ['deliveryPoint','dropoffNumber','additionalInfo']
+
+class SideForm(ModelForm):
+    class Meta:
+        model = Side
+        fields = ['name']

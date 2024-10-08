@@ -105,9 +105,29 @@
             <div class="col-md-4" id="sideBox">
                 <!-- Order Summary -->
                 <div class="card p-4 shadow-sm">
+                    
                     <h4 class="mb-4">Order Summary</h4>
                     <p>Total Price: GHS{{ total_price }}</p>
-                    <button class="btn btn-cps w-100">Place ORder</button>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default" style="gap: 3px;align-items: center;">
+                                        <img src="{% static 'img/ghana.svg' %}" width="30px" height="30px" alt=""><span>+233</span>
+                                    </span>
+                                    <input type="text" class="form-control" aria-label="Sizing example input"
+                                        aria-describedby="inputGroup-sizing-default" value="{{request.user.profile.phone}}" name="phone">
+                                </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingInput" value="Kumasi" name="City" readonly>
+                                        <label for="City">City</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="Location" placeholder="Location" name="Location">
+                                        <label for="Location">Location</label>
+                                    </div>
+                        <button class="btn btn-cps w-100" type="submit" name="placeOrder">Place Order</button>
+                    </form>
                 </div>
             </div>
             {% else %}

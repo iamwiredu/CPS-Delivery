@@ -141,7 +141,16 @@
     </div>
     <div class="container mt-5">
         {% for food in foods %}
-        {{food}}
+            {{food}}
+            {% for side in food.side_set.all %}
+            {{side.name}}
+            {% endfor %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="food" value="{{food.unique_id}}">
+            <input type="text" name="name">
+            <input type="submit" value="add side" name="addSide">
+        </form>
         {% endfor %}
     </div>
 

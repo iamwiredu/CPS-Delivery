@@ -9,6 +9,6 @@ urlpatterns = [
     path('restaurantUpdate/<str:unique_id>/',restaurantUpdate.as_view(),name='restaurantUpdate'),
     path('restaurantFood/<str:unique_id>/',restaurantFood.as_view(),name='restaurantFood'),
     path('restaurantOrder/<str:unique_id>/',restaurantOrder.as_view(),name='restaurantOrder'),
-    path('cart/', cart_view, name='cart_view'),               # View the cart
+    path('cart/<str:unique_id>/', cart_view, name='cart_view'),               # View the cart
     path('cart/add/<int:food_id>/', add_to_cart, name='add_to_cart'),   # Add food to cart
 ]
