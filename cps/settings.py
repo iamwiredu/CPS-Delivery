@@ -82,29 +82,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cps.wsgi.application'
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': "verceldb",
-#         'URL_NO_SSL':"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb",
-#         "URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
-#         "PRISMA_URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15",
-#         "URL_NON_POOLING":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
-#         'USER': "default",
-#         'PASSWORD':"dN0ShxHPfqa9",
-#         "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "verceldb",
+        'URL_NO_SSL':"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb",
+        "URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+        "PRISMA_URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15",
+        "URL_NON_POOLING":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+        'USER': "default",
+        'PASSWORD':"dN0ShxHPfqa9",
+        "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -138,25 +138,25 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Google Cloud Storage settings
-# GS_PROJECT_ID = 'precise-line-437900-m9'
-# GS_BUCKET_NAME = 'cps-images'
+#Google Cloud Storage settings
+GS_PROJECT_ID = 'precise-line-437900-m9'
+GS_BUCKET_NAME = 'cps-images'
 
-# # Get the JSON key data from environment variable
-# google_cloud_key = os.getenv('KEY')
+# Get the JSON key data from environment variable
+google_cloud_key = os.getenv('KEY')
 
-# # Parse the JSON key
-# google_cloud_info = json.loads(google_cloud_key)
+# Parse the JSON key
+google_cloud_info = json.loads(google_cloud_key)
 
-# # settings.py
-# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-# GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-#     google_cloud_info
-# )
+# settings.py
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+    google_cloud_info
+)
 
-# # Media files (uploads)
-# GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
-# MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
+# Media files (uploads)
+GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
+MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
 
 
 # Static files (CSS, JavaScript, Images)

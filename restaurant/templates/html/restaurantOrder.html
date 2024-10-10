@@ -11,6 +11,18 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Restaurant Menu</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/vendor.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styleRes.css' %}">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            rel="stylesheet">
+
     <style>
         @font-face {
             font-family: "CustomFont";
@@ -29,6 +41,69 @@
 </head>
 
 <body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <defs>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="link" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M12 19a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0-4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm-5 0a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm7-12h-1V2a1 1 0 0 0-2 0v1H8V2a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3Zm1 17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9h16Zm0-11H4V6a1 1 0 0 1 1-1h1v1a1 1 0 0 0 2 0V5h8v1a1 1 0 0 0 2 0V5h1a1 1 0 0 1 1 1ZM7 15a1 1 0 1 0-1-1a1 1 0 0 0 1 1Zm0 4a1 1 0 1 0-1-1a1 1 0 0 0 1 1Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="arrow-right" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 0 1.42a1 1 0 0 0 1.42 0l5-5a1 1 0 0 0 .21-.33a1 1 0 0 0 0-.76Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="category" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M19 5.5h-6.28l-.32-1a3 3 0 0 0-2.84-2H5a3 3 0 0 0-3 3v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-10a3 3 0 0 0-3-3Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1h4.56a1 1 0 0 1 .95.68l.54 1.64a1 1 0 0 0 .95.68h7a1 1 0 0 1 1 1Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="calendar" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M19 4h-2V3a1 1 0 0 0-2 0v1H9V3a1 1 0 0 0-2 0v1H5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm1 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7h16Zm0-9H4V7a1 1 0 0 1 1-1h2v1a1 1 0 0 0 2 0V6h6v1a1 1 0 0 0 2 0V6h2a1 1 0 0 1 1 1Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="heart" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M20.16 4.61A6.27 6.27 0 0 0 12 4a6.27 6.27 0 0 0-8.16 9.48l7.45 7.45a1 1 0 0 0 1.42 0l7.45-7.45a6.27 6.27 0 0 0 0-8.87Zm-1.41 7.46L12 18.81l-6.75-6.74a4.28 4.28 0 0 1 3-7.3a4.25 4.25 0 0 1 3 1.25a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 6.05Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="plus" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="minus" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="check" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46l-3.13-3.14A1 1 0 1 0 5.29 13l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.47Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="trash" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M10 18a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1ZM20 6h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2ZM10 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h-4Zm7 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8h10Zm-3-1a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="star-outline" viewBox="0 0 15 15">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    d="M7.5 9.804L5.337 11l.413-2.533L4 6.674l2.418-.37L7.5 4l1.082 2.304l2.418.37l-1.75 1.793L9.663 11L7.5 9.804Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="star-solid" viewBox="0 0 15 15">
+                <path fill="currentColor"
+                    d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z" />
+            </symbol>
+            <symbol xmlns="http://www.w3.org/2000/svg" id="close" viewBox="0 0 15 15">
+                <path fill="currentColor"
+                    d="M7.953 3.788a.5.5 0 0 0-.906 0L6.08 5.85l-2.154.33a.5.5 0 0 0-.283.843l1.574 1.613l-.373 2.284a.5.5 0 0 0 .736.518l1.92-1.063l1.921 1.063a.5.5 0 0 0 .736-.519l-.373-2.283l1.574-1.613a.5.5 0 0 0-.283-.844L8.921 5.85l-.968-2.062Z" />
+            </symbol>
+        </defs>
+    </svg>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" id="CPS">CPS</a>
@@ -39,38 +114,142 @@
                         d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
                     </path>
                 </svg><span style="color:white;">{{request.user}}</span>
-  
+                <div style="display: inline-block;">
+                                            <a href="{% url 'cart_view' restaurant.unique_id %}">
+                                                <svg viewBox="-2.4 -2.4 28.80 28.80" width="50px" height="50px" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                                    stroke="#61b124">
+                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                    <g id="SVGRepo_iconCarrier">
+                                                        <!-- Cart Icon Paths -->
+                                                        <path
+                                                            d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z"
+                                                            stroke="#61b124" stroke-width="1.5"></path>
+                                                        <path
+                                                            d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z"
+                                                            stroke="#61b124" stroke-width="1.5"></path>
+                                                        <path d="M16.5 6.5L15 15.5" stroke="#61b124" stroke-width="1.5" stroke-linecap="round"></path>
+                                                        <path d="M9 6.5L10.5 15" stroke="#61b124" stroke-width="1.5" stroke-linecap="round"></path>
+                                                        <path
+                                                            d="M2 3L2.26121 3.09184C3.5628 3.54945 4.2136 3.77826 4.58584 4.32298C4.95808 4.86771 4.95808 5.59126 4.95808 7.03836V9.76C4.95808 12.7016 5.02132 13.6723 5.88772 14.5862C6.75412 15.5 8.14857 15.5 10.9375 15.5H12M4.95808 6.12H9M13 6.12H17.0888C18.7738 6.12 20.2906 6.12 20.7345 6.69708C21.1784 7.27417 21.0049 8.14369 20.6578 9.88275L20.158 12.3075C19.8429 13.8364 19.6853 14.6008 19.1336 15.0504C18.5819 15.5 17.8014 15.5 16.2404 15.5H15"
+                                                            stroke="#61b124" stroke-width="1.5" stroke-linecap="round"></path>
+                                                    </g>
+                                            
+                                                    <!-- Subscript Number -->
+                                                </svg>
+                                            </a>
+                </div>
+
+    </nav>
+
+    <section class="py-5">
+        <div class="container-fluid">
+    
+            <div class="row">
+                <div class="col-md-12">
+    
+                    <div class="bootstrap-tabs product-tabs">
+                        <div class="tabs-header d-flex justify-content-between border-bottom my-5">
+                            <h3>{{restaurant.name}}</h3>
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab"
+                                        data-bs-toggle="tab" data-bs-target="#nav-all">All</a>
+                                    <a href="#" class="nav-link text-uppercase fs-6" id="nav-fruits-tab"
+                                        data-bs-toggle="tab" data-bs-target="#nav-fruits">Top Sellers</a>
+                                    <a href="#" class="nav-link text-uppercase fs-6" id="nav-juices-tab"
+                                        data-bs-toggle="tab" data-bs-target="#nav-juices">Your Favorites</a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-all" role="tabpanel"
+                                aria-labelledby="nav-all-tab">
+    
+                                <div
+                                    class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    
+                                    {% for food in foods %}
+                    <div class="col">
+                        <div class="product-item">
+                            <span class="badge bg-success position-absolute m-3">-30%</span>
+                            <a href="#" class="btn-wishlist">
+                                <svg width="24" height="24">
+                                    <use xlink:href="#heart"></use>
+                                </svg>
+                            </a>
+                            <figure>
+                                <a href="index.html" title="Product Title">
+                                    <img src="{{food.image.url}}" class="tab-image" style="width: 100%; height: 200px; object-fit: cover; border-radius: 25px;">
+                                </a>
+                            </figure>
+                            <h3>{{food.name}}</h3>
+                            <span class="qty">Rating</span>
+                            <span class="rating">
+                                <svg width="24" height="24" class="text-primary">
+                                    <use xlink:href="#star-solid"></use>
+                                </svg> 4.5
+                            </span>
+                            <span class="price">GHS{{food.price}}</span>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="input-group product-qty">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
+                                            <svg width="16" height="16">
+                                                <use xlink:href="#minus"></use>
+                                            </svg>
+                                        </button>
+                                    </span>
+                                    <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
+                                            <svg width="16" height="16">
+                                                <use xlink:href="#plus"></use>
+                                            </svg>
+                                        </button>
+                                    </span>
+                                </div>
+                                <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></iconify-icon></a>
+                            </div>
+                        </div>
+                    </div>
+
+                                    {% endfor %}
+    
+    
+                                </div>
+                                <!-- / product-grid -->
+    
+                            </div>
+    
+                            <div class="tab-pane fade" id="nav-fruits" role="tabpanel" aria-labelledby="nav-fruits-tab">
+    
+                                <div
+                                    class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    
+                                    <h1>None</h1>
+                                </div>
+                                <!-- / product-grid -->
+    
+                            </div>
+                            <div class="tab-pane fade" id="nav-juices" role="tabpanel" aria-labelledby="nav-juices-tab">
+    
+                                <div
+                                    class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    
+    
+                                </div>
+                                <!-- / product-grid -->
+    
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                </div>
             </div>
         </div>
-        <div class="container-fluid" style="justify-content: right;">
-            <a href="{% url 'cart_view' restaurant.unique_id %}">
-                <svg viewBox="-2.4 -2.4 28.80 28.80" width="50px" height="50px" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    stroke="#61b124">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                        <!-- Cart Icon Paths -->
-                        <path
-                            d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z"
-                            stroke="#61b124" stroke-width="1.5"></path>
-                        <path
-                            d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z"
-                            stroke="#61b124" stroke-width="1.5"></path>
-                        <path d="M16.5 6.5L15 15.5" stroke="#61b124" stroke-width="1.5" stroke-linecap="round"></path>
-                        <path d="M9 6.5L10.5 15" stroke="#61b124" stroke-width="1.5" stroke-linecap="round"></path>
-                        <path
-                            d="M2 3L2.26121 3.09184C3.5628 3.54945 4.2136 3.77826 4.58584 4.32298C4.95808 4.86771 4.95808 5.59126 4.95808 7.03836V9.76C4.95808 12.7016 5.02132 13.6723 5.88772 14.5862C6.75412 15.5 8.14857 15.5 10.9375 15.5H12M4.95808 6.12H9M13 6.12H17.0888C18.7738 6.12 20.2906 6.12 20.7345 6.69708C21.1784 7.27417 21.0049 8.14369 20.6578 9.88275L20.158 12.3075C19.8429 13.8364 19.6853 14.6008 19.1336 15.0504C18.5819 15.5 17.8014 15.5 16.2404 15.5H15"
-                            stroke="#61b124" stroke-width="1.5" stroke-linecap="round"></path>
-                    </g>
-                
-                    <!-- Subscript Number -->
-                </svg>
-            </a>
-
-
-
-        </div>
-    </nav>
+    </section>
 
     <div class="container mt-5">
         <div style="margin-bottom: 40px;">
@@ -78,6 +257,7 @@
         </div>
         <div class="row">
             {% for food in foods %}
+
             <div class="col-6 col-md-3 mb-4">
                 <div class="card h-100 shadow-sm" style="border-radius: 10px; overflow: hidden;" data-bs-toggle="modal"
                     data-bs-target="#foodModal{{ food.id }}">
@@ -100,40 +280,60 @@
             </div>
 
             <!-- Modal for adding quantity -->
-            <div class="modal fade" id="foodModal{{ food.id }}" tabindex="-1"
-                aria-labelledby="foodModalLabel{{ food.id }}" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="foodModalLabel{{ food.id }}">{{ food.name }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="#" method="POST">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <label for="quantity{{ food.unique_id }}" class="form-label">Quantity</label>
-                                    <input type="hidden" value="{{food.unique_id}}" name="food_uniqueId">
-                                    <input type="number" class="form-control" id="quantity{{ food.id }}" name="quantity"
-                                        value="1" min="1" required>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+<div class="modal fade" id="foodModal{{ food.id }}" tabindex="-1" aria-labelledby="foodModalLabel{{ food.id }}"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="foodModalLabel{{ food.id }}">{{ food.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="quantity{{ food.unique_id }}" class="form-label">Quantity</label>
+                        <input type="hidden" value="{{food.unique_id}}" name="food_uniqueId">
+                        <input type="number" class="form-control" id="quantity{{ food.id }}" name="quantity" value="1"
+                            min="1" required>
+                    </div>
+                    <div>
+                        <div>
+                            <div>Extra Sides:</div>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                           <div>Add Side:</div>
+                            {% for side in food.side_set.all %}
+                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btncheck1">{{ side }}</label>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
             {% endfor %}
         </div>
     </div>
-
+        <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+        <script src="{% static 'js/plugins.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
 
 </body>
 
