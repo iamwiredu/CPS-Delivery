@@ -84,13 +84,13 @@
                                 </div>
                             </div>
                             <div style="margin-top: 5px; align-items: center;">
-                                <form action="" method="POST" style="display:inline-block;"></form>
+                                <!-- <form action="" method="POST" style="display:inline-block;"></form>
                                     {% csrf_token %}
                                     <input type="hidden" name="cartIdUpdate" value="{{item.unique_id}}">
                                     <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control"
                                         style="width: 60px; display:inline-block;">
                                     <button type="submit" class="btn btn-sm btn-primary" name="update">Update</button>
-                                </form>
+                                </form> -->
                                 <form action="" method="POST" style="display:inline-block;">
                                     {% csrf_token %}
                                     <input type="hidden" name="cartId" value="{{item.unique_id}}">

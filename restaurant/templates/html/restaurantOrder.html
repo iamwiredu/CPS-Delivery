@@ -168,53 +168,105 @@
     
                                 <div
                                     class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    {% for food in foods %}
+    <div class="col">
+        <div class="product-item">
+            <span class="badge bg-success position-absolute m-3">-30%</span>
+            <a href="#" class="btn-wishlist">
+                <svg width="24" height="24">
+                    <use xlink:href="#heart"></use>
+                </svg>
+            </a>
+            <figure>
+                <a href="index.html" title="Product Title">
+                    <img src="{{food.image.url}}" class="tab-image"
+                        style="width: 100%; height: 200px; object-fit: cover; border-radius: 25px;">
+                </a>
+            </figure>
+            <h3>{{food.name}}</h3>
+            <span class="qty">Rating</span>
+            <span class="rating">
+                <svg width="24" height="24" class="text-primary">
+                    <use xlink:href="#star-solid"></use>
+                </svg> 4.5
+            </span>
+            <span class="price">GHS{{food.price}}</span>
     
-                                    {% for food in foods %}
-                    <div class="col">
-                        <div class="product-item">
-                            <span class="badge bg-success position-absolute m-3">-30%</span>
-                            <a href="#" class="btn-wishlist">
-                                <svg width="24" height="24">
-                                    <use xlink:href="#heart"></use>
+            <div class="d-flex align-items-center justify-content-between">
+                <form action="#" method="POST">
+                    <div class="input-group product-qty">
+                        <span class="input-group-btn">
+                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
+                                <svg width="16" height="16">
+                                    <use xlink:href="#minus"></use>
                                 </svg>
-                            </a>
-                            <figure>
-                                <a href="index.html" title="Product Title">
-                                    <img src="{{food.image.url}}" class="tab-image" style="width: 100%; height: 200px; object-fit: cover; border-radius: 25px;">
-                                </a>
-                            </figure>
-                            <h3>{{food.name}}</h3>
-                            <span class="qty">Rating</span>
-                            <span class="rating">
-                                <svg width="24" height="24" class="text-primary">
-                                    <use xlink:href="#star-solid"></use>
-                                </svg> 4.5
-                            </span>
-                            <span class="price">GHS{{food.price}}</span>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="input-group product-qty">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
-                                            <svg width="16" height="16">
-                                                <use xlink:href="#minus"></use>
-                                            </svg>
-                                        </button>
-                                    </span>
-                                    <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
-                                    <span class="input-group-btn">
-                                        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
-                                            <svg width="16" height="16">
-                                                <use xlink:href="#plus"></use>
-                                            </svg>
-                                        </button>
-                                    </span>
-                                </div>
-                                <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></iconify-icon></a>
-                            </div>
+                            </button>
+                        </span>
+    
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="hidden" value="{{food.unique_id}}" name="food_uniqueId">
+                            <input id="quantity" name="quantity" class="form-control input-number" value="1" required>
                         </div>
+    
+                        <span class="input-group-btn">
+                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
+                                <svg width="16" height="16">
+                                    <use xlink:href="#plus"></use>
+                                </svg>
+                            </button>
+                        </span>
                     </div>
+    
+                    <input type="submit" name="addToCart" id="addToCart" value="Add to Cart">
+                </form>
+            </div>
+    
+            <!-- Add toggle button for sides -->
+            <button class="btn btn-primary mt-3 toggle-sides-btn" style="background-color: #61b124;">View Sides</button>
+            <div class="sides-form" style="display: none;"> <!-- Initially hidden -->
+                {% for side in food.side_set.all %}
+    <div class="side-item d-flex align-items-center justify-content-between mt-2">
+        <div class="d-flex flex-column align-items-center" style="margin-right: 9px;">
+            <figure class="mb-1">
+                <img src="{{side.image.url}}" alt="{{side.name}}"
+                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 10px;">
+            </figure>
+            <p class="text-center mb-0">{{side.name}}</p>
+        </div>
+<div>
+            <div>GHS{{side.price}}</div>
+            <div>
+                <span class="input-group-btn">
+                    <button type="button" class="side-left-minus btn btn-danger btn-number" data-side-id="{{side.id}}"
+                        data-type="minus">
+                        <svg width="16" height="16">
+                            <use xlink:href="#minus"></use>
+                        </svg>
+                    </button>
+                </span>
+                <input type="text" name="side_quantity_{{side.id}}" id="side_quantity_{{side.id}}"
+                    class="form-control input-number text-center" value="0" min="0" style="display: inline-block; width: 60px; ">
+                <span class="input-group-btn">
+                    <button type="button" class="side-right-plus btn btn-success btn-number" data-side-id="{{side.id}}"
+                        data-type="plus">
+                        <svg width="16" height="16">
+                            <use xlink:href="#plus"></use>
+                        </svg>
+                    </button>
+                </span>
+            </div>
+            
+</div>
+    </div>
 
-                                    {% endfor %}
+                {% endfor %}
+            </div>
+    
+        </div>
+    </div>
+    {% endfor %}
+
     
     
                                 </div>
@@ -251,78 +303,7 @@
         </div>
     </section>
 
-    <div class="container mt-5">
-        <div style="margin-bottom: 40px;">
-            <h1>{{restaurant.name}}</h1>
-        </div>
-        <div class="row">
-            {% for food in foods %}
-
-            <div class="col-6 col-md-3 mb-4">
-                <div class="card h-100 shadow-sm" style="border-radius: 10px; overflow: hidden;" data-bs-toggle="modal"
-                    data-bs-target="#foodModal{{ food.id }}">
-                    <!-- Display food image -->
-                    <img src="{{ food.image.url }}" class="card-img-top" alt="{{ food.name }}"
-                        style="height: 150px; object-fit: cover;">
-                    <div class="card-body" style="padding: 15px;">
-                        <!-- Food name -->
-                        <h5 class="card-title" style="font-size: 1.1rem; font-weight: bold;">{{ food.name }}</h5>
-                        <!-- Food price -->
-                        <p class="card-text" style="font-size: 0.9rem; color: #555;">
-                            GHS{{ food.price }}<br>
-                        </p>
-                        <!-- Optional description -->
-                        {% if food.description %}
-                        <p class="card-text" style="font-size: 0.85rem; color: #777;">{{ food.description }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal for adding quantity -->
-<div class="modal fade" id="foodModal{{ food.id }}" tabindex="-1" aria-labelledby="foodModalLabel{{ food.id }}"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="foodModalLabel{{ food.id }}">{{ food.name }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="POST">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="quantity{{ food.unique_id }}" class="form-label">Quantity</label>
-                        <input type="hidden" value="{{food.unique_id}}" name="food_uniqueId">
-                        <input type="number" class="form-control" id="quantity{{ food.id }}" name="quantity" value="1"
-                            min="1" required>
-                    </div>
-                    <div>
-                        <div>
-                            <div>Extra Sides:</div>
-                        </div>
-                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                           <div>Add Side:</div>
-                            {% for side in food.side_set.all %}
-                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btncheck1">{{ side }}</label>
-                            {% endfor %}
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name="addToCart">Add to Cart</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-            {% endfor %}
-        </div>
-    </div>
+ 
         <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
@@ -333,6 +314,45 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                    // Toggle sides form visibility
+                    document.querySelectorAll('.toggle-sides-btn').forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            const sidesForm = this.nextElementSibling;
+                            if (sidesForm.style.display === "none") {
+                                sidesForm.style.display = "block"; // Show form
+                                this.textContent = "Close Sides"; // Change button text
+                            } else {
+                                sidesForm.style.display = "none";  // Hide form
+                                this.textContent = " View Sides";    // Change button text back
+                            }
+                        });
+                    });
+
+                    // Quantity control for sides
+                    document.querySelectorAll('.side-left-minus').forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            const sideId = this.getAttribute('data-side-id');
+                            const qtyInput = document.getElementById('side_quantity_' + sideId);
+                            let currentValue = parseInt(qtyInput.value);
+                            if (currentValue > 0) {
+                                qtyInput.value = currentValue - 1;
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('.side-right-plus').forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            const sideId = this.getAttribute('data-side-id');
+                            const qtyInput = document.getElementById('side_quantity_' + sideId);
+                            let currentValue = parseInt(qtyInput.value);
+                            qtyInput.value = currentValue + 1;
+                        });
+                    });
+                });
+
+        </script>
 
 
 </body>

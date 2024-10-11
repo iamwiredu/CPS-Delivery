@@ -178,6 +178,8 @@ class restaurantOrder(View):
             cart, created = CartRestaurant.objects.get_or_create(user=request.user,completed=False,restaurant=restaurant)
             cartItem,created = CartItemRestaurant.objects.get_or_create(cart=cart,food=food)
 
+            # as we create cart we need to add it's equivalent sideOrder
+
             cartItem.quantity = int(quantity)
             cartItem.save()
 
@@ -219,7 +221,7 @@ def cart_view(request,unique_id):
             cart_item.delete()
 
 
-            return redirect('/cart/')
+            return redirect(f'/cart/{unique_id}')
         if 'update' in request.POST:
             cart_id = request.POST.get('cartIdUpdate')
             quantity = request.POST.get('quantity')
@@ -227,7 +229,7 @@ def cart_view(request,unique_id):
             cart_item = get_object_or_404(CartItemRestaurant, unique_id=cart_id)
             cart_item.quantity = quantity
             cart_item.save()
-            return redirect('/cart/')
+            return redirect(f'/cart/{unique_id}')
         
         if 'placeOrder' in request.POST:
             try:

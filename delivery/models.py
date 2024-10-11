@@ -57,7 +57,8 @@ class RestaurantOrder(models.Model):
 class Side(models.Model):
     food = models.ForeignKey(Food,on_delete=models.CASCADE,null=True,blank=True)
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='images/sides',null=True,blank=True)
+    price = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='images/sides',null=True,blank=True,default='images/sides/default.png')
 
 class SideOrder(models.Model):
     side = models.ForeignKey(Side,on_delete=models.SET_NULL,null=True,blank=True)
