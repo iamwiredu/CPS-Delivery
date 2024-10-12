@@ -199,6 +199,13 @@ input:checked + .slider:before {
         </label>
     <span style="padding-left: 5px;">Bulk Request</span>
 </div>
+                    <div class="container" style="text-align: center;">
+                        <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
+                            style="background-color: #61b124; color: white; border: none; margin: 5px;">View Past Deliveries</a>
+                        <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
+                            style="background-color: #61b124; color: white; border: none; margin: 5px;">View Pending Delivery
+                            Requests</a>
+                    </div>
 <div class=" container table-responsive">
 <table class="table hidden" id="bulkDeliveryBox">
     <thead>
@@ -217,13 +224,7 @@ input:checked + .slider:before {
 </div>
     <div class="container mt-5 activeBox" id="single" >
         <div class="row">
-                    <div class="container" style="text-align: center;">
-                        <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
-                            style="background-color: #61b124; color: white; border: none; margin: 5px;">View Past Deliveries</a>
-                        <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
-                            style="background-color: #61b124; color: white; border: none; margin: 5px;">View Pending Delivery
-                            Requests</a>
-                    </div>
+              
                     <div>
                         <form method="POST" class="uniForm">
                             {% csrf_token %}
@@ -239,6 +240,7 @@ input:checked + .slider:before {
         </div>
     </div>
     <div class="container mt-5" id="bulk">
+        
         <form action="" method="POST" id="baseForm">
             {% csrf_token %}
        <div style="display: flex; justify-content: space-between;"> 
@@ -248,6 +250,7 @@ input:checked + .slider:before {
                 <input type="hidden" value="" id="sessionStorageLength" name="quantity">
          
        </div>
+       
         {{BulkDeliveryRequestFormCreator|crispy}}
         
         </form>

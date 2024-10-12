@@ -38,15 +38,22 @@ class CartItemRestaurant(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     cart = models.ForeignKey(CartRestaurant, related_name='cart_items', on_delete=models.CASCADE)
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=0)
     added_at = models.DateTimeField(auto_now_add=True)
+    
 
     def __str__(self):
         return f"{self.quantity} x {self.food.name}"
 
+   
     @property
     def total_price(self):
-        return self.food.price * self.quantity
+        """Calculate the total price including the quantity of food and any sides."""
+        main_price = self.food.price * self.quantity
+        side_orders = self.sideorder_set.all()  # Ensure it's the correct related name
+        for side_order in side_orders:
+            main_price += side_order.total()
+        return main_price
 
 
 class RestaurantOrder(models.Model):
@@ -63,10 +70,11 @@ class Side(models.Model):
 class SideOrder(models.Model):
     side = models.ForeignKey(Side,on_delete=models.SET_NULL,null=True,blank=True)
     quantity = models.IntegerField(default=1)
+    state = models.IntegerField(default=0) # quantity number
     cartItemRestaurant = models.ForeignKey(CartItemRestaurant,on_delete=models.CASCADE,null=True,blank=True)
 
-    
-
+    def total(self):
+        return self.quantity * self.side.price
 
 
 
@@ -214,4 +222,4 @@ class BulkDeliveryPoint(models.Model):
     dropoffName = models.CharField(max_length=255)
     deliveryLocation = models.CharField(max_length=255)
     additionalInfo = models.TextField()
-    orderQuantity = models.PositiveBigIntegerField(null=True)
+

@@ -7,7 +7,7 @@ from .models import Restaurant, Food
 from .forms import RestaurantForm, FoodForm
 from django.contrib.auth.decorators import login_required
 from .models import  Food
-from delivery.models import CartRestaurant, Side,CartItemRestaurant, RestaurantOrder, DeliveryRequest
+from delivery.models import CartRestaurant, SideOrder, Side,CartItemRestaurant, RestaurantOrder, DeliveryRequest
 # Create your views here.
 
 class restaurantHome(View):
@@ -161,6 +161,7 @@ class restaurantOrder(View):
     def get(self,request,unique_id):
         restaurant = Restaurant.objects.get(unique_id=unique_id)
         foods = Food.objects.all().filter(restaurant=restaurant)
+
         context = {
             'foods':foods,
             'restaurant':restaurant,
@@ -172,16 +173,28 @@ class restaurantOrder(View):
             print('yes')
             restaurant = Restaurant.objects.get(unique_id=unique_id)
             food_id = request.POST.get('food_uniqueId')
-            quantity = request.POST.get('quantity')
+            
             
             food = Food.objects.get(unique_id=food_id)
             cart, created = CartRestaurant.objects.get_or_create(user=request.user,completed=False,restaurant=restaurant)
             cartItem,created = CartItemRestaurant.objects.get_or_create(cart=cart,food=food)
 
+            cartItem.quantity += 1 # increase by one
+            cartItem.save()
+
+            # loop through sides 
+            for side in food.side_set.all():
+                side_quantity = request.POST.get(side.name) #get's quantity
+                sideObj = Side.objects.get(food=food,name=side.name)
+                side_order = SideOrder(side=sideObj,quantity=side_quantity,state=cartItem.quantity,cartItemRestaurant=cartItem)
+                side_order.save()
+                print(side_order)
+
+
+
             # as we create cart we need to add it's equivalent sideOrder
 
-            cartItem.quantity = int(quantity)
-            cartItem.save()
+     
 
             return redirect(f'/restaurantOrder/{unique_id}')
 
@@ -212,6 +225,24 @@ def cart_view(request,unique_id):
     cart_items = cart.cart_items.all()
     total_price = cart.total_price
 
+    sideOrdersItems = []
+    for item in cart_items: # loop through cart
+        sideOrder = []
+        for i in range(item.quantity):
+            if i +1 <= item.quantity:
+                side_objects = SideOrder.objects.all().filter(state=i+1,cartItemRestaurant=item)
+                new = (side_objects)
+                if new:
+                    sideOrder.append(new)
+                else:
+                    sideOrder.append('None')
+        item.sideObj = sideOrder
+        sideOrdersItems.append(sideOrder)
+        sideOrder = []
+    print(sideOrdersItems)
+
+        # create a list of queryset for the sides
+        
     if request.method == 'POST':     
         if 'remove' in request.POST:
             cart_id = request.POST.get('cartId')
@@ -265,4 +296,5 @@ def cart_view(request,unique_id):
         'cart_items': cart_items,
         'total_price': total_price,
         'cart':cart,
+        'sideOrdersItems':sideOrdersItems,
     })

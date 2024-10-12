@@ -22,22 +22,68 @@
         .card {
             border-radius: 10px;
             overflow: hidden;
+            transition: box-shadow 0.3s;
+            /* Add transition for box-shadow */
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            /* Add shadow on hover */
         }
 
         .btn-cps {
             background-color: #61b124;
             color: white;
+            transition: background-color 0.3s;
+            /* Smooth transition */
         }
 
         .btn-cps:hover {
             background-color: #4a8f1d;
         }
 
-        @media only screen  and (max-width:800px) {
-            .mainBox{
-                margin-bottom:20px;
+        .toggle-sides {
+            cursor: pointer;
+            color: #61b124;
+            transition: color 0.3s;
+            /* Smooth color transition */
+        }
+
+        .toggle-sides:hover {
+            color: #4a8f1d;
+            /* Change color on hover */
+        }
+
+        .side-items {
+            display: none;
+            /* Initially hide the side items */
+            margin-top: 10px;
+            padding-left: 15px;
+            /* Add some left padding */
+            opacity: 0;
+            /* Start with opacity 0 for transition */
+            transition: opacity 0.5s;
+            /* Smooth opacity transition */
+        }
+
+        .side-items.show {
+            display: block;
+            /* Use show class to display */
+            opacity: 1;
+            /* Fade in effect */
+        }
+
+        .alert {
+            transition: all 0.3s;
+            /* Smooth transition for alerts */
+        }
+
+        @media only screen and (max-width:800px) {
+            .mainBox {
+                margin-bottom: 20px;
             }
-            #sideBox{
+
+            #sideBox {
                 margin-bottom: 20px;
             }
         }
@@ -62,12 +108,12 @@
 
     <!-- Cart Container -->
     <div class="container mt-5">
-        <h1 class="mb-4">Your Cart - {{cart.restaurant}}</h1>
+        <h1 class="mb-4">Your Cart - {{ cart.restaurant }}</h1>
 
         <!-- Cart Items -->
         <div class="row">
             {% if cart_items %}
-            <div class="col-md-8 mainBox" >
+            <div class="col-md-8 mainBox">
                 <div class="card p-4 shadow-sm">
                     <h4 class="mb-4">Items in Cart</h4>
                     <ul class="list-group">
@@ -83,17 +129,30 @@
                                         style="width: 80px; height: 80px; object-fit: cover;">
                                 </div>
                             </div>
+
+                            <!-- Toggle Button for Side Items -->
+                            <div>
+                                <span class="toggle-sides" onclick="toggleSides({{ forloop.counter0 }})">View/Hide
+                                    Sides</span>
+                            </div>
+
+                            <div class="side-items" id="side-items-{{ forloop.counter0 }}">
+                                {% for ordersides in item.sideObj %}
+                                <div>
+                                    <div>{{ ordersides.1.state }}</div>
+                                    <ul>
+                                        {% for side in ordersides %}
+                                        <li>{{ side.side.name }} x {{ side.quantity }} GHS{{ side.total}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endfor %}
+                            </div>
+
                             <div style="margin-top: 5px; align-items: center;">
-                                <!-- <form action="" method="POST" style="display:inline-block;"></form>
-                                    {% csrf_token %}
-                                    <input type="hidden" name="cartIdUpdate" value="{{item.unique_id}}">
-                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control"
-                                        style="width: 60px; display:inline-block;">
-                                    <button type="submit" class="btn btn-sm btn-primary" name="update">Update</button>
-                                </form> -->
                                 <form action="" method="POST" style="display:inline-block;">
                                     {% csrf_token %}
-                                    <input type="hidden" name="cartId" value="{{item.unique_id}}">
+                                    <input type="hidden" name="cartId" value="{{ item.unique_id }}">
                                     <button type="submit" class="btn btn-sm btn-danger" name="remove">Remove</button>
                                 </form>
                             </div>
@@ -105,27 +164,31 @@
             <div class="col-md-4" id="sideBox">
                 <!-- Order Summary -->
                 <div class="card p-4 shadow-sm">
-                    
                     <h4 class="mb-4">Order Summary</h4>
-                    <p>Total Price: GHS{{ total_price }}</p>
+                    <p>Total Price: <span id="total-price">GHS{{ total_price }}</span></p>
                     <form action="" method="POST">
                         {% csrf_token %}
                         <input type="hidden">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="inputGroup-sizing-default" style="gap: 3px;align-items: center;">
-                                        <img src="{% static 'img/ghana.svg' %}" width="30px" height="30px" alt=""><span>+233</span>
-                                    </span>
-                                    <input type="text" class="form-control" aria-label="Sizing example input"
-                                        aria-describedby="inputGroup-sizing-default" value="{{request.user.profile.phone}}" name="phone">
-                                </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="floatingInput" value="Kumasi" name="City" readonly>
-                                        <label for="City">City</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="Location" placeholder="Location" name="Location">
-                                        <label for="Location">Location</label>
-                                    </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default"
+                                style="gap: 3px; align-items: center;">
+                                <img src="{% static 'img/ghana.svg' %}" width="30px" height="30px"
+                                    alt=""><span>+233</span>
+                            </span>
+                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                aria-describedby="inputGroup-sizing-default" value="{{ request.user.profile.phone }}"
+                                name="phone">
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" value="Kumasi" name="City"
+                                readonly>
+                            <label for="City">City</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="Location" placeholder="Location"
+                                name="Location">
+                            <label for="Location">Location</label>
+                        </div>
                         <button class="btn btn-cps w-100" type="submit" name="placeOrder">Place Order</button>
                     </form>
                 </div>
@@ -143,6 +206,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script>
+        function toggleSides(index) {
+            var sideItems = document.getElementById("side-items-" + index);
+            if (sideItems.style.display === "none" || sideItems.style.display === "") {
+                sideItems.classList.add("show"); // Add class to show with transition
+                sideItems.style.display = "block"; // Set display to block for visibility
+            } else {
+                sideItems.classList.remove("show"); // Remove class to hide with transition
+                sideItems.style.display = "none"; // Set display to none for hiding
+            }
+        }
+    </script>
 </body>
 
 </html>

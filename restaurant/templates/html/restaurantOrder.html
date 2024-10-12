@@ -170,7 +170,9 @@
                                     class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
     {% for food in foods %}
     <div class="col">
+
         <div class="product-item">
+            <form action="#" method="POST">
             <span class="badge bg-success position-absolute m-3">-30%</span>
             <a href="#" class="btn-wishlist">
                 <svg width="24" height="24">
@@ -193,7 +195,7 @@
             <span class="price">GHS{{food.price}}</span>
     
             <div class="d-flex align-items-center justify-content-between">
-                <form action="#" method="POST">
+               
                     <div class="input-group product-qty">
                         <span class="input-group-btn">
                             <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
@@ -219,49 +221,49 @@
                     </div>
     
                     <input type="submit" name="addToCart" id="addToCart" value="Add to Cart">
-                </form>
+                
             </div>
     
             <!-- Add toggle button for sides -->
-            <button class="btn btn-primary mt-3 toggle-sides-btn" style="background-color: #61b124;">View Sides</button>
+            <div class="btn btn-primary mt-3 toggle-sides-btn" style="background-color: #61b124;">View Sides</div>
             <div class="sides-form" style="display: none;"> <!-- Initially hidden -->
                 {% for side in food.side_set.all %}
-    <div class="side-item d-flex align-items-center justify-content-between mt-2">
-        <div class="d-flex flex-column align-items-center" style="margin-right: 9px;">
-            <figure class="mb-1">
-                <img src="{{side.image.url}}" alt="{{side.name}}"
-                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 10px;">
-            </figure>
-            <p class="text-center mb-0">{{side.name}}</p>
-        </div>
-<div>
-            <div>GHS{{side.price}}</div>
-            <div>
-                <span class="input-group-btn">
-                    <button type="button" class="side-left-minus btn btn-danger btn-number" data-side-id="{{side.id}}"
-                        data-type="minus">
-                        <svg width="16" height="16">
-                            <use xlink:href="#minus"></use>
-                        </svg>
-                    </button>
-                </span>
-                <input type="text" name="side_quantity_{{side.id}}" id="side_quantity_{{side.id}}"
-                    class="form-control input-number text-center" value="0" min="0" style="display: inline-block; width: 60px; ">
-                <span class="input-group-btn">
-                    <button type="button" class="side-right-plus btn btn-success btn-number" data-side-id="{{side.id}}"
-                        data-type="plus">
-                        <svg width="16" height="16">
-                            <use xlink:href="#plus"></use>
-                        </svg>
-                    </button>
-                </span>
-            </div>
-            
-</div>
-    </div>
-
+                    <div class="side-item d-flex align-items-center justify-content-between mt-2">
+                        <div class="d-flex flex-column align-items-center" style="margin-right: 9px;">
+                            <figure class="mb-1">
+                                <img src="{{side.image.url}}" alt="{{side.name}}"
+                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 10px;">
+                            </figure>
+                            <p class="text-center mb-0">{{side.name}}</p>
+                        </div>
+                        <div>
+                            <div>GHS{{side.price}}</div>
+                            <div>
+                                <span class="input-group-btn">
+                                    <button type="button" class="side-left-minus btn btn-danger btn-number" data-side-id="{{side.id}}"
+                                        data-type="minus">
+                                        <svg width="16" height="16">
+                                            <use xlink:href="#minus"></use>
+                                        </svg>
+                                    </button>
+                                </span>
+                                <input type="text" name="{{side.name}}" id="side_quantity_{{side.id}}"
+                                    class="form-control input-number text-center" value="0" min="0" style="display: inline-block; width: 60px; ">
+                                <span class="input-group-btn">
+                                    <button type="button" class="side-right-plus btn btn-success btn-number" data-side-id="{{side.id}}"
+                                        data-type="plus">
+                                        <svg width="16" height="16">
+                                            <use xlink:href="#plus"></use>
+                                        </svg>
+                                    </button>
+                                </span>
+                            </div>
+                            
+                </div>
+                    </div>
                 {% endfor %}
             </div>
+            </form>
     
         </div>
     </div>

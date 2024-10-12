@@ -60,69 +60,65 @@
         tr:hover td {
             background-color: #e9ecef;
         }
-                /* The switch - the container */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
 
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-}
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-/* Slider before element */
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: 0.4s;
-}
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+        }
 
-/* When the checkbox is checked, change background color */
-input:checked + .slider {
-  background-color: #2196F3;
-}
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
 
-/* Move the slider to the right when checked */
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
 
-/* Rounded slider */
-.slider.round {
-  border-radius: 34px;
-}
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
 
-.slider.round:before {
-  border-radius: 50%;
-}
-.mb{
-    display: none;
-}
-.activeBox{
-    display: flex;
-}
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .mb {
+            display: none;
+        }
+
+        .activeBox {
+            display: flex;
+        }
     </style>
 </head>
 
@@ -167,143 +163,141 @@ input:checked + .slider:before {
             </div>
         </div>
     </nav>
-<div class="container" style="display: flex; justify-content: center; ">
-<h2>Pending Order Requests</h2>
-</div>
-<div class="container" style="display: flex; justify-content: center;">
-    <div style="display: flex; justify-content: center; padding: 10px;">
-        <span style="padding-right: 5px;">Single Requests</span>
-        <label class="switch">
-            <input type="checkbox" id="sliderCheckbox">
-            <span class="slider round"></span>
-        </label>
-        <span style="padding-left: 5px;">Bulk Requests</span>
+    <div class="container" style="display: flex; justify-content: center;">
+        <h2>Pending Order Requests</h2>
     </div>
-</div>
-    <div class="container"  id="single" style="display: block;">
-    <table class="table">
-        <thead class="table-light" style="text-align: center;">
-            <th>Id</th>
-            <th>Product</th>
-            <th>Pickup Location</th>
-            <th>Pickup Number</th>
-            <th>Dropoff Name</th>
-            <th>Dropoff Location</th>
-            <th>Dropoff Contact</th>
-            <th>Assigned</th>
-            <th>Picked Up</th>
-            <th>enroute</th>
-            <th>delivered</th>
-            <th></th>
-    
-        </thead>
-        <tbody class="table" style="text-align: center;">
-            {% for data in DeliveryRequests %}
-            <tr>
-              
-                <td>{{data.id_curator}}</td>
-                <td>{{data.product}}</td>
-                <td>{{data.pickupLocation}}</td>
-                <td>{{data.pickupNumber}}</td>
-                <td>{{data.dropoffName}}</td>
-                <td>{{data.dropoffLocation}}</td>
-                <td>{{data.dropoffNumber}}</td>
-                <td>
-                    {% if data.assigned == False %}
-                    <input type="checkbox" name="assigned" disabled>
-                    {% else %}
-                    <input type="checkbox" name="assigned" checked>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if data.pickedUp == False %}
-                    <input type="checkbox" name="assigned" disabled>
-                    {% else %}
-                    <input type="checkbox" name="assigned" checked>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if data.enroute == False %}
-                    <input type="checkbox" name="assigned" disabled>
-                    {% else %}
-                    <input type="checkbox" name="assigned" checked>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if data.delivered == False %}
-                    <input type="checkbox" name="assigned" disabled>
-                    {% else %}
-                    <input type="checkbox" name="assigned" checked>
-                    {% endif %}
-                </td>
-                <td><a href="{% url 'detailsPage' data.id %}">details</a></td>
-    
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container" style="display: flex; justify-content: center;">
+        <div style="display: flex; justify-content: center; padding: 10px;">
+            <span style="padding-right: 5px;">Single Requests</span>
+            <label class="switch">
+                <input type="checkbox" id="sliderCheckbox">
+                <span class="slider round"></span>
+            </label>
+            <span style="padding-left: 5px;">Bulk Requests</span>
+        </div>
+    </div>
+    <div class="container" id="single" style="display: block;">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-light" style="text-align: center;">
+                    <th>Id</th>
+                    <th>Product</th>
+                    <th>Pickup Location</th>
+                    <th>Pickup Number</th>
+                    <th>Dropoff Name</th>
+                    <th>Dropoff Location</th>
+                    <th>Dropoff Number</th>
+                    <th>Assigned</th>
+                    <th>Picked Up</th>
+                    <th>enroute</th>
+                    <th>delivered</th>
+                    <th></th>
+
+                </thead>
+                <tbody class="table" style="text-align: center;">
+                    {% for data in DeliveryRequests %}
+                    <tr>
+                        <td>{{data.id_curator}}</td>
+                        <td>{{data.product}}</td>
+                        <td>{{data.pickupLocation}}</td>
+                        <td>0{{data.pickupNumber}}</td>
+                        <td>{{data.dropoffName}}</td>
+                        <td>{{data.dropoffLocation}}</td>
+                        <td>0{{data.dropoffNumber}}</td>
+                        <td>
+                            {% if data.assigned == False %}
+                            <input type="checkbox" name="assigned" disabled>
+                            {% else %}
+                            <input type="checkbox" name="assigned" checked>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if data.pickedUp == False %}
+                            <input type="checkbox" name="assigned" disabled>
+                            {% else %}
+                            <input type="checkbox" name="assigned" checked>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if data.enroute == False %}
+                            <input type="checkbox" name="assigned" disabled>
+                            {% else %}
+                            <input type="checkbox" name="assigned" checked>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if data.delivered == False %}
+                            <input type="checkbox" name="assigned" disabled>
+                            {% else %}
+                            <input type="checkbox" name="assigned" checked>
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'detailsPage' data.id %}">details</a></td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="container"  id="bulk" style="display: none;">
-        <table class="table">
-            <thead class="table-light" style="text-align: center;">
-                <tr>
-                    <th>Delivery Id</th>
-                    <th>Product</th>
-                    <th>Order Count</th>
-                    <th>Product Fee</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody style="text-align: center;">
-                {% for data in DeliveryRequestBulk %}
-                <tr>
-                    <td>{{ data.id_curator }}</td>
-                    <td>{{ data.product }}</td>
-                    <td>{{ data.orderQuantity }}</td>
-                    <td>{{ data.productFee }}</td>
-                    <td>
-                        {% if data.enroute == False %}
-                        not picked up
-                        {% else %}
-                        picked up
-                        {% endif %}
-                    </td>
-                    <td><a href="{% url 'bulkPendingDetails' data.unique_id %}">details</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="container" id="bulk" style="display: none;">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="table-light" style="text-align: center;">
+                    <tr>
+                        <th>Delivery Id</th>
+                        <th>Product</th>
+                        <th>Order Count</th>
+                        <th>Product Fee</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody style="text-align: center;">
+                    {% for data in DeliveryRequestBulk %}
+                    <tr>
+                        <td>{{ data.id_curator }}</td>
+                        <td>{{ data.product }}</td>
+                        <td>{{ data.orderQuantity }}</td>
+                        <td>{{ data.productFee }}</td>
+                        <td>
+                            {% if data.enroute == False %}
+                            not picked up
+                            {% else %}
+                            picked up
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'bulkPendingDetails' data.unique_id %}">details</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
     <script>
-        window.onload = () =>{
-            if (document.getElementById('sliderCheckbox').checked){
+        window.onload = () => {
+            if (document.getElementById('sliderCheckbox').checked) {
                 document.getElementById('sliderCheckbox').click()
                 bulk.style.display = 'none'
-
                 single.style.display = 'block'
-
             }
         }
-           single = document.getElementById('single')
-            bulk = document.getElementById('bulk')
-            
-            document.getElementById('sliderCheckbox').addEventListener('change', function () {
-                const status = document.getElementById('status');
+        single = document.getElementById('single')
+        bulk = document.getElementById('bulk')
 
-                if (this.checked) {
-                    bulk.style.display = 'block'
-                   
-                    single.style.display = 'none'
+        document.getElementById('sliderCheckbox').addEventListener('change', function () {
+            const status = document.getElementById('status');
 
-                } else {
-                    bulk.style.display = 'none'
-                    
-                    single.style.display = 'block'
+            if (this.checked) {
+                bulk.style.display = 'block'
+                single.style.display = 'none'
 
-                }
-            });
+            } else {
+                bulk.style.display = 'none'
+                single.style.display = 'block'
+            }
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

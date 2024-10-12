@@ -167,6 +167,8 @@
                             <th>Product</th>
                             <th>Order Count</th>
                             <th>Pickup Number</th>
+                            <th>Pickup Location</th>
+                            <th>Pickup Point</th>
                             <th>Product Fee</th>
                             <th>Status</th>
                           
@@ -179,6 +181,8 @@
                             <td>{{ DeliveryRequested.product }}</td>
                             <td>{{ DeliveryRequested.orderQuantity }}</td>
                             <td>{{DeliveryRequested.pickupNumber}}</td>
+                            <td>{{DeliveryRequested.pickupLocation}}</td>
+                            <td>{{DeliveryRequested.pickupPoint}}</td>
                             <td>{{ DeliveryRequested.productFee }}</td>
                             <td>
                                 {% if DeliveryRequested.enroute == False %}
@@ -202,9 +206,8 @@
                 <thead class="table-light" style="text-align: center;">
                     <tr>
                        
-                        <th>Location</th>
-                        <th>Delivery Point</th>
-                        <th>Order Count</th>
+                        <th>Dropoff Location</th>
+                        <th>Dropoff Point</th>
                         <th>Dropoff Name</th>
                         <th>Dropoff Number</th>
                         <th>Additonal Info</th>
@@ -217,11 +220,10 @@
   
                     <tr>
                         
-                        <td>{{ data.Location }}</td>
+                        <td>{{ data.deliveryLocation }}</td>
                         <td>{{data.deliveryPoint}}</td>
-                        <td>{{data.orderQuantity }}</td>
                         <td>{{data.dropoffName}}</td>
-                        <td>{{ data.dropOffNumber }}</td>
+                        <td>{{ data.dropoffNumber }}</td>
                         <td>{{ data.additionalInfo}}</td>
                     
                     </tr>
