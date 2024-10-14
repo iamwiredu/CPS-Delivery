@@ -201,10 +201,9 @@ input:checked + .slider:before {
 </div>
                     <div class="container" style="text-align: center;">
                         <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
-                            style="background-color: #61b124; color: white; border: none; margin: 5px;">View Past Deliveries</a>
+                            style="background-color: #61b124; color: white; border: none; margin: 5px;">Past Deliveries</a>
                         <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
-                            style="background-color: #61b124; color: white; border: none; margin: 5px;">View Pending Delivery
-                            Requests</a>
+                            style="background-color: #61b124; color: white; border: none; margin: 5px;">Pending Deliveries</a>
                     </div>
 <div class=" container table-responsive">
 <table class="table hidden" id="bulkDeliveryBox">
@@ -244,7 +243,7 @@ input:checked + .slider:before {
         <form action="" method="POST" id="baseForm">
             {% csrf_token %}
        <div style="display: flex; justify-content: space-between;"> 
-            <h3 style="color:black;">Sender</h3>
+            <h3 style="color:black;">Sender Details</h3>
                 <input type="submit" value="Add Bulk Request" name="addBulkRequest" style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
                 <input type="hidden" value="" id="objectInput" name="objectInput">
                 <input type="hidden" value="" id="sessionStorageLength" name="quantity">
