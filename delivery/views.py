@@ -5,6 +5,7 @@ from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest
 from .forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import formset_factory
 # Create your views here.
 
 class accountHome(LoginRequiredMixin,View):
@@ -121,3 +122,53 @@ class bulkPendingDetails(LoginRequiredMixin,View):
             'DeliveryRequested':DeliveryRequested,
         }
         return render(request,'bulkPendingDetails.html',context)
+    
+from django.forms import formset_factory
+from django.shortcuts import render, redirect
+
+def requestMod(request):
+    # Individual forms
+    DeliveryRequestFormCreator = DeliveryRequestForm()
+    BulkDeliveryRequestFormCreator = BulkDeliveryRequestForm()
+
+    # Formset for bulk delivery points
+
+
+    if request.method == 'POST':
+        if 'addBulkRequest' in request.POST:
+            # Get the number of delivery points from the form
+            number_of_points = int(request.POST.get('objectInput'))
+           
+            bulksender = BulkDeliveryRequestForm(request.POST)
+          
+            if bulksender.is_valid():
+                event = bulksender.save(commit=False)
+                event.user = request.user
+                event.orderQuantity = number_of_points
+                event.save()
+
+                for i in range(1, number_of_points+1):
+                    dropoff_number = request.POST.get(f'dropoffNumber_bulk_{i}')
+                    dropoff_name = request.POST.get(f'id_dropoffName_bulk_{i}')
+                    delivery_point = request.POST.get(f'deliveryPoint_bulk_{i}')
+                    dropoff_area = request.POST.get(f'id_dropoffArea_bulk_{i}')
+                    additional_info = request.POST.get(f'additionalInfo_bulk_{i}')
+                    point = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=delivery_point,dropoffNumber=dropoff_number,dropoffName=dropoff_name,deliveryLocation=dropoff_area,additionalInfo=additional_info)
+                    point.save()
+                    print(i)
+
+            
+            else:
+                print('error')
+    else:
+        # Display empty formset initially
+        print('error')
+
+    # Pass forms and formset to the template context
+    context = {
+        'DeliveryRequestFormCreator': DeliveryRequestFormCreator,
+        'BulkDeliveryRequestFormCreator': BulkDeliveryRequestFormCreator,
+      
+    }
+    
+    return render(request, 'requestMod.html', context)

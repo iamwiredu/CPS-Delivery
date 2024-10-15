@@ -39,7 +39,7 @@ class BulkDeliveryRequestForm(ModelForm):
 class BulkDeliveryPointForm(ModelForm):
     class Meta:
         model = BulkDeliveryPoint
-        fields = ['deliveryPoint','dropoffNumber','additionalInfo']
+        fields = ['dropoffNumber','dropoffName','deliveryPoint','deliveryLocation','additionalInfo']
 
 class SideForm(ModelForm):
     class Meta:

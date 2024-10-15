@@ -218,29 +218,14 @@
         <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
             style="background-color: #61b124; color: white; border: none; margin: 5px;">Pending Deliveries</a>
     </div>
-    <div class=" container table-responsive">
-        <table class="table hidden" id="bulkDeliveryBox">
-            <thead>
-                <tr>
-                    <th scope="col">Dropoff Number</th>
-                    <th scope="col">Dropoff Name</th>
-                    <th scope="col">Delivery Point</th>
-                    <th scope="col">Dropoff Location</th>
-                    <th scope="col">Additional Info</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
+<form method="POST" class="uniForm">
     <div class="container mt-5 activeBox" id="single">
         <div class="row">
-
+        
             <div>
-                <form method="POST" class="uniForm">
+              
                     {% csrf_token %}
-                    {{ DeliveryRequestFormCreator|crispy }}
+                   {{DeliveryRequestFormCreator|crispy}}
 
                     <div id="price"></div>
                     <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary"
@@ -257,204 +242,145 @@
             {% csrf_token %}
             <div style="display: flex; justify-content: space-between;">
                 <h3 style="color:black;">Sender Details</h3>
-                <input type="submit" value="Add Bulk Request" name="addBulkRequest"
-                    style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
+            
                 <input type="hidden" value="" id="objectInput" name="objectInput">
-                <input type="hidden" value="" id="sessionStorageLength" name="quantity">
+                
 
             </div>
 
             {{BulkDeliveryRequestFormCreator|crispy}}
 
-        </form>
-        <div style="display: flex; justify-content: right; margin: 20px 0px 20px 0px; ">
-            <input type="button" value="Add Delivery Point" id="AAP"
-                style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
+        
+ <div style="display: flex; justify-content: right; margin: 20px 0px 20px 0px;">
+    <label for="numberOfPoints" style="padding-right: 10px;">Number of Delivery Points:</label>
+    <input type="number" id="numberOfPoints" name="numberOfPoints" min="1" style="width: 50px; text-align: center;">
+    <input type="button" value="Generate Forms" id="generateForms"
+        style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
+</div>
 
-        </div>
-        <div id="AAPbox" class="hidden">
-            <h3 style="color: #1c1e25;">Dropoff Point</h3>
+<div id="deliveryFormsContainer"></div>
+    <input type="submit" value="Add Bulk Request" name="addBulkRequest"
+        style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
+</form>
 
-            <!-- Delivery Point -->
-
-            <!-- Drop Off Number -->
-            <div class="form-group">
-                <label for="id_dropoffNumber" class="requiredField">Drop Off Number</label>
-                <div>
-                    <input type="number" name="dropoffNumber_bulk" id="id_dropoffNumber_bulk"
-                        class="numberinput form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="id_dropoffName" class="requiredField">DropOff Name</label>
-                <div>
-                    <input type="text" name="id_dropoffName_bulk" id="id_dropoffName_bulk"
-                        class="textinput form-control">
-                </div>
-            </div>
-            <!-- Pickup Point -->
-            <div class="form-group">
-                <label class="requiredField" for="id_deliveryPoint_bulk">Dropoff Point</label>
-                <div>
-                    <select name="deliveryPoint" id="id_deliveryPoint_bulk" class="select form-control">
-                        <option value="Select">Select</option>
-                        <option value="Kumasi">Kumasi</option>
-                        <option value="Cape Coast">Cape Coast</option>
-                        <option value="Takoradi">Takoradi</option>
-                        <option value="Koforidua">Koforidua</option>
-                        <option value="Ho">Ho</option>
-                        <option value="Sunyani">Sunyani</option>
-                        <option value="Tarkwa">Tarkwa</option>
-                        <option value="Obuasi">Obuasi</option>
-                        <option value="Akosombo">Akosombo</option>
-                        <option value="Techiman">Techiman</option>
-                        <option value="Nsawam">Nsawam</option>
-                        <option value="Nkwakaw">Nkwakaw</option>
-                        <option value="Winneba">Winneba</option>
-                        <option value="Mankessim">Mankessim</option>
-                        <option value="Suhum">Suhum</option>
-                        <option value="Konongo">Konongo</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="id_dropoffArea_bulk" class="requiredField">Drop Off Area</label>
-                <div>
-                    <input type="text" name="id_dropoffArea_bulk" id="id_dropoffArea_bulk"
-                        class="textinput form-control">
-                </div>
-            </div>
-            <!-- Additional Info -->
-            <div class="form-group">
-                <label class="requiredField" for="id_additionalInfo_bulk">Additional Info</label>
-                <textarea name="additionalInfo" class="textarea form-control" id="id_additionalInfo_bulk"
-                    rows="4"></textarea>
-
-            </div>
-            <!-- Submit Button -->
-            <input type="button" name="addPoint" id="addPoint" value="Add"
-                style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
-
-
-        </div>
-    </div>
     <div>
+      
 
     </div>
-    <script>
-        //function to populate data with table
-        function populateTable() {
-            var tableBody = document.querySelector('#bulkDeliveryBox tbody');
-            tableBody.innerHTML = '';  // Clear the table body
+<script>
+    document.getElementById('generateForms').addEventListener('click', function () {
+        const objectInput = document.getElementById('objectInput')
+        const numberOfPoints = document.getElementById('numberOfPoints').value;
+        const container = document.getElementById('deliveryFormsContainer');
+        container.innerHTML = ''; // Clear the container before generating new forms
 
-            // Loop through all keys in sessionStorage
-            Object.keys(sessionStorage).forEach(function (key) {
-                // Get the stored data (it's in JSON format, so parse it back to an array)
-                var dataList = JSON.parse(sessionStorage.getItem(key));
+        objectInput.value = numberOfPoints
+        for (let i = 0; i < numberOfPoints; i++) {
+            // Create a new form for each delivery point
+            const formDiv = document.createElement('div');
+            formDiv.classList.add('bulk-delivery-point-form');
+            formDiv.innerHTML = `
+                <div class='DeliveryPoints'>
+    <h1>Dropoff ${i + 1}</h1>
+    <div class="form-group">
+        <label for="id_dropoffNumber_bulk_${i + 1}" class="requiredField">Drop Off Number</label>
+        <div>
+            <input type="number" name="dropoffNumber_bulk_${i + 1}" id="id_dropoffNumber_bulk_${i + 1}" class="numberinput form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="id_dropoffName_bulk_${i + 1}" class="requiredField">DropOff Name</label>
+        <div>
+            <input type="text" name="id_dropoffName_bulk_${i + 1}" id="id_dropoffName_bulk_${i + 1}" class="textinput form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="requiredField" for="id_deliveryPoint_bulk_${i + 1}">Dropoff Point</label>
+        <div>
+            <select name="deliveryPoint_bulk_${i + 1}" id="id_deliveryPoint_bulk_${i + 1}" class="select form-control">
+                <option value="Select">Select</option>
+                <option value="Kumasi">Kumasi</option>
+                <option value="Cape Coast">Cape Coast</option>
+                <option value="Takoradi">Takoradi</option>
+                <option value="Koforidua">Koforidua</option>
+                <option value="Ho">Ho</option>
+                <option value="Sunyani">Sunyani</option>
+                <option value="Tarkwa">Tarkwa</option>
+                <option value="Obuasi">Obuasi</option>
+                <option value="Akosombo">Akosombo</option>
+                <option value="Techiman">Techiman</option>
+                <option value="Nsawam">Nsawam</option>
+                <option value="Nkwakaw">Nkwakaw</option>
+                <option value="Winneba">Winneba</option>
+                <option value="Mankessim">Mankessim</option>
+                <option value="Suhum">Suhum</option>
+                <option value="Konongo">Konongo</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="id_dropoffArea_bulk_${i + 1}" class="requiredField">Drop Off Area</label>
+        <div>
+            <input type="text" name="id_dropoffArea_bulk_${i + 1}" id="id_dropoffArea_bulk_${i + 1}" class="textinput form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="id_additionalInfo_bulk_${i + 1}" class="requiredField">Additional Info</label>
+        <textarea name="additionalInfo_bulk_${i + 1}" class="textarea form-control" id="id_additionalInfo_bulk_${i + 1}" rows="4"></textarea>
+    </div>
+</div>
 
-                // Create a new row and insert the data into cells
-                var newRow = tableBody.insertRow();
-                dataList.slice(0, 4).forEach(function (item) {
-                    var newCell = newRow.insertCell();
-                    newCell.textContent = item;
-                });
-
-                // Handle Additional Info with ellipsis if it's too long
-                var additionalInfo = dataList[4];
-                var truncatedInfo = additionalInfo.length > 20 ? additionalInfo.substring(0, 20) + '...' : additionalInfo;
-
-                var newCell = newRow.insertCell();
-                newCell.textContent = truncatedInfo;
-                // Create a "Delete" button for this row
-                var actionCell = newRow.insertCell();
-                var deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = function () {
-                    // Remove the item from sessionStorage
-                    sessionStorage.removeItem(key);
-
-                    // Remove the row from the table
-                    newRow.remove();
-                    inputField = document.getElementById('objectInput');
-                    inputField.value = ''; // Clear the input field first
-
-                    Object.keys(sessionStorage).forEach(key => {
-                        // Get the value for each key
-                        let obj = sessionStorage.getItem(key);
-                        // Append it to the input field
-                        inputField.value += obj + ','; // Adding a newline for better readability
-                    });
-                };
-                actionCell.appendChild(deleteButton);
-                inputField = document.getElementById('objectInput');
-                inputField.value = ''; // Clear the input field first
-
-                Object.keys(sessionStorage).forEach(key => {
-                    // Get the value for each key
-                    let obj = sessionStorage.getItem(key);
-                    // Append it to the input field
-                    inputField.value += obj + ','; // Adding a newline for better readability
-                });
-
-            });
+            `;
+            container.appendChild(formDiv);
         }
 
-        var addPointButton = document.getElementById('addPoint');
-        var keyDir = 1
-        addPointButton.onclick = () => {
-            var dropoffNumber = document.getElementById('id_dropoffNumber_bulk').value;
-            var dropoffName = document.getElementById('id_dropoffName_bulk').value;
-            var deliveryPoint = document.getElementById('id_deliveryPoint_bulk').value;
-            var dropoffArea = document.getElementById('id_dropoffArea_bulk').value;
-            var additionalInfo = document.getElementById('id_additionalInfo_bulk').value;
+        // Add a hidden input to track the number of points submitted
+        const form = document.getElementById('baseForm');
+        if (!document.getElementById('numberOfPointsInput')) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.id = 'numberOfPointsInput';
+            input.name = 'numberOfPoints';
+            input.value = numberOfPoints;
+            form.appendChild(input);
+        } else {
+            document.getElementById('numberOfPointsInput').value = numberOfPoints;
+        }
+    });
+</script>
 
-            // Alert the values (concatenated as a string)
-            // alert(
-            //     "Dropoff Number: " + dropoffNumber + "\n" +
-            //     "Dropoff Name: " + dropoffName + "\n" +
-            //     "Delivery Point: " + deliveryPoint + "\n" +
-            //     "Dropoff Area: " + dropoffArea + "\n" +
-            //     "Additional Info: " + additionalInfo
-            // );
 
-            // Create a list (array) of the data
-            var dataList = [
-                dropoffNumber,
-                dropoffName,
-                deliveryPoint,
-                dropoffArea,
-                additionalInfo
-            ];
+    <script>
+        document.getElementById('baseForm').onsubmit = () => {
+            sessionStorage.clear()
+        }
+        slider = document.getElementById('sliderCheckbox')
+        window.onload = () => {
+            if (slider.checked) {
+                slider.click()
+            }
+        }
 
-            // Create a unique key (could be based on dropoff number, or an index)
-            var key = keyDir; // Assuming dropoffNumber is unique, you can change it
-            keyDir += 1
-            // Store the data list in sessionStorage with the key
-            sessionStorage.setItem(key, JSON.stringify(dataList)); // Save the list as a JSON string
+        single = document.getElementById('single')
+        bulk = document.getElementById('bulk')
+       
+        document.getElementById('sliderCheckbox').addEventListener('change', function () {
+            const status = document.getElementById('status');
 
-            // Optionally, you can retrieve the stored data later like this:
-            // var storedData = JSON.parse(sessionStorage.getItem(key));
-            populateTable()
-            document.getElementById('sessionStorageLength').value = sessionStorage.length
-            alert('Order Added to bulk')
-            // reset 
-            document.getElementById('id_dropoffNumber_bulk').value = '';
-            document.getElementById('id_dropoffName_bulk').value = '';
-            document.getElementById('id_deliveryPoint_bulk').value = '';
-            document.getElementById('id_dropoffArea_bulk').value = '';
-            document.getElementById('id_additionalInfo_bulk').value = '';
-        };
+            if (this.checked) {
+                bulk.classList.add('activeBox')
+               
+                single.classList.remove('activeBox')
 
-        // Getting the values of the input or select boxes by ID
+            } else {
+                bulk.classList.remove('activeBox')
+               
+                single.classList.add('activeBox')
 
-        // Getting the button by ID (no .value needed here, as it's for interaction)
-
+            }
+        });
 
     </script>
-    <script> //This script handles addition of object to delvieryPoint
-
-    </script>
- 
     <script>
         const dataset = {
             "KumasiAccra": 37,
