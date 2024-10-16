@@ -2,530 +2,192 @@
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Delivery Request</title>
-    <style>
+    <title>Document</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<style>
+      
         @font-face {
             font-family: "CustomFont";
             src: url("{% static 'font/Boge.ttf' %}") format('truetype');
         }
 
-        .asteriskField {
-            display: none;
-        }
-
-        .navbar {
-            background-color: #1c1e25;
-        }
-
-
-        .nav-link {
-            color: white;
-        }
-
-
-        .btn-primary {
-            background-color: #61b124;
-            border-color: #61b124;
-        }
-
-        .btn-primary:hover {
-            background-color: #4a9e23;
-            border-color: #4a9e23;
-        }
-
-        .sidebar {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .info-item h5 {
-            color: #61b124;
-            font-weight: bold;
-        }
-
-        .progress-bar {
-            background-color: #61b124;
-        }
-
         #CPS {
-            font-family: 'CustomFont';
+            font-family: "CustomFont";
+        }
+
+        #CPS a {
+            text-decoration: none;
             color: #61b124;
         }
 
-        .navbar-brand {
-            color: #61b124;
-        }
-
-        .form-group {
-            margin: 5px;
-        }
-
-        .activeBox {
-            display: block;
-        }
-
-        /* The switch - the container */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        /* Hide default HTML checkbox */
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        /* The slider */
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-        }
-
-        /* Slider before element */
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
+        .line {
+            width: 100%;
+            height: 2px;
             background-color: white;
-            transition: 0.4s;
+        }
+.container .container-fluid {
+    padding: 10px;
+    border: 1px solid #61b124;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    color: #1c1e25;
+}
+
+        .status {
+            display: flex;
+            justify-content: space-around;
         }
 
-        /* When the checkbox is checked, change background color */
-        input:checked+.slider {
-            background-color: #2196F3;
+        .container {
+            margin-bottom: 25px;
         }
 
-        /* Move the slider to the right when checked */
-        input:checked+.slider:before {
-            transform: translateX(26px);
+        .set {
+            vertical-align: middle;
         }
-
-        /* Rounded slider */
-        .slider.round {
-            border-radius: 34px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-
-        .mt-5,
-        .no_d {
-            display: none;
-        }
-
-        .activeBox {
-            display: block;
-        }
-
-        #AAPbox {
-            overflow: hidden;
-            /* Prevents content overflow during transition */
-            max-height: 0;
-            /* Initial state (hidden) */
-            transition: max-height 0.5s ease;
-            /* Animation for max-height */
-        }
-
-        #AAPbox.show {
-            max-height: 500px;
-            /* Adjust to a value greater than the form height */
-        }
-
-        .hidden {
-            display: none;
-            /* Completely hide the box when not shown */
-        }
-    </style>
-
-</head>
-
+    
+</style>
 <body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#" id="CPS" style="color: #61b124;">CPS</a>
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="#61b124" viewBox="0 0 24 24"
-                    stroke="#61b124">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
-                        </path>
-                    </g>
-                </svg><span style="color:white;">{{request.user}}</span>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
-                    aria-labelledby="offcanvasDarkNavbarLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">{{request.user}}</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Logout</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Settings</a>
-                            </li>
-                        </ul>
-                    </div>
+    <body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" id="CPS" style="color: #61b124;">CPS</a>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="#61b124" viewBox="0 0 24 24"
+                stroke="#61b124">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
+                    </path>
+                </g>
+            </svg><span style="color:white;">{{request.user}}</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">{{request.user}}</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Settings</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div style="display: flex; justify-content: center; padding: 10px;">
-        <span style="padding-right: 5px;">Single Request</span>
-        <label class="switch">
-            <input type="checkbox" id="sliderCheckbox">
-            <span class="slider round"></span>
-        </label>
-        <span style="padding-left: 5px;">Bulk Request</span>
-    </div>
-    <div class="container" style="text-align: center;">
-        <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
-            style="background-color: #61b124; color: white; border: none; margin: 5px;">Past Deliveries</a>
-        <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
-            style="background-color: #61b124; color: white; border: none; margin: 5px;">Pending Deliveries</a>
-    </div>
-    <div class=" container table-responsive">
-        <table class="table hidden" id="bulkDeliveryBox">
-            <thead>
-                <tr>
-                    <th scope="col">Dropoff Number</th>
-                    <th scope="col">Dropoff Name</th>
-                    <th scope="col">Delivery Point</th>
-                    <th scope="col">Dropoff Location</th>
-                    <th scope="col">Additional Info</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-    <div class="container mt-5 activeBox" id="single">
-        <div class="row">
-
+    
+        <div class="status">
             <div>
-                <form method="POST" class="uniForm">
-                    {% csrf_token %}
-                    {{ DeliveryRequestFormCreator|crispy }}
-
-                    <div id="price"></div>
-                    <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary"
-                        style="background-color: #61b124; color: white; border: none; float: right; margin: 5px 0 5px 0;"
-                        value="Request">
-                </form>
+                <span class="set">Assigned</span>
+                {% if DeliveryRequested.assigned == False %}
+                <span class="material-icons set" style="color: red;">close</span>
+                {% else %}
+                <span class="material-icons set" style="color: green;">check</span>
+                {% endif %}
             </div>
-
+            <div>
+                <span class="set">Picked up</span>
+                {% if DeliveryRequested.pickedUp == False %}
+                <span class="material-icons set" style="color: red;">close</span>
+                {% else %}
+                <span class="material-icons set" style="color: green;">check</span>
+                {% endif %}
+            </div>
+            <div>
+                <span class="set">Enroute</span>
+                {% if DeliveryRequested.enroute == False %}
+                <span class="material-icons set" style="color: red;">close</span>
+                {% else %}
+                <span class="material-icons set" style="color: green;">check</span>
+                {% endif %}
+            </div>
+            <div>
+                <span class="set">Delivered</span>
+                {% if DeliveryRequested.delivered == False %}
+                <span class="material-icons set" style="color: red;">close</span>
+                {% else %}
+                <span class="material-icons set" style="color: green;">check</span>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="container mt-5" id="bulk">
-
-        <form action="" method="POST" id="baseForm">
-            {% csrf_token %}
-            <div style="display: flex; justify-content: space-between;">
-                <h3 style="color:black;">Sender Details</h3>
-                <input type="submit" value="Add Bulk Request" name="addBulkRequest"
-                    style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
-                <input type="hidden" value="" id="objectInput" name="objectInput">
-                <input type="hidden" value="" id="sessionStorageLength" name="quantity">
-
-            </div>
-
-            {{BulkDeliveryRequestFormCreator|crispy}}
-
-        </form>
-        <div style="display: flex; justify-content: right; margin: 20px 0px 20px 0px; ">
-            <input type="button" value="Add Delivery Point" id="AAP"
-                style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
-
+    
+        <div style="display: flex; justify-content: center;">
+            {% if DeliveryRequested.assigned == False %}
+            <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;"></div>
+            {% else %}
+            <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
+            {% endif %}
+            {% if DeliveryRequested.pickedUp == False %}
+            <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;"></div>
+            {% else %}
+            <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
+            {% endif %}
+            {% if DeliveryRequested.enroute == False %}
+            <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;"></div>
+            {% else %}
+            <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
+            {% endif %}
+            {% if DeliveryRequested.delivered == False %}
+            <div style="width: 30%; height: 2px; background-color: red;"></div>
+            {% else %}
+            <div style="width: 30%; height: 2px; background-color: green;"></div>
+            {% endif %}
         </div>
-        <div id="AAPbox" class="hidden">
-            <h3 style="color: #1c1e25;">Dropoff Point</h3>
-
-            <!-- Delivery Point -->
-
-            <!-- Drop Off Number -->
-            <div class="form-group">
-                <label for="id_dropoffNumber" class="requiredField">Drop Off Number</label>
-                <div>
-                    <input type="number" name="dropoffNumber_bulk" id="id_dropoffNumber_bulk"
-                        class="numberinput form-control">
-                </div>
+    
+        <div class="container">
+            <div>
+                <div>Order Quantity</div>
+                <div class="container-fluid">{{ DeliveryRequested.orderQuantity }}</div>
             </div>
-            <div class="form-group">
-                <label for="id_dropoffName" class="requiredField">DropOff Name</label>
-                <div>
-                    <input type="text" name="id_dropoffName_bulk" id="id_dropoffName_bulk"
-                        class="textinput form-control">
-                </div>
+            <div>
+                <div>Pickup Number</div>
+                <div class="container-fluid">{{ DeliveryRequested.pickupNumber }}</div>
             </div>
-            <!-- Pickup Point -->
-            <div class="form-group">
-                <label class="requiredField" for="id_deliveryPoint_bulk">Dropoff Point</label>
-                <div>
-                    <select name="deliveryPoint" id="id_deliveryPoint_bulk" class="select form-control">
-                        <option value="Select">Select</option>
-                        <option value="Kumasi">Kumasi</option>
-                        <option value="Cape Coast">Cape Coast</option>
-                        <option value="Takoradi">Takoradi</option>
-                        <option value="Koforidua">Koforidua</option>
-                        <option value="Ho">Ho</option>
-                        <option value="Sunyani">Sunyani</option>
-                        <option value="Tarkwa">Tarkwa</option>
-                        <option value="Obuasi">Obuasi</option>
-                        <option value="Akosombo">Akosombo</option>
-                        <option value="Techiman">Techiman</option>
-                        <option value="Nsawam">Nsawam</option>
-                        <option value="Nkwakaw">Nkwakaw</option>
-                        <option value="Winneba">Winneba</option>
-                        <option value="Mankessim">Mankessim</option>
-                        <option value="Suhum">Suhum</option>
-                        <option value="Konongo">Konongo</option>
-                    </select>
-                </div>
+            <div>
+                <div>Delivery Point</div>
+                <div class="container-fluid">{{ DeliveryRequested.deliveryPoint }}</div>
             </div>
-            <div class="form-group">
-                <label for="id_dropoffArea_bulk" class="requiredField">Drop Off Area</label>
-                <div>
-                    <input type="text" name="id_dropoffArea_bulk" id="id_dropoffArea_bulk"
-                        class="textinput form-control">
-                </div>
+            <div>
+                <div>Dropoff Number</div>
+                <div class="container-fluid">{{ DeliveryRequested.dropoffNumber }}</div>
             </div>
-            <!-- Additional Info -->
-            <div class="form-group">
-                <label class="requiredField" for="id_additionalInfo_bulk">Additional Info</label>
-                <textarea name="additionalInfo" class="textarea form-control" id="id_additionalInfo_bulk"
-                    rows="4"></textarea>
-
+            <div>
+                <div>Pickup Point</div>
+                <div class="container-fluid">{{ DeliveryRequested.pickupPoint }}</div>
             </div>
-            <!-- Submit Button -->
-            <input type="button" name="addPoint" id="addPoint" value="Add"
-                style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
-
-
+            <div>
+                <div>Product Fee</div>
+                <div class="container-fluid">{{ DeliveryRequested.productFee }}</div>
+            </div>
+            <div>
+                <div>Additional Info</div>
+                <div class="container-fluid">{{ DeliveryRequested.additionalInfo }}</div>
+            </div>
         </div>
-    </div>
-    <div>
-
-    </div>
-    <script>
-        //function to populate data with table
-        function populateTable() {
-            var tableBody = document.querySelector('#bulkDeliveryBox tbody');
-            tableBody.innerHTML = '';  // Clear the table body
-
-            // Loop through all keys in sessionStorage
-            Object.keys(sessionStorage).forEach(function (key) {
-                // Get the stored data (it's in JSON format, so parse it back to an array)
-                var dataList = JSON.parse(sessionStorage.getItem(key));
-
-                // Create a new row and insert the data into cells
-                var newRow = tableBody.insertRow();
-                dataList.slice(0, 4).forEach(function (item) {
-                    var newCell = newRow.insertCell();
-                    newCell.textContent = item;
-                });
-
-                // Handle Additional Info with ellipsis if it's too long
-                var additionalInfo = dataList[4];
-                var truncatedInfo = additionalInfo.length > 20 ? additionalInfo.substring(0, 20) + '...' : additionalInfo;
-
-                var newCell = newRow.insertCell();
-                newCell.textContent = truncatedInfo;
-                // Create a "Delete" button for this row
-                var actionCell = newRow.insertCell();
-                var deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = function () {
-                    // Remove the item from sessionStorage
-                    sessionStorage.removeItem(key);
-
-                    // Remove the row from the table
-                    newRow.remove();
-                    inputField = document.getElementById('objectInput');
-                    inputField.value = ''; // Clear the input field first
-
-                    Object.keys(sessionStorage).forEach(key => {
-                        // Get the value for each key
-                        let obj = sessionStorage.getItem(key);
-                        // Append it to the input field
-                        inputField.value += obj + ','; // Adding a newline for better readability
-                    });
-                };
-                actionCell.appendChild(deleteButton);
-                inputField = document.getElementById('objectInput');
-                inputField.value = ''; // Clear the input field first
-
-                Object.keys(sessionStorage).forEach(key => {
-                    // Get the value for each key
-                    let obj = sessionStorage.getItem(key);
-                    // Append it to the input field
-                    inputField.value += obj + ','; // Adding a newline for better readability
-                });
-
-            });
-        }
-
-        var addPointButton = document.getElementById('addPoint');
-        var keyDir = 1
-        addPointButton.onclick = () => {
-            var dropoffNumber = document.getElementById('id_dropoffNumber_bulk').value;
-            var dropoffName = document.getElementById('id_dropoffName_bulk').value;
-            var deliveryPoint = document.getElementById('id_deliveryPoint_bulk').value;
-            var dropoffArea = document.getElementById('id_dropoffArea_bulk').value;
-            var additionalInfo = document.getElementById('id_additionalInfo_bulk').value;
-
-            // Alert the values (concatenated as a string)
-            // alert(
-            //     "Dropoff Number: " + dropoffNumber + "\n" +
-            //     "Dropoff Name: " + dropoffName + "\n" +
-            //     "Delivery Point: " + deliveryPoint + "\n" +
-            //     "Dropoff Area: " + dropoffArea + "\n" +
-            //     "Additional Info: " + additionalInfo
-            // );
-
-            // Create a list (array) of the data
-            var dataList = [
-                dropoffNumber,
-                dropoffName,
-                deliveryPoint,
-                dropoffArea,
-                additionalInfo
-            ];
-
-            // Create a unique key (could be based on dropoff number, or an index)
-            var key = keyDir; // Assuming dropoffNumber is unique, you can change it
-            keyDir += 1
-            // Store the data list in sessionStorage with the key
-            sessionStorage.setItem(key, JSON.stringify(dataList)); // Save the list as a JSON string
-
-            // Optionally, you can retrieve the stored data later like this:
-            // var storedData = JSON.parse(sessionStorage.getItem(key));
-            populateTable()
-            document.getElementById('sessionStorageLength').value = sessionStorage.length
-            alert('Order Added to bulk')
-            // reset 
-            document.getElementById('id_dropoffNumber_bulk').value = '';
-            document.getElementById('id_dropoffName_bulk').value = '';
-            document.getElementById('id_deliveryPoint_bulk').value = '';
-            document.getElementById('id_dropoffArea_bulk').value = '';
-            document.getElementById('id_additionalInfo_bulk').value = '';
-        };
-
-        // Getting the values of the input or select boxes by ID
-
-        // Getting the button by ID (no .value needed here, as it's for interaction)
-
-
-    </script>
-    <script> //This script handles addition of object to delvieryPoint
-
-    </script>
- 
-    <script>
-        const dataset = {
-            "KumasiAccra": 37,
-            "KumasiCape Coast": 37,
-            "KumasiTakoradi": 37,
-            "KumasiKoforidua": 40,
-            "KumasiHo": 40,
-            "KumasiSunyani": 40,
-            "KumasiTarkwa": 40,
-            "KumasiObuasi": 45,
-            "KumasiAkosombo": 40,
-            "KumasiTechiman": 40,
-            "KumasiNsawam": 40,
-            "KumasiNkwakaw": 40,
-            "KumasiWinneba": 40,
-            "KumasiMankessim": 40,
-            "KumasiSuhum": 40,
-            "KumasiKonongo": 37
-        };
-
-        const pickUpPoint = document.getElementById('id_pickupPoint');
-        const deliveryPoint = document.getElementById('id_deliveryPoint');
-        const price = document.getElementById('price');
-        const request = document.getElementById('createRequest');
-
-        pickUpPoint.onchange = () => {
-            const deliveryValue = deliveryPoint.value;
-            const pickUpValue = pickUpPoint.value;
-            if (dataset[pickUpValue + deliveryValue] === undefined) {
-                const text = pickUpValue + deliveryValue;
-                if (text.includes('Select')) {
-                    price.textContent = 'Choose a location other than Select.';
-                    request.disabled = true;
-                    request.style.backgroundColor = 'red';
-                } else {
-                    price.textContent = "We do not deliver from " + pickUpValue + " to " + deliveryValue;
-                    request.disabled = true;
-                    request.style.backgroundColor = 'red';
-                }
-            } else {
-                price.textContent = pickUpValue + " to " + deliveryValue + " is GHs" + dataset[pickUpValue + deliveryValue];
-                request.disabled = false;
-                request.style.backgroundColor = 'green';
-            }
-        }
-
-        deliveryPoint.onchange = () => {
-            const deliveryValue = deliveryPoint.value;
-            const pickUpValue = pickUpPoint.value;
-            if (dataset[pickUpValue + deliveryValue] === undefined) {
-                const text = pickUpPoint.value + deliveryPoint.value;
-                if (text.includes('Select')) {
-                    price.textContent = 'Choose a location other than Select.';
-                    request.disabled = true;
-                    request.style.backgroundColor = 'red';
-                } else {
-                    price.textContent = "We do not deliver from " + pickUpValue + " to " + deliveryValue;
-                    request.disabled = true;
-                    request.style.backgroundColor = 'red';
-                }
-            } else {
-                price.textContent = pickUpValue + " to " + deliveryValue + " is GHs" + dataset[pickUpValue + deliveryValue];
-                request.disabled = false;
-                request.style.backgroundColor = 'green';
-            }
-        }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
+    
+        <!-- Include Bootstrap JS and any other necessary scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </body>
-
 </html>

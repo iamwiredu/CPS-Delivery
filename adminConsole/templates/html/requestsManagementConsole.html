@@ -153,44 +153,59 @@ input:checked + .slider:before {
             </thead>
             <tbody class="table" style="text-align: center;">
                 {% for data in DeliveryRequests %}
+                <form action="" method="POST">
                 <tr>
                     <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
                      <td>{{data.id_curator}}</td>
                     <td>{{data.pickupPoint}}</td>
                     <td>{{data.deliveryPoint}}</td>
                     <td>{{data.pickupNumber}}</td>
+                   
+                        {% csrf_token %}
+                        <input type="hidden" name="request_id" value={{data.unique_id}}>
                     <td>
                         {% if data.assigned == False %}
-                            <input type="checkbox" name="assigned" disabled>
+                            <input type="checkbox" name="assigned" disabled> off
                         {% else %}
-                            <input type="checkbox" name="assigned" checked>
+                            <input type="checkbox" name="assigned" checked disabled style="background-color: blue;">on
                         {% endif %}
                     </td>
                     <td>
                         {% if data.pickedUp == False %}
-                        <input type="checkbox" name="assigned" disabled>
+                        <input type="checkbox" name="pickedUp" >off
                     {% else %}
-                        <input type="checkbox" name="assigned" checked>
+                        <input type="checkbox" name="pickedUp" checked>on
                     {% endif %}
                     </td>
                     <td>
                         {% if data.enroute == False %}
-                        <input type="checkbox" name="assigned" disabled>
+                        <input type="checkbox" name="enroute" >off
                     {% else %}
-                        <input type="checkbox" name="assigned" checked>
+                        <input type="checkbox" name="enroute" checked>on
                     {% endif %}
                     </td>
                     <td>
                         {% if data.delivered == False %}
-                        <input type="checkbox" name="assigned" disabled>
+                        <input type="checkbox" name="delivered" >off
                     {% else %}
-                        <input type="checkbox" name="assigned" checked>
+                        <input type="checkbox" name="delivered" checked>on
                     {% endif %}
                     </td>
-                    <td><button style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
-                    border-radius: 0.5rem; color: white;">Update</button></td>
+                    <td>
+                        {% if data.rider %}
+                        {{data.rider}}
+                        {% else %}
+                            {% for rider in riders %}
+                                                <select name="rider" id="">
+                                                    <option value="{{rider.unique_id}}">{{rider}}</option>
+                                                </select>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td><input  type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
+                    border-radius: 0.5rem; color: white; " name="updateSingleOrder" value="submit" ></td>
                     <td><a href="{% url 'managementUpdate' data.unique_id %}">details</a></td>
-
+                </form>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -213,45 +228,62 @@ input:checked + .slider:before {
             </thead>
             <tbody class="table" style="text-align: center;">
                 {% for data in BulkDeliveryRequests %}
-                <tr>
-                    <td>{{data.id_curator}}</td>
-                    <td>{{data.pickupPoint}}</td>
-                    <td>{{data.deliveryPoint}}</td>
-                    <td>{{data.pickupNumber}}</td>
-                    <td>
-                        {% if data.assigned == False %}
-                        <input type="checkbox" name="assigned" disabled>
-                        {% else %}
-                        <input type="checkbox" name="assigned" checked>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if data.pickedUp == False %}
-                        <input type="checkbox" name="assigned" disabled>
-                        {% else %}
-                        <input type="checkbox" name="assigned" checked>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if data.enroute == False %}
-                        <input type="checkbox" name="assigned" disabled>
-                        {% else %}
-                        <input type="checkbox" name="assigned" checked>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if data.delivered == False %}
-                        <input type="checkbox" name="assigned" disabled>
-                        {% else %}
-                        <input type="checkbox" name="assigned" checked>
-                        {% endif %}
-                    </td>
-                    <td><button style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
-                        border-radius: 0.5rem; color: white;">Update</button></td>
-                    <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">details</a></td>
+    <form action="" method="POST">
+        <tr>
+            <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
+            <td>{{data.id_curator}}</td>
+            <td>{{data.pickupPoint}}</td>
+            <td>{{data.deliveryPoint}}</td>
+            <td>{{data.pickupNumber}}</td>
     
-                </tr>
+            {% csrf_token %}
+            <input type="hidden" name="request_id" value={{data.unique_id}}>
+            <td>
+                {% if data.assigned == False %}
+                <input type="checkbox" name="assigned" disabled> off
+                {% else %}
+                <input type="checkbox" name="assigned" checked disabled style="background-color: blue;">on
+                {% endif %}
+            </td>
+            <td>
+                {% if data.pickedUp == False %}
+                <input type="checkbox" name="pickedUp">off
+                {% else %}
+                <input type="checkbox" name="pickedUp" checked>on
+                {% endif %}
+            </td>
+            <td>
+                {% if data.enroute == False %}
+                <input type="checkbox" name="enroute">off
+                {% else %}
+                <input type="checkbox" name="enroute" checked>on
+                {% endif %}
+            </td>
+            <td>
+                {% if data.delivered == False %}
+                <input type="checkbox" name="delivered">off
+                {% else %}
+                <input type="checkbox" name="delivered" checked>on
+                {% endif %}
+            </td>
+            <td>
+                {% if data.rider %}
+                {{data.rider}}
+                {% else %}
+                {% for rider in riders %}
+                <select name="rider" id="">
+                    <option value="{{rider.unique_id}}">{{rider}}</option>
+                </select>
                 {% endfor %}
+                {% endif %}
+            </td>
+            <td><input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
+                        border-radius: 0.5rem; color: white; " name="updateBulkOrder" value="submit"></td>
+            <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">details</a></td>
+    </form>
+    </tr>
+    {% endfor %}
+
             </tbody>
         </table>
     </div>

@@ -24,12 +24,97 @@ def adminConsole(request):
 def requestManagementConsole(request):
     DeliveryRequests = DeliveryRequest.objects.filter(delivered=False)
     BulkDeliveryRequests = BulkDeliveryRequest.objects.filter(delivered=False)
+    riders = Rider.objects.all()
     print(DeliveryRequests)
     context ={
         'DeliveryRequests':DeliveryRequests,
         'BulkDeliveryRequests':BulkDeliveryRequests,
+        'riders':riders,
 
     }
+    if request.method == 'POST':
+        if 'updateSingleOrder' in request.POST:
+            
+            request_id = request.POST.get('request_id')
+            assigned = request.POST.get('assigned')
+            pickedUp = request.POST.get('pickedUp')
+            enroute = request.POST.get('enroute')
+            delivered = request.POST.get('delivered')
+            selectedRider = request.POST.get('rider')
+        
+
+            # Fetch the delivery request based on the rider_id
+            request_single = DeliveryRequest.objects.get(unique_id=request_id)
+            print(selectedRider)
+            # Update 'assigned' field
+
+            # Update 'pickedUp' field
+            if pickedUp == 'on':
+                request_single.pickedUp = True
+            else:
+                request_single.pickedUp = False
+
+            # Update 'enroute' field
+            if enroute == 'on':
+                request_single.enroute = True
+            else:
+                request_single.enroute = False
+
+            # Update 'delivered' field
+            if delivered == 'on':
+                request_single.delivered = True
+            else:
+                request_single.delivered = False
+
+            # Save the updated request object to the database
+            if not request_single.rider: 
+                rider = Rider.objects.get(unique_id=selectedRider)
+                request_single.rider = rider
+                request_single.assigned = True
+            request_single.save()
+            return redirect('/requestmanagement/')
+        if 'updateBulkOrder' in request.POST:
+            
+            request_id = request.POST.get('request_id')
+            assigned = request.POST.get('assigned')
+            pickedUp = request.POST.get('pickedUp')
+            enroute = request.POST.get('enroute')
+            delivered = request.POST.get('delivered')
+            selectedRider = request.POST.get('rider')
+        
+
+            # Fetch the delivery request based on the rider_id
+            request_bulk = BulkDeliveryRequest.objects.get(unique_id=request_id)
+            print(selectedRider)
+            # Update 'assigned' field
+
+            # Update 'pickedUp' field
+            if pickedUp == 'on':
+                request_bulk.pickedUp = True
+            else:
+                request_bulk.pickedUp = False
+
+            # Update 'enroute' field
+            if enroute == 'on':
+                request_bulk.enroute = True
+            else:
+                request_bulk.enroute = False
+
+            # Update 'delivered' field
+            if delivered == 'on':
+                request_bulk.delivered = True
+            else:
+                request_bulk.delivered = False
+
+            # Save the updated request object to the database
+            if not request_bulk.rider: 
+                rider = Rider.objects.get(unique_id=selectedRider)
+                request_bulk.rider = rider
+                request_bulk.assigned = True
+            request_bulk.save()
+
+
+
     return render(request,'html/requestsManagementConsole.html',context)
 
 
@@ -244,7 +329,7 @@ def managementUpdateBulk(request,unique_id):
                 print('Done')
             else:
                 print('Error')
-            return redirect(managementUpdate,unique_id)
+            return redirect(managementUpdateBulk,unique_id)
         if 'UpdateRequest' in request.POST:
             form = BulkRequestStatusUpdateForm(request.POST,instance=DeliveryRequested)
 
@@ -265,7 +350,7 @@ def managementUpdateBulk(request,unique_id):
                 
             else:
                 print('Error')
-            return redirect(managementUpdate,unique_id)
+            return redirect(managementUpdateBulk,unique_id)
     context ={
         'DeliveryRequested':DeliveryRequested,
         'BulkRequestStatusUpdateFormUpdater':BulkRequestStatusUpdateFormUpdater,

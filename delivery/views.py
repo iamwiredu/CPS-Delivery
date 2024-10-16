@@ -5,6 +5,7 @@ from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest
 from .forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.forms import formset_factory
 # Create your views here.
 
@@ -156,10 +157,20 @@ def requestMod(request):
                     point = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=delivery_point,dropoffNumber=dropoff_number,dropoffName=dropoff_name,deliveryLocation=dropoff_area,additionalInfo=additional_info)
                     point.save()
                     print(i)
+                    messages.success('Order Placed.')
+                    return redirect('/pendingRequest/')
 
-            
+        if 'createRequest' in request.POST:
+            DeliveryRequestFormCreator = DeliveryRequestForm(request.POST)
+            if DeliveryRequestFormCreator.is_valid():
+                event = DeliveryRequestFormCreator.save(commit=False)
+                event.user = request.user
+                event.save()
+                messages.success(request,'Order Placed.')
+                return redirect('/pendingRequest/')
             else:
                 print('error')
+                    # return redirect('/deliveryRequest/')  #pending Request
     else:
         # Display empty formset initially
         print('error')
