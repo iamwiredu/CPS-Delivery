@@ -101,7 +101,8 @@ class SignUp(View):
                 profile.save()
             except Exception as e:
                 messages.error(request,e)
-                return redirect('/signUP/')
+                return redirect('/signUp/')
+            messages.success(request,'account created!')
             return redirect('/login/')
 
 
