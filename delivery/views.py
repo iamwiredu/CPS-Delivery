@@ -73,8 +73,10 @@ class pastDeliveries(LoginRequiredMixin,View):
     login_url = '/login/'
     def get(self,request):
         DeliveryRequests = DeliveryRequest.objects.filter(user=request.user,delivered=True)
+        DeliveryRequestBulk = BulkDeliveryRequest.objects.filter(user=request.user,delivered=True)
         context={
             'DeliveryRequests':DeliveryRequests,
+            'DeliveryRequestBulk':DeliveryRequestBulk,
         }
         return render(request,'pastDeliveries.html',context)
     
