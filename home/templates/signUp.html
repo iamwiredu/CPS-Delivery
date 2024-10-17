@@ -10,145 +10,256 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CPS</title>
-    <style>
-        @font-face {
-            font-family: "CustomFont";
-            src: url("{% static 'font/Boge.ttf' %}") format('truetype');
-        }
-        .navbar{
-            background-color: #1c1e25;
-        }
-    
-    </style>
 </head>
+<style>
+    @font-face {
+        font-family: "CustomFont";
+        src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+    }
+</style>
 
 <body>
-<nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">CPS</a>
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="color: #61b124; font-size: 20px;"><a style="color: inherit; text-decoration: none;" href="{% url 'loginPage' %}">Login</a></div>
+    <nav class="navbar navbar-dark bg-dark" style="height: 90px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="font-size: 30px;">CPS</a>
         </div>
-    </div>
-    <div style="display: flex; justify-content: right;width: 100%;">
-        <a href="{% url 'restaurantSignUp' %}"> <span style=" color: #61b124; font-size: 20px; width: fit-content;">Sign Up as Restaurant</span></a>
-    </div>
-</nav>
-<div id="signUpUser"> 
-    <form action="" method="POST">
-        {% csrf_token %}
-        <div class="container formbox">
-            <h1 id="signUp">Sign Up - User</h1>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">@</span>
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
-                    <label for="Username">Username</label>
-                </div>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="fname">
-                <label for="floatingInput">First Name</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="lname">
-                <label for="floatingInput">Last Name</label>
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default" style="gap: 3px;align-items: center;">
-                    <img src="{% static 'img/ghana.svg' %}" width="30px" height="30px" alt=""><span>+233</span>
-                </span>
-                <input type="text" class="form-control" aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default" placeholder="Contact" name="phone">
-            </div>
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
-                <label for="floatingInput">Email address</label>
-            </div>
-            <div class="input-group mb-3">
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                        name="password1">
-                    <label for="floatingPassword">Password</label>
-                </div>
-            </div>
-            <div class="input-group mb-3">
-                <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingVerifyPassword" placeholder="Password"
-                        name="password2">
-                    <label for="floatingVerifyPassword">Verify Password</label>
-                </div>
-            </div>
-    
-            <div class="d-grid gap-2 col-6 ">
-                <button class="btn btn-primary" id="submitBtn" type="submit" name="addUser">Sign Up</button>
-            </div>
+    </nav>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    
-    </form>
-</div>
-<div id="signUpRestaurant" style="display: none;">
-        <form action="" method="POST"></form>
-            {% csrf_token %}
-            <div class="container formbox">
-                <h1 id="signUp">Sign Up - Restaurant</h1>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">@</span>
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="username" placeholder="Username" name="username">
-                        <label for="Username">Username</label>
-                    </div>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="fname">
-                    <label for="floatingInput">First Name</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="lname">
-                    <label for="floatingInput">Last Name</label>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default" style="gap: 3px;align-items: center;">
-                        <img src="{% static 'img/ghana.svg' %}" width="30px" height="30px" alt=""><span>+233</span>
-                    </span>
-                    <input type="text" class="form-control" aria-label="Sizing example input"
-                        aria-describedby="inputGroup-sizing-default" placeholder="Contact" name="phone">
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
-                    <label for="floatingInput">Email address</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="rname" placeholder="restaurant name" name="rname">
-                    <label for="rname">Restaurant Name</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="rloc" placeholder="location" name="rloc">
-                    <label for="rloc">Restaurant Location</label>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                            name="password1">
-                        <label for="floatingPassword">Password</label>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingVerifyPassword" placeholder="Password"
-                            name="password2">
-                        <label for="floatingVerifyPassword">Verify Password</label>
-                    </div>
-                </div>
-        
-                <div class="d-grid gap-2 col-6 ">
-                    <button class="btn btn-primary" id="submitBtn" type="submit" name="addUser">Sign Up</button>
-                </div>
-            </div>
-        </form>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-</div>
+    <!-- Login 3 - Bootstrap Brain Component -->
+    <section class="p-3 p-md-4 p-xl-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 bsb-tpl-bg-platinum">
+                    <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
+                        <div>
+                            <h3 class="m-0">Welcome!</h3>
+                            <p class="mb-0">Have an account? <a href="{% url 'loginPage' %}"
+                                    class="link-secondary text-decoration-none" style="color: #61b124;">Login</a></p>
+                            <div style="display: flex; gap: 5px;">
+                                <p class="mb-0" id="infoRes">Sign Up as a restaurant</p>
+                                <a class="link-secondary text-decoration-none" style="color: #61b124; cursor: pointer;"
+                                    id="clickInfoa">Sign
+                                    Up</a>
+                            </div>
+                        </div>
+                        <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="{% static 'img/dev.svg' %}"
+                            width="100%" height="80" alt="BootstrapBrain Logo">
+                        <p class="mb-0" style="visibility: hidden;">Not a member yet? <a href="{% url 'signupPage' %}"
+                                class="link-secondary text-decoration-none" style="color: #61b124;">Sign Up</a></p>
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 bsb-tpl-bg-lotion" id="signUpUser">
+                    <div class="p-3 p-md-4 p-xl-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-5">
+                                    <h3>Sign Up</h3>
+
+                                </div>
+                            </div>
+                        </div>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="row gy-3 gy-md-4 overflow-hidden">
+                                <div class="col-12">
+                                    <label for="Username" class="form-label">Username <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="username" id="Username"
+                                        placeholder="username" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="First Name" class="form-label">First name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="fname" id="First Name"
+                                        placeholder="first name" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="Last Name" class="form-label">Last name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="lname" id="Last Name"
+                                        placeholder="last name" required>
+                                </div>
+                                <label for="Last Name" class="form-label">Contact <span
+                                        class="text-danger">*</span></label>
+                                <div class="input-group mb-3" style="margin: 0px;">
+
+                                    <span class="input-group-text" id="inputGroup-sizing-default"
+                                        style="gap: 3px;align-items: center;">
+                                        <img src="{% static 'img/ghana.svg' %}" width="30px" height="30px"
+                                            alt=""><span>+233</span>
+                                    </span>
+                                    <input type="text" class="form-control" aria-label="Sizing example input"
+                                        aria-describedby="inputGroup-sizing-default" placeholder="000 000 000"
+                                        name="phone">
+                                </div>
+                                <div class="col-12">
+                                    <label for="Email" class="form-label">Email <span
+                                            class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="email"
+                                        required>
+                                </div>
+                                <div class="col-12">
+
+                                    <label for="password1" class="form-label">Password <span
+                                            class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" name="password1" id="password1"
+                                        placeholder="password" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="password2" class="form-label">Verify Password <span
+                                            class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" name="password2" id="password2"
+                                        placeholder="password" required>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" name="remember_me"
+                                            id="remember_me">
+                                        <label class="form-check-label text-secondary" for="remember_me">
+                                            Keep me logged in
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-grid">
+                                        <input class="btn btn-primary" id="submitBtn" type="submit" name="addUser"
+                                            value="Sign Up" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-12">
+                                <hr class="mt-5 mb-4 border-secondary-subtle">
+                                <!-- <div class="text-end">
+                                <a href="#!" class="link-secondary text-decoration-none">Forgot password</a>
+                            </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 bsb-tpl-bg-lotion" id="signUpRestaurant" style="display: none;">
+                    <div class="p-3 p-md-4 p-xl-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-5">
+                                    <h3>Sign Up</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="row gy-3 gy-md-4 overflow-hidden">
+                                <div class="col-12">
+                                    <label for="Username" class="form-label">Username <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="username" id="Username"
+                                        placeholder="username" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="First Name" class="form-label">First name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="fname" id="First Name"
+                                        placeholder="first name" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="Last Name" class="form-label">Last name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="lname" id="Last Name"
+                                        placeholder="last name" required>
+                                </div>
+                                <label for="Last Name" class="form-label">Contact <span
+                                        class="text-danger">*</span></label>
+                                <div class="input-group mb-3" style="margin: 0px;">
+
+                                    <span class="input-group-text" id="inputGroup-sizing-default"
+                                        style="gap: 3px;align-items: center;">
+                                        <img src="{% static 'img/ghana.svg' %}" width="30px" height="30px"
+                                            alt=""><span>+233</span>
+                                    </span>
+                                    <input type="text" class="form-control" aria-label="Sizing example input"
+                                        aria-describedby="inputGroup-sizing-default" placeholder="000 000 000"
+                                        name="phone">
+                                </div>
+                                <div class="col-12">
+                                    <label for="Email" class="form-label">Email <span
+                                            class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="email"
+                                        required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="rname" class="form-label">Restaurant Name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="rname" id="restaurantName"
+                                        placeholder="restaurant name" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="rloc" class="form-label">Restaurant Location<span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="rloc" id="restaurantLocation"
+                                        placeholder="Restaurant Location" required>
+                                </div>
+                                <div class="col-12">
+
+                                    <label for="password1" class="form-label">Password <span
+                                            class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" name="password1" id="password1"
+                                        placeholder="password" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="password2" class="form-label">Verify Password <span
+                                            class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" name="password2" id="password2"
+                                        placeholder="password" required>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" name="remember_me"
+                                            id="remember_me">
+                                        <label class="form-check-label text-secondary" for="remember_me">
+                                            Keep me logged in
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-grid">
+                                        <input class="btn btn-primary" id="submitBtn" type="submit" name="login"
+                                            value="Sign Up" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-12">
+                                <hr class="mt-5 mb-4 border-secondary-subtle">
+                                <!-- <div class="text-end">
+                                                    <a href="#!" class="link-secondary text-decoration-none">Forgot password</a>
+                                                </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <footer class="bg-light text-dark py-5">
+
+
         </div>
         <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
             <p style="margin: 0px 10px;">© 2024 Company, Inc. All rights reserved.</p>
@@ -171,26 +282,33 @@
             </ul>
         </div>
     </footer>
-<script>
-    //     const userForm = document.getElementById('signUpUser');
-    //     const restaurantForm = document.getElementById('signUpRestaurant');
-    //     const userbtn = document.getElementById('signUpUserBtn')
-    //     const restaurantbtn = document.getElementById('signUpRestaurantBtn');
-        
-    //     userbtn.onclick = () => {
 
-    //         userForm.style.display = 'block'
-    //         restaurantForm.style.display = 'none'
-    //     }
-    //    restaurantbtn.onclick = () => {
-    //         restaurantForm.style.display =  'block'
-    //         userForm.style.display = 'None'
-    //     }
 
-</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        clickInfo = document.getElementById('clickInfoa')
+        infoRes = document.getElementById('infoRes')
+        signUpRestaurant = document.getElementById('signUpRestaurant')
+        signUpUser = document.getElementById('signUpUser')
+        clickInfo.onclick = () => {
+            if (infoRes.innerText.toLowerCase().includes('restaurant')) {
+                signUpUser.style.display = 'none',
+                signUpRestaurant.style.display = 'block'
+                infoRes.innerText = 'Sign Up as a user' 
+                
+            }
+            else {
+                signUpRestaurant.style.display = 'block'
+                signUpUser.style.display = 'block'
+                infoRes.innerText = 'Sign Up as a restaurant'
+            }
+        }
+    </script>
 </body>
 
 

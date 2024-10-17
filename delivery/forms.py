@@ -12,30 +12,26 @@ class DeliveryRequestForm(ModelForm):
             "pickupPoint":"Pickup Point:",
             "dropoffNumber":"Dropoff Number:",
             "deliveryPoint":"Dropoff Point:",
-            "productFee":"Product Fee:",
             "additionalInfo":"Additional Info:",
             "dropoffLocation":"Dropoff Location:",
             "pickupLocation":"Pickup Location:",
             "product": "Product:",
             "dropoffName":'Dropoff Name:'
         }
-        fields = ['orderQuantity','product','pickupNumber','pickupPoint','pickupLocation','dropoffName','dropoffNumber','deliveryPoint','dropoffLocation','productFee','additionalInfo']
+        fields = ['orderQuantity','product','pickupNumber','pickupPoint','pickupLocation','dropoffName','dropoffNumber','deliveryPoint','dropoffLocation','additionalInfo']
 
 class BulkDeliveryRequestForm(ModelForm):
     class Meta:
         model = BulkDeliveryRequest
-        fields = ['product','pickupNumber','pickupPoint','pickupLocation','productFee']
+        fields = ['product','pickupNumber','pickupPoint','pickupLocation',]
         labels ={
             'product':'Product:',
             'pickupNumber':'Pickup Number:',
             'pickupPoint': 'Pickup Point:',
             'pickupLocation':'Pickup Location:',
-            'productFee': 'Product Fee:',
+            
         }
-        helptext ={
-            'productFee':'price per product'
-        }
-
+    
 class BulkDeliveryPointForm(ModelForm):
     class Meta:
         model = BulkDeliveryPoint

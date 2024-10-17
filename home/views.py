@@ -59,10 +59,32 @@ class SignUp(View):
             try:
                 username = request.POST.get('username')
                 password = request.POST.get('password1')
+                password2 = request.POST.get('password2')
                 email = request.POST.get('email')
                 first_name = request.POST.get('fname')
                 last_name = request.POST.get('lname')
                 phone = request.POST.get('phone')
+
+                error_messages = []
+
+                # Check if passwords match
+                if password != password2:
+                    error_messages.append('Passwords do not match.')
+
+                # Check if the username already exists
+                if User.objects.filter(username=username).exists():
+                    error_messages.append('Username has already been taken.')
+
+                # Check if the email already exists
+                if User.objects.filter(email=email).exists():
+                    error_messages.append('Email has already been taken.')
+
+                # If there are any errors, add them to messages and redirect once
+                if error_messages:
+                    for error in error_messages:
+                        messages.error(request, error)
+                    return redirect('/signUp/')
+
 
                 # Create the user
                 user = User.objects.create(username=username, email=email, first_name=first_name, last_name=last_name)
@@ -77,8 +99,9 @@ class SignUp(View):
                 profile.phone = phone  # Assuming `Profile` has a `phone` field
                 profile.accountType = 'Nuser'
                 profile.save()
-            except:
-                print('error')
+            except Exception as e:
+                messages.error(request,e)
+                return redirect('/signUP/')
             return redirect('/login/')
 
 
