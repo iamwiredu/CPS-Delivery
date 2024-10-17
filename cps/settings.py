@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z^tj&whs9!3a=a+7^=7t^m7m!p2#yex-guem6#vud81-5lqj3c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", ".now.sh",'cpsdeliverygh.com']
 
@@ -171,8 +171,6 @@ STATIC_ROOT = 'productionFiles/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
- 
