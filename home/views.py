@@ -9,7 +9,7 @@ from restaurant.views import restaurantAdmin
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-
+from django.contrib.auth.forms import PasswordChangeForm
 
 class Home(LoginRequiredMixin,View):
     login_url = '/login/'
@@ -123,4 +123,25 @@ def custom_404(request, exception):
 
 
 def settings(request):
-    return render(request,'settings.html')
+    PasswordChangeFormCreator = PasswordChangeForm(request.user)
+    all_messages = messages.get_messages(request)
+    first_message = None
+    if all_messages:
+        first_message = list(all_messages)[0]
+
+
+    if 'changePassword' in request.POST:
+        form = PasswordChangeForm(request.user,request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request,'You successfully changed your password!')
+            return redirect('/settings/')
+        else:
+            messages.error(request,'Error changing Password.')
+            return redirect('/settings/')
+            
+    context = {
+        'PasswordChangeFormCreator':PasswordChangeFormCreator,
+        'first_message':first_message,
+    }
+    return render(request,'settings.html',context)

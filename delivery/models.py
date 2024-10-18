@@ -80,6 +80,7 @@ class SideOrder(models.Model):
 
 class DeliveryRequest(models.Model):
     class DeliveryLocations(models.TextChoices):
+        ACCRA = 'Accra', 'Accra'
         KUMASI = 'Kumasi', 'Kumasi'
         CAPE_COAST = 'Cape Coast', 'Cape Coast'
         TAKORADI = 'Takoradi', 'Takoradi'
@@ -96,7 +97,7 @@ class DeliveryRequest(models.Model):
         MANKESSIM = 'Mankessim', 'Mankessim'
         SUHUM = 'Suhum', 'Suhum'
         KONONGO = 'Konongo', 'Konongo'
-        ACCRA = 'Accra', 'Accra'
+      
     
     class PickupLocations(models.TextChoices):
         KUMASI = 'Kumasi', 'Kumasi'
@@ -106,7 +107,7 @@ class DeliveryRequest(models.Model):
     orderQuantity = models.PositiveIntegerField()
     product = models.CharField(max_length=255,null=True,blank=True)
     pickupNumber = models.PositiveIntegerField()
-    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.KUMASI)
+    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.ACCRA)
     dropoffLocation = models.CharField(max_length=255,null=True)
     dropoffNumber = models.PositiveIntegerField()
     dropoffName = models.CharField(max_length=255,null=True)
@@ -197,7 +198,7 @@ class BulkDeliveryRequest(models.Model):
     
 class BulkDeliveryPoint(models.Model):
     class DeliveryLocations(models.TextChoices):
-        Select = 'Select', 'Select'
+        ACCRA = 'Accra' 'Accra'
         KUMASI = 'Kumasi', 'Kumasi'
         CAPE_COAST = 'Cape Coast', 'Cape Coast'
         TAKORADI = 'Takoradi', 'Takoradi'
@@ -214,10 +215,10 @@ class BulkDeliveryPoint(models.Model):
         MANKESSIM = 'Mankessim', 'Mankessim'
         SUHUM = 'Suhum', 'Suhum'
         KONONGO = 'Konongo', 'Konongo'
-        ACCRA = 'Accra' 'Accra'
+       
     
     bulkDeliveryRequest = models.ForeignKey(BulkDeliveryRequest,related_name='indv_orders',on_delete=models.CASCADE,null=True,blank=True)
-    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.Select)
+    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.ACCRA)
     dropoffNumber = models.PositiveIntegerField()
     dropoffName = models.CharField(max_length=255)
     deliveryLocation = models.CharField(max_length=255)
