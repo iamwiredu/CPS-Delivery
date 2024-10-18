@@ -96,6 +96,7 @@ class DeliveryRequest(models.Model):
         MANKESSIM = 'Mankessim', 'Mankessim'
         SUHUM = 'Suhum', 'Suhum'
         KONONGO = 'Konongo', 'Konongo'
+        ACCRA = 'Accra', 'Accra'
     
     class PickupLocations(models.TextChoices):
         KUMASI = 'Kumasi', 'Kumasi'
@@ -213,6 +214,7 @@ class BulkDeliveryPoint(models.Model):
         MANKESSIM = 'Mankessim', 'Mankessim'
         SUHUM = 'Suhum', 'Suhum'
         KONONGO = 'Konongo', 'Konongo'
+        ACCRA = 'Accra' 'Accra'
     
     bulkDeliveryRequest = models.ForeignKey(BulkDeliveryRequest,related_name='indv_orders',on_delete=models.CASCADE,null=True,blank=True)
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.Select)

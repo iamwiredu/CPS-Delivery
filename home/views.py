@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.middleware.csrf import CsrfViewMiddleware
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate
 from .models import Profile
@@ -17,32 +18,40 @@ class Home(LoginRequiredMixin,View):
 
 class Login(View):
 
-    def get(self, request):
-        context = {
 
+    def get(self, request):
+        all_messages = messages.get_messages(request)
+        first_message = None
+        if all_messages:
+            first_message = list(all_messages)[0]
+        context = {
+            'first_message' : first_message,
         }
         return render(request, 'login.html', context)
 
     def post(self, request):
         if 'login' in request.POST:
-            user = authenticate(username=request.POST.get('username'),password=request.POST.get('password'))
-            if user is not None:
-                login(request,user)
-                print('yes')
-                if user.is_superuser:
-                    return redirect('/adminConsole/')
-                elif user.profile.accountType == 'Rider':
-                    return redirect(riderManagement,request.user.profile.rider.unique_id) # associate every rider profile with a rider object
-                elif user.profile.accountType == 'Restaurant':
-                    return redirect('/restaurantAdmin/')
+            try:
+                user = authenticate(username=request.POST.get('username'),password=request.POST.get('password'))
+                if user is not None:
+                    login(request,user)
+                    print('yes')
+                    if user.is_superuser:
+                        return redirect('/adminConsole/')
+                    elif user.profile.accountType == 'Rider':
+                        return redirect(riderManagement,request.user.profile.rider.unique_id) # associate every rider profile with a rider object
+                    elif user.profile.accountType == 'Restaurant':
+                        return redirect('/restaurantAdmin/')
+                    else:
+                        print(user.profile.accountType)
+                        return redirect('/accounthome/')
                 else:
-                    print(user.profile.accountType)
-                    return redirect('/accounthome/')
-                   
-            
-            else:
-                messages.error(request,'Wrong Password or Username.')
+                    messages.error(request,'Wrong Password or Username.')
+                    return redirect('/login/')
+            except:
+                messages.error(request,'Error logging in.')
                 return redirect('/login/')
+                   
 
         context = {
         }
@@ -99,6 +108,9 @@ class SignUp(View):
                 profile.phone = phone  # Assuming `Profile` has a `phone` field
                 profile.accountType = 'Nuser'
                 profile.save()
+            except CsrfViewMiddleware as csrf_error:
+                messages.error(request, 'Error. Please refresh the page and try again.')
+                return redirect('/signUp/') 
             except Exception as e:
                 messages.error(request,e)
                 return redirect('/signUp/')
@@ -108,3 +120,7 @@ class SignUp(View):
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
+
+
+def settings(request):
+    return render(request,'settings.html')

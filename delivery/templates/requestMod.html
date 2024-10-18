@@ -192,10 +192,10 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Settings</a>
+                                <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
                             </li>
                         </ul>
                     </div>
@@ -285,13 +285,13 @@
                 <div class='DeliveryPoints'>
     <h1>Dropoff ${i + 1}</h1>
     <div class="form-group">
-        <label for="id_dropoffNumber_bulk_${i + 1}" class="requiredField">Drop Off Number</label>
+        <label for="id_dropoffNumber_bulk_${i + 1}" class="requiredField">Receiver's Number</label>
         <div>
             <input type="number" name="dropoffNumber_bulk_${i + 1}" id="id_dropoffNumber_bulk_${i + 1}" class="numberinput form-control">
         </div>
     </div>
     <div class="form-group">
-        <label for="id_dropoffName_bulk_${i + 1}" class="requiredField">DropOff Name</label>
+        <label for="id_dropoffName_bulk_${i + 1}" class="requiredField">Receiver's Name</label>
         <div>
             <input type="text" name="id_dropoffName_bulk_${i + 1}" id="id_dropoffName_bulk_${i + 1}" class="textinput form-control">
         </div>
@@ -317,11 +317,12 @@
                 <option value="Mankessim">Mankessim</option>
                 <option value="Suhum">Suhum</option>
                 <option value="Konongo">Konongo</option>
+                <option value="Accra">Accra</option>
             </select>
         </div>
     </div>
     <div class="form-group">
-        <label for="id_dropoffArea_bulk_${i + 1}" class="requiredField">Drop Off Area</label>
+        <label for="id_dropoffArea_bulk_${i + 1}" class="requiredField">Drop Off Location</label>
         <div>
             <input type="text" name="id_dropoffArea_bulk_${i + 1}" id="id_dropoffArea_bulk_${i + 1}" class="textinput form-control">
         </div>

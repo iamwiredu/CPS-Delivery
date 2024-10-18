@@ -152,10 +152,10 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Settings</a>
+                                <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
                             </li>
                         </ul>
                     </div>
@@ -236,7 +236,7 @@
                     <th>Dropoff Number</th>
                     <th>Assigned</th>
                     <th>Picked Up</th>
-                    <th>enroute</th>
+                    
                     <th>delivered</th>
                     <th></th>
 
@@ -264,14 +264,9 @@
                             {% else %}
                             <input type="checkbox" name="assigned" checked>
                             {% endif %}
-                        </td>
-                        <td>
-                            {% if data.enroute == False %}
-                            <input type="checkbox" name="assigned" disabled>
-                            {% else %}
-                            <input type="checkbox" name="assigned" checked>
-                            {% endif %}
-                        </td>
+                        </td> 
+                    
+                       
                         <td>
                             {% if data.delivered == False %}
                             <input type="checkbox" name="assigned" disabled>
@@ -307,13 +302,7 @@
                         <td>{{ data.id_curator }}</td>
                         <td>{{ data.product }}</td>
                         <td>{{ data.orderQuantity }}</td>
-                        <td>
-                            {% if data.enroute == False %}
-                            not picked up
-                            {% else %}
-                            picked up
-                            {% endif %}
-                        </td>
+                      
                         <td><a href="{% url 'bulkPendingDetails' data.unique_id %}">details</a></td>
                     </tr>
                     {% endfor %}

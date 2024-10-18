@@ -69,6 +69,9 @@
             font-family: CustomFont;
             color:  #61b124;
         }
+        a{
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -105,7 +108,7 @@
                             <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Settings</a>
+                            <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
                         </li>
                     </ul>
                 </div>
@@ -117,41 +120,51 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="grid-container">
-                    <div class="card">
-                        <img src="{% static 'images/c4.jpg' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text small">Place Delivery Request</p>
-                            <a href="{% url  'requestPage' %}"><input class="btn btn-primary" type="button" value="Order"></a>
+                    <a href="{% url  'requestPage' %}">
+                        <div class="card">
+                            <img src="{% static 'images/c4.jpg' %}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text small">Place Delivery Request</p>
+                                <input class="btn btn-primary" type="button" value="Order">
+                            </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <img src="{% static 'images/c3.jpg' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text small">Restaurant</p>
-                            <a href="{% url 'restaurantHome' %}"><input class="btn btn-primary" type="button" value="Restaurant"></a>
+                    </a>
+                    <a href="{% url 'restaurantHome' %}">
+                        <div class="card">
+                            <img src="{% static 'images/c3.jpg' %}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text small">Restaurant</p>
+                            <input class="btn btn-primary" type="button" value="Restaurant">
+                            </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <img src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text small">Checkout our pharmacy.</p>
-                           <a href="{% url 'comingSoon' %}"><input class="btn btn-primary" type="button" value="Pharmacy"></a>
+                    </a>
+                    <a href="{% url 'comingSoon' %}">
+                        <div class="card">
+                            <img src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text small">Checkout our pharmacy.</p>
+                            <input class="btn btn-primary" type="button" value="Pharmacy">
+                            </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <img src="{% static 'images/c2.jpg' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text small">Need a place to store items? Click here.</p>
-                            <a href="{% url 'comingSoon' %}"><input class="btn btn-primary" type="button" value="Storage"></a>
+                    </a>
+                    <a href="{% url 'comingSoon' %}">
+                        <div class="card">
+                            <img src="{% static 'images/c2.jpg' %}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text small">Need a place to store items? Click here.</p>
+                            <input class="btn btn-primary" type="button" value="Storage">
+                            </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <img src="{% static 'images/c3.jpg' %}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <p class="card-text small">Click here to shop from our online store.</p>
-                           <a href="{% url 'comingSoon' %}"><input class="btn btn-primary" type="button" value="Online Store"></a>
+                    </a>
+                    <a href="{% url 'comingSoon' %}"></a>
+                        <div class="card">
+                            <img src="{% static 'images/c3.jpg' %}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text small">Click here to shop from our online store.</p>
+                            <input class="btn btn-primary" type="button" value="Online Store">
+                            </div>
                         </div>
-                    </div>
+                    </a>
     
                 </div>
             </div>

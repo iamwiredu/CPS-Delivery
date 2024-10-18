@@ -86,10 +86,10 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                                    <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Settings</a>
+                                    <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
                                 </li>
                             </ul>
                         </div>
@@ -116,14 +116,7 @@
                 <span class="material-icons set" style="color: green;">check</span>
                 {% endif %}
             </div>
-            <div>
-                <span class="set">Enroute</span>
-                {% if DeliveryRequested.enroute == False %}
-                <span class="material-icons set" style="color: red;">close</span>
-                {% else %}
-                <span class="material-icons set" style="color: green;">check</span>
-                {% endif %}
-            </div>
+     
             <div>
                 <span class="set">Delivered</span>
                 {% if DeliveryRequested.delivered == False %}
@@ -145,9 +138,6 @@
             {% else %}
             <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
             {% endif %}
-            {% if DeliveryRequested.enroute == False %}
-            <div style="width: 30%; height: 2px; background-color: red; border-right: 9px solid #1c1e25;"></div>
-            {% else %}
             <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
             {% endif %}
             {% if DeliveryRequested.delivered == False %}
@@ -185,14 +175,7 @@
                             <td>{{DeliveryRequested.pickupNumber}}</td>
                             <td>{{DeliveryRequested.pickupLocation}}</td>
                             <td>{{DeliveryRequested.pickupPoint}}</td>
-                           
-                            <td>
-                                {% if DeliveryRequested.enroute == False %}
-                                not picked up
-                                {% else %}
-                                picked up
-                                {% endif %}
-                            </td>
+                   
 
                         </tr>
 

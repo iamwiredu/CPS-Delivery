@@ -115,10 +115,10 @@ input:checked + .slider:before {
                             <div class="offcanvas-body">
                                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                     <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="#">Logout</a>
+                                        <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Settings</a>
+                                        <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
                                     </li>
                                 </ul>
                             </div>
@@ -145,7 +145,7 @@ input:checked + .slider:before {
                 <th>Pickup contact</th>
                 <th>Assigned</th>
                 <th>Picked Up</th>
-                <th>enroute</th>
+             
                 <th>delivered</th>
                 <th></th>
                 <th></th>
@@ -177,13 +177,7 @@ input:checked + .slider:before {
                         <input type="checkbox" name="pickedUp" checked>on
                     {% endif %}
                     </td>
-                    <td>
-                        {% if data.enroute == False %}
-                        <input type="checkbox" name="enroute" >off
-                    {% else %}
-                        <input type="checkbox" name="enroute" checked>on
-                    {% endif %}
-                    </td>
+             
                     <td>
                         {% if data.delivered == False %}
                         <input type="checkbox" name="delivered" >off
@@ -195,11 +189,13 @@ input:checked + .slider:before {
                         {% if data.rider %}
                         {{data.rider}}
                         {% else %}
+                           
+                        <select name="rider" id="">
                             {% for rider in riders %}
-                                                <select name="rider" id="">
-                                                    <option value="{{rider.unique_id}}">{{rider}}</option>
-                                                </select>
+                            <option value="{{rider.unique_id}}">{{rider}}</option>
                             {% endfor %}
+                        </select>
+                         
                         {% endif %}
                     </td>
                     <td><input  type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
@@ -220,7 +216,7 @@ input:checked + .slider:before {
                 <th>Pickup contact</th>
                 <th>Assigned</th>
                 <th>Picked Up</th>
-                <th>enroute</th>
+                
                 <th>delivered</th>
                 <th></th>
                 <th></th>
@@ -252,13 +248,7 @@ input:checked + .slider:before {
                 <input type="checkbox" name="pickedUp" checked>on
                 {% endif %}
             </td>
-            <td>
-                {% if data.enroute == False %}
-                <input type="checkbox" name="enroute">off
-                {% else %}
-                <input type="checkbox" name="enroute" checked>on
-                {% endif %}
-            </td>
+     
             <td>
                 {% if data.delivered == False %}
                 <input type="checkbox" name="delivered">off
@@ -270,11 +260,13 @@ input:checked + .slider:before {
                 {% if data.rider %}
                 {{data.rider}}
                 {% else %}
-                {% for rider in riders %}
+               
                 <select name="rider" id="">
+                    {% for rider in riders %}
                     <option value="{{rider.unique_id}}">{{rider}}</option>
+                    {% endfor %}
                 </select>
-                {% endfor %}
+                
                 {% endif %}
             </td>
             <td><input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;

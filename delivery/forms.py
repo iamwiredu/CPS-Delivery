@@ -8,15 +8,15 @@ class DeliveryRequestForm(ModelForm):
         model = DeliveryRequest
         labels = {
             "orderQuantity":"Quantity:",
-            "pickupNumber":"Pickup Number:",
+            "pickupNumber":"Sender's Number:",
             "pickupPoint":"Pickup Point:",
-            "dropoffNumber":"Dropoff Number:",
+            "dropoffNumber":"Receiver's Number:",
             "deliveryPoint":"Dropoff Point:",
             "additionalInfo":"Additional Info:",
             "dropoffLocation":"Dropoff Location:",
             "pickupLocation":"Pickup Location:",
             "product": "Product:",
-            "dropoffName":'Dropoff Name:'
+            "dropoffName":"Reeceiver's Name"
         }
         fields = ['orderQuantity','product','pickupNumber','pickupPoint','pickupLocation','dropoffName','dropoffNumber','deliveryPoint','dropoffLocation','additionalInfo']
 
@@ -26,7 +26,7 @@ class BulkDeliveryRequestForm(ModelForm):
         fields = ['product','pickupNumber','pickupPoint','pickupLocation',]
         labels ={
             'product':'Product:',
-            'pickupNumber':'Pickup Number:',
+            'pickupNumber':"Sender's Number:",
             'pickupPoint': 'Pickup Point:',
             'pickupLocation':'Pickup Location:',
             

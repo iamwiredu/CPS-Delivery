@@ -22,8 +22,8 @@ def adminConsole(request):
 
 @login_required(login_url='/login/')
 def requestManagementConsole(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(delivered=False)
-    BulkDeliveryRequests = BulkDeliveryRequest.objects.filter(delivered=False)
+    DeliveryRequests = DeliveryRequest.objects.filter(delivered=False).order_by('id')
+    BulkDeliveryRequests = BulkDeliveryRequest.objects.filter(delivered=False).order_by('id')
     riders = Rider.objects.all()
     print(DeliveryRequests)
     context ={

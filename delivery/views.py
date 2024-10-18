@@ -7,6 +7,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.forms import formset_factory
+from django.contrib.auth.forms import PasswordChangeForm
 # Create your views here.
 
 class accountHome(LoginRequiredMixin,View):
