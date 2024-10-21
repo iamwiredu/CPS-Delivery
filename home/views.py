@@ -69,7 +69,6 @@ class SignUp(View):
                 username = request.POST.get('username')
                 password = request.POST.get('password1')
                 password2 = request.POST.get('password2')
-                email = request.POST.get('email')
                 first_name = request.POST.get('fname')
                 last_name = request.POST.get('lname')
                 phone = request.POST.get('phone')
@@ -84,9 +83,7 @@ class SignUp(View):
                 if User.objects.filter(username=username).exists():
                     error_messages.append('Username has already been taken.')
 
-                # Check if the email already exists
-                if User.objects.filter(email=email).exists():
-                    error_messages.append('Email has already been taken.')
+
 
                 # If there are any errors, add them to messages and redirect once
                 if error_messages:
@@ -96,7 +93,7 @@ class SignUp(View):
 
 
                 # Create the user
-                user = User.objects.create(username=username, email=email, first_name=first_name, last_name=last_name)
+                user = User.objects.create(username=username, first_name=first_name, last_name=last_name)
                 
                 # Set the password correctly
                 user.set_password(password)

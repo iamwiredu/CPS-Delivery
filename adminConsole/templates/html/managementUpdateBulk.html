@@ -138,8 +138,6 @@
             {% else %}
             <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
             {% endif %}
-            <div style="width: 30%; height: 2px; background-color: green; border-right: 9px solid #1c1e25;"></div>
-            {% endif %}
             {% if DeliveryRequested.delivered == False %}
             <div style="width: 30%; height: 2px; background-color: red;"></div>
             {% else %}
@@ -155,26 +153,23 @@
                 <table class="table">
                     <thead class="table-light" style="text-align: center;">
                         <tr>
-                            <th>Delivery Id</th>
-                            <th>Product</th>
-                            <th>Order Count</th>
-                            <th>Pickup Number</th>
-                            <th>Pickup Location</th>
-                            <th>Pickup Point</th>
-                         
-                            <th>Status</th>
-
+                <th>Delivery Id</th>
+                <th>Order Quantity</th>
+                <th>Pickup Point</th>
+                <th>Pickup Location</th>
+                <th>Sender's Number</th>
+                
                         </tr>
                     </thead>
                     <tbody style="text-align: center;">
 
                         <tr>
                             <td>{{ DeliveryRequested.id_curator }}</td>
-                            <td>{{ DeliveryRequested.product }}</td>
+                
                             <td>{{ DeliveryRequested.orderQuantity }}</td>
-                            <td>{{DeliveryRequested.pickupNumber}}</td>
-                            <td>{{DeliveryRequested.pickupLocation}}</td>
                             <td>{{DeliveryRequested.pickupPoint}}</td>
+                            <td>{{DeliveryRequested.pickupLocation}}</td>
+                            <td>{{DeliveryRequested.pickupNumber}}</td>
                    
 
                         </tr>

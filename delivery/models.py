@@ -102,6 +102,11 @@ class DeliveryRequest(models.Model):
     class PickupLocations(models.TextChoices):
         KUMASI = 'Kumasi', 'Kumasi'
     
+    class DeliverySpeed(models.TextChoices):
+        SAME = 'Same day delivery', 'Same day delivery'
+        NEXT = 'Next day delivery', 'Next day delivery'
+        EXPRESS = 'Express delivery', 'Express delivery'
+
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     orderQuantity = models.PositiveIntegerField()
@@ -113,6 +118,7 @@ class DeliveryRequest(models.Model):
     dropoffName = models.CharField(max_length=255,null=True)
     pickupPoint = models.CharField(max_length=10, choices=PickupLocations.choices,default=PickupLocations.KUMASI)
     pickupLocation = models.CharField(max_length=255,null=True)
+    deliverySpeed = models.CharField(max_length=17,choices=DeliverySpeed.choices,default=DeliverySpeed.SAME)
     additionalInfo = models.TextField(blank=True,null=True)
     delivered = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
@@ -197,6 +203,11 @@ class BulkDeliveryRequest(models.Model):
             return 'B'+str(id_value)
     
 class BulkDeliveryPoint(models.Model):
+    class DeliverySpeed(models.TextChoices):
+        SAME = 'Same day delivery', 'Same day delivery'
+        NEXT = 'Next day delivery', 'Next day delivery'
+        EXPRESS = 'Express delivery', 'Express delivery'
+
     class DeliveryLocations(models.TextChoices):
         ACCRA = 'Accra' 'Accra'
         KUMASI = 'Kumasi', 'Kumasi'
@@ -222,5 +233,6 @@ class BulkDeliveryPoint(models.Model):
     dropoffNumber = models.PositiveIntegerField()
     dropoffName = models.CharField(max_length=255)
     deliveryLocation = models.CharField(max_length=255)
+    deliverySpeed = models.CharField(max_length=17,choices=DeliverySpeed.choices,default=DeliverySpeed.SAME)
     additionalInfo = models.TextField(blank=True,null=True)
 

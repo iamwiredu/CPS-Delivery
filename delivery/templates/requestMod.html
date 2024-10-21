@@ -254,7 +254,7 @@
  <div style="display: flex; justify-content: space-between;">
     <div>
         <label for="numberOfPoints" style="padding-right: 10px;">Number of Delivery Points:</label>
-        <input type="number" id="numberOfPoints" name="numberOfPoints" min="1" style="width: 50px; text-align: center;">
+        <input type="number" id="numberOfPoints" min='2' name="numberOfPoints" min="1" style="width: 50px; text-align: center;">
     </div>
     <input type="button" value="Generate Forms" id="generateForms"
         style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
@@ -328,6 +328,17 @@
             <input type="text" name="id_dropoffArea_bulk_${i + 1}" id="id_dropoffArea_bulk_${i + 1}" class="textinput form-control">
         </div>
     </div>
+    <div class="form-group">
+    <label for="id_delivery_speed_${i + 1}" class="requiredField">Delivery Speed</label>
+    <div>
+        <select name="delivery_speed_${i + 1}" id="id_delivery_speed_${i + 1}" class="form-control">
+            <option value="Same day delivery">Same day delivery</option>
+            <option value="Next day delivery">Next day delivery</option>
+            <option value="Express delivery">Express delivery</option>
+        </select>
+    </div>
+</div>
+
     <div class="form-group">
         <label for="id_additionalInfo_bulk_${i + 1}" class="requiredField">Additional Info</label>
         <textarea name="additionalInfo_bulk_${i + 1}" class="textarea form-control" id="id_additionalInfo_bulk_${i + 1}" rows="4"></textarea>

@@ -313,8 +313,8 @@ def riderLoginAddition(request,unique_id):
 @login_required(login_url='/login/')
 def managementUpdateBulk(request,unique_id):
     DeliveryRequested = BulkDeliveryRequest.objects.get(unique_id=unique_id)
-    BulkRequestStatusUpdateFormUpdater = BulkRequestStatusUpdateForm()
-    BulkRidersAssignmentFormUpdater = BulkRidersAssignmentForm()
+    BulkRequestStatusUpdateFormUpdater = BulkRequestStatusUpdateForm(instance=DeliveryRequested)
+    BulkRidersAssignmentFormUpdater = BulkRidersAssignmentForm(instance=DeliveryRequested)
     if request.method == 'POST':
         if 'UdpateAssignment' in request.POST:
             form = RidersAssignmentForm(request.POST,instance=DeliveryRequested)
@@ -323,8 +323,9 @@ def managementUpdateBulk(request,unique_id):
             
             if form.is_valid():
                 form.save()
-                AssignedRiderMsg(DeliveryRequested,AssignedRider)
                 DeliveryRequested.assigned = True
+                AssignedRiderMsg(DeliveryRequested,AssignedRider)
+                
                 DeliveryRequested.save()
                 print('Done')
             else:

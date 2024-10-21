@@ -150,18 +150,21 @@ def requestMod(request):
                 event.user = request.user
                 event.orderQuantity = number_of_points
                 event.save()
+                print(number_of_points)
 
-                for i in range(1, number_of_points+1):
+                for i in range(1, number_of_points+2):
+                    print(i)
                     dropoff_number = request.POST.get(f'dropoffNumber_bulk_{i}')
                     dropoff_name = request.POST.get(f'id_dropoffName_bulk_{i}')
                     delivery_point = request.POST.get(f'deliveryPoint_bulk_{i}')
                     dropoff_area = request.POST.get(f'id_dropoffArea_bulk_{i}')
                     additional_info = request.POST.get(f'additionalInfo_bulk_{i}')
-                    point = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=delivery_point,dropoffNumber=dropoff_number,dropoffName=dropoff_name,deliveryLocation=dropoff_area,additionalInfo=additional_info)
+                    delivery_speed = request.POST.get(f'delivery_speed_{i}')
+                    point = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=delivery_point,dropoffNumber=dropoff_number,dropoffName=dropoff_name,deliveryLocation=dropoff_area,deliverySpeed=delivery_speed,additionalInfo=additional_info)
                     point.save()
-                    print(i)
-                    messages.success('Order Placed.')
-                    return redirect('/pendingRequest/')
+                
+                messages.success(request,'Order Placed.')
+                return redirect('/pendingRequest/')
 
         if 'createRequest' in request.POST:
             DeliveryRequestFormCreator = DeliveryRequestForm(request.POST)

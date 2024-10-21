@@ -236,6 +236,7 @@
                     <th>Dropoff Location</th>
                     <th>Dropoff Number</th>
                     <th>Assigned</th>
+                    <th>Delivery Speed</th>
                     <th>Picked Up</th>
                     <th>enroute</th>
                     <th>delivered</th>
@@ -259,6 +260,7 @@
                             <input type="checkbox" name="assigned" checked>
                             {% endif %}
                         </td>
+                        <td>{{data.deliverySpeed}}</td>
                         <td>
                             {% if data.pickedUp == False %}
                             <input type="checkbox" name="assigned" disabled>

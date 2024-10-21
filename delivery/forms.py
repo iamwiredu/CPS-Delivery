@@ -16,9 +16,10 @@ class DeliveryRequestForm(ModelForm):
             "dropoffLocation":"Dropoff Location:",
             "pickupLocation":"Pickup Location:",
             "product": "Product:",
-            "dropoffName":"Reeceiver's Name"
+            "dropoffName":"Reeceiver's Name:",
+            "deliverySpeed":"Delivery Speed:",
         }
-        fields = ['orderQuantity','product','pickupNumber','pickupPoint','pickupLocation','dropoffName','dropoffNumber','deliveryPoint','dropoffLocation','additionalInfo']
+        fields = ['orderQuantity','product','pickupNumber','pickupPoint','pickupLocation','dropoffName','dropoffNumber','deliveryPoint','dropoffLocation','deliverySpeed','additionalInfo']
 
 class BulkDeliveryRequestForm(ModelForm):
     class Meta:
@@ -35,7 +36,7 @@ class BulkDeliveryRequestForm(ModelForm):
 class BulkDeliveryPointForm(ModelForm):
     class Meta:
         model = BulkDeliveryPoint
-        fields = ['dropoffNumber','dropoffName','deliveryPoint','deliveryLocation','additionalInfo']
+        fields = ['dropoffNumber','dropoffName','deliveryPoint','deliveryLocation','deliverySpeed','additionalInfo']
 
 class SideForm(ModelForm):
     class Meta:

@@ -234,9 +234,9 @@
                     <th>Dropoff Name</th>
                     <th>Dropoff Location</th>
                     <th>Dropoff Number</th>
+                    <th>Delivery Speed</th>
                     <th>Assigned</th>
                     <th>Picked Up</th>
-                    
                     <th>delivered</th>
                     <th></th>
 
@@ -251,6 +251,7 @@
                         <td>{{data.dropoffName}}</td>
                         <td>{{data.dropoffLocation}}</td>
                         <td>0{{data.dropoffNumber}}</td>
+                        <td>{{data.deliverySpeed}}</td>
                         <td>
                             {% if data.assigned == False %}
                             <input type="checkbox" name="assigned" disabled>

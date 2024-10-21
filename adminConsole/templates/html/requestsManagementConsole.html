@@ -140,15 +140,20 @@ input:checked + .slider:before {
         <table class="table" >
             <thead class="table-light" style="text-align: center;">
                 <th>Delivery Id</th>
-                <th>Delivery Pickup</th>
-                <th>Delivery Dropoff</th>
-                <th>Pickup contact</th>
+                <th>Pickup Point</th>
+                <th>Pickup Location</th>
+                <th>Sender's Number</th>
+                <th>Dropoff Point</th>
+                <th>Dropoff Location</th>
+                <th>Receiver's Number</th>
                 <th>Assigned</th>
+                <th>Assign Rider</th>
+                <th></th>
                 <th>Picked Up</th>
-             
                 <th>delivered</th>
                 <th></th>
                 <th></th>
+              
               
             </thead>
             <tbody class="table" style="text-align: center;">
@@ -158,9 +163,11 @@ input:checked + .slider:before {
                     <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
                      <td>{{data.id_curator}}</td>
                     <td>{{data.pickupPoint}}</td>
-                    <td>{{data.deliveryPoint}}</td>
+                    <td>{{data.pickupLocation}}</td>
                     <td>{{data.pickupNumber}}</td>
-                   
+                    <td>{{data.deliveryPoint}}</td>
+                    <td>{{data.dropoffLocation}}</td>
+                    <td>0{{data.dropoffNumber}}</td>
                         {% csrf_token %}
                         <input type="hidden" name="request_id" value={{data.unique_id}}>
                     <td>
@@ -170,6 +177,21 @@ input:checked + .slider:before {
                             <input type="checkbox" name="assigned" checked disabled style="background-color: blue;">on
                         {% endif %}
                     </td>
+                    <td>
+                        {% if data.rider %}
+                        {{data.rider}}
+                        {% else %}
+                    
+                        <select name="rider" id="">
+                            {% for rider in riders %}
+                            <option value="{{rider.unique_id}}">{{rider}}</option>
+                            {% endfor %}
+                        </select>
+                    
+                        {% endif %}
+                    </td>
+                    <td><input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
+                                        border-radius: 0.5rem; color: white; " name="updateSingleOrder" value="submit"></td>
                     <td>
                         {% if data.pickedUp == False %}
                         <input type="checkbox" name="pickedUp" >off
@@ -185,21 +207,7 @@ input:checked + .slider:before {
                         <input type="checkbox" name="delivered" checked>on
                     {% endif %}
                     </td>
-                    <td>
-                        {% if data.rider %}
-                        {{data.rider}}
-                        {% else %}
-                           
-                        <select name="rider" id="">
-                            {% for rider in riders %}
-                            <option value="{{rider.unique_id}}">{{rider}}</option>
-                            {% endfor %}
-                        </select>
-                         
-                        {% endif %}
-                    </td>
-                    <td><input  type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
-                    border-radius: 0.5rem; color: white; " name="updateSingleOrder" value="submit" ></td>
+                    
                     <td><a href="{% url 'managementUpdate' data.unique_id %}">details</a></td>
                 </form>
                 </tr>
@@ -211,72 +219,75 @@ input:checked + .slider:before {
         <table class="table">
             <thead class="table-light" style="text-align: center;">
                 <th>Delivery Id</th>
-                <th>Delivery Pickup</th>
-                <th>Delivery Dropoff</th>
-                <th>Pickup contact</th>
+                <th>Order Count</th>
+                <th>Pickup Point</th>
+                <th>Pickup Location</th>
+                <th>Sender's Number</th>
                 <th>Assigned</th>
+                <th>Assign Rider</th>
+                <th></th>
                 <th>Picked Up</th>
-                
                 <th>delivered</th>
                 <th></th>
                 <th></th>
-    
             </thead>
-            <tbody class="table" style="text-align: center;">
-                {% for data in BulkDeliveryRequests %}
-    <form action="" method="POST">
-        <tr>
-            <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
-            <td>{{data.id_curator}}</td>
-            <td>{{data.pickupPoint}}</td>
-            <td>{{data.deliveryPoint}}</td>
-            <td>{{data.pickupNumber}}</td>
-    
-            {% csrf_token %}
-            <input type="hidden" name="request_id" value={{data.unique_id}}>
-            <td>
-                {% if data.assigned == False %}
-                <input type="checkbox" name="assigned" disabled> off
-                {% else %}
-                <input type="checkbox" name="assigned" checked disabled style="background-color: blue;">on
-                {% endif %}
-            </td>
-            <td>
-                {% if data.pickedUp == False %}
-                <input type="checkbox" name="pickedUp">off
-                {% else %}
-                <input type="checkbox" name="pickedUp" checked>on
-                {% endif %}
-            </td>
-     
-            <td>
-                {% if data.delivered == False %}
-                <input type="checkbox" name="delivered">off
-                {% else %}
-                <input type="checkbox" name="delivered" checked>on
-                {% endif %}
-            </td>
-            <td>
-                {% if data.rider %}
-                {{data.rider}}
-                {% else %}
-               
-                <select name="rider" id="">
-                    {% for rider in riders %}
-                    <option value="{{rider.unique_id}}">{{rider}}</option>
-                    {% endfor %}
-                </select>
-                
-                {% endif %}
-            </td>
-            <td><input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
-                        border-radius: 0.5rem; color: white; " name="updateBulkOrder" value="submit"></td>
-            <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">details</a></td>
-    </form>
-    </tr>
-    {% endfor %}
-
-            </tbody>
+        <tbody class="table" style="text-align: center;">
+            {% for data in BulkDeliveryRequests %}
+            <form action="" method="POST">
+                <tr>
+                    <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
+                    <td>{{data.id_curator}}</td>
+                    <td>{{data.orderQuantity}}</td>
+                    <td>{{data.pickupPoint}}</td>
+                    <td>{{data.pickupLocation}}</td>
+                    <td>0{{data.pickupNumber}}</td>
+                   
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value={{data.unique_id}}>
+                    <td>
+                        {% if data.assigned == False %}
+                        <input type="checkbox" name="assigned" disabled> off
+                        {% else %}
+                        <input type="checkbox" name="assigned" checked disabled style="background-color: blue;">on
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if data.rider %}
+                        {{data.rider}}
+                        {% else %}
+        
+                        <select name="rider" id="">
+                            {% for rider in riders %}
+                            <option value="{{rider.unique_id}}">{{rider}}</option>
+                            {% endfor %}
+                        </select>
+        
+                        {% endif %}
+                    </td>
+                    <td><input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
+                                                border-radius: 0.5rem; color: white; " name="updateBulkOrder" value="submit">
+                    </td>
+                    <td>
+                        {% if data.pickedUp == False %}
+                        <input type="checkbox" name="pickedUp">off
+                        {% else %}
+                        <input type="checkbox" name="pickedUp" checked>on
+                        {% endif %}
+                    </td>
+        
+                    <td>
+                        {% if data.delivered == False %}
+                        <input type="checkbox" name="delivered">off
+                        {% else %}
+                        <input type="checkbox" name="delivered" checked>on
+                        {% endif %}
+                    </td>
+        
+                    <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">details</a></td>
+            </form>
+            </tr>
+            {% endfor %}
+        </tbody>
         </table>
     </div>
 </body>
