@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.forms import formset_factory
 from django.contrib.auth.forms import PasswordChangeForm
+from qrcodefile import generate_qr_code_for_order
 # Create your views here.
 
 class accountHome(LoginRequiredMixin,View):
@@ -41,6 +42,7 @@ class RequestPage(LoginRequiredMixin,View):
                     event = DeliveryRequestFormCreator.save(commit=False)
                     event.user = request.user
                     event.save()
+                    generate_qr_code_for_order(event, f'www.cpsdeliverygh.com/receiptPage/{event.unique_id}')
                     return redirect('/deliveryRequest/')
                 else:
                     print('error')
@@ -147,9 +149,14 @@ def requestMod(request):
           
             if bulksender.is_valid():
                 event = bulksender.save(commit=False)
-                event.user = request.user
-                event.orderQuantity = number_of_points
-                event.save()
+                if request.user.is_authenticated:
+                    event.user = request.user
+                    event.orderQuantity = number_of_points
+                    event.save()
+                else:
+                    event.user = None
+                    event.orderQuantity = number_of_points
+                    event.save()
                 print(number_of_points)
 
                 for i in range(1, number_of_points+2):
@@ -164,16 +171,20 @@ def requestMod(request):
                     point.save()
                 
                 messages.success(request,'Order Placed.')
-                return redirect('/pendingRequest/')
+                return redirect(f'/receiptPage/{point.unique_id}')
 
         if 'createRequest' in request.POST:
             DeliveryRequestFormCreator = DeliveryRequestForm(request.POST)
             if DeliveryRequestFormCreator.is_valid():
                 event = DeliveryRequestFormCreator.save(commit=False)
-                event.user = request.user
-                event.save()
+                if request.user.is_authenticated:
+                    event.user = request.user
+                    event.save()
+                else:
+                    event.user = None
+                    event.save()
                 messages.success(request,'Order Placed.')
-                return redirect('/pendingRequest/')
+                return redirect(f'/receiptPage/{event.unique_id}/')
             else:
                 print('error')
                     # return redirect('/deliveryRequest/')  #pending Request
@@ -189,3 +200,11 @@ def requestMod(request):
     }
     
     return render(request, 'requestMod.html', context)
+
+
+def receiptPage(request, unique_id):
+    DeliveryRequested = DeliveryRequest.objects.get(unique_id=unique_id)
+    context ={
+        'DeliveryRequested':DeliveryRequested,
+    }
+    return render(request,'receiptPage.html',context)

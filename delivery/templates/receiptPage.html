@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Order Details</title>
+    {% load static %}
+    <style>
+        @font-face {
+            font-family: "CustomFont";
+            src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+
+        /* Branding styles */
+        #CPS {
+            font-family: 'CustomFont';
+            color: #61b124;
+        }
+
+        #CPS a {
+            text-decoration: none;
+            color: #61b124;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #61b124;
+            color: white;
+            border-bottom: 2px solid #1c1e25;
+        }
+
+        td {
+            background-color: #f8f9fa;
+            color: #1c1e25;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover td {
+            background-color: #e9ecef;
+        }
+
+        /* Switch styling (not strictly necessary for this page, but left for consistency) */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" id="CPS" style="color: #61b124;">CPS</a>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <!-- User icon and name -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="#61b124" viewBox="0 0 24 24"
+                    stroke="#61b124">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
+                               10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0
+                               3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3
+                               1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99
+                               4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29
+                               1.94-3.5 3.22-6 3.22z">
+                        </path>
+                    </g>
+                </svg>
+                <span style="color:white;">{{request.user}}</span>
+
+                <!-- Offcanvas toggler -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Offcanvas content -->
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                    aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">{{request.user}}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
+                            </li>
+                            <!-- Add other links as needed -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Order Details</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Order ID</th>
+                        <td>A0001</td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td>20/01/202- [14:58:06]</td>
+                    </tr>
+                    <tr>
+                        <th>Product</th>
+                        <td>Shoes</td>
+                    </tr>
+                    <tr>
+                        <th>Sender</th>
+                        <td>Rose</td>
+                    </tr>
+                    <tr>
+                        <th>Pickup Location</th>
+                        <td>Kumasi, KNUST - Indece hall</td>
+                    </tr>
+                    <tr>
+                        <th>Pickup Phone</th>
+                        <td>02xxxx</td>
+                    </tr>
+                    <tr>
+                        <th>Receiver</th>
+                        <td>tred</td>
+                    </tr>
+                    <tr>
+                        <th>Dropoff Location</th>
+                        <td>Accra, Circle - SIC bus stop</td>
+                    </tr>
+                    <tr>
+                        <th>Dropoff Phone</th>
+                        <td>05xxxx</td>
+                    </tr>
+                    <tr>
+                        <th>Delivery Fee</th>
+                        <td>45.00</td>
+                    </tr>
+                    <tr>
+                        <th>Product Fee</th>
+                        <td>0.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-3">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 CPS. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Bootstrap JS + dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-LxHYkj78VDv7ntScREJRwH3uBZeNi4bGX19/kSk8RWT1nFfggwWj7rwMh7WsRZ3nR"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

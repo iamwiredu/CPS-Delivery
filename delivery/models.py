@@ -189,7 +189,8 @@ class BulkDeliveryRequest(models.Model):
     enroute = models.BooleanField(default=False)
     pickedUp = models.BooleanField(default=False)
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='bulk_assignments',default=None,null=True,blank=True)
-    
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+
 
     @property
     def id_curator(self):    
