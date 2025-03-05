@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 import json
 from pathlib import Path
-from google.oauth2 import service_account 
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,25 +138,25 @@ USE_I18N = True
 USE_TZ = True
 
 
-#Google Cloud Storage settings
-GS_PROJECT_ID = 'precise-line-437900-m9'
-GS_BUCKET_NAME = 'cps-images'
+# #Google Cloud Storage settings
+# GS_PROJECT_ID = 'precise-line-437900-m9'
+# GS_BUCKET_NAME = 'cps-images'
 
-# Get the JSON key data from environment variable
-google_cloud_key = os.getenv('KEY')
+# # Get the JSON key data from environment variable
+# google_cloud_key = os.getenv('KEY')
 
-# Parse the JSON key
-google_cloud_info = json.loads(google_cloud_key)
+# # Parse the JSON key
+# google_cloud_info = json.loads(google_cloud_key)
 
-# settings.py
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
-    google_cloud_info
-)
+# # settings.py
+# DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_info(
+#     google_cloud_info
+# )
 
-# Media files (uploads)
-GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
-MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
+# # Media files (uploads)
+# GS_MEDIA_BUCKET_NAME = GS_BUCKET_NAME
+# MEDIA_URL = f'https://storage.googleapis.com/{GS_MEDIA_BUCKET_NAME}/'
 
 
 # Static files (CSS, JavaScript, Images)
