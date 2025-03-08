@@ -1,7 +1,7 @@
 import ast
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest
+from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest, QrIdent
 from .forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -174,7 +174,8 @@ def requestMod(request):
                 event.user = request.user
                 event.save()
                 print(event)
-               
+                qrcodeData = QrIdent(deliveryRequest=event)
+                qrcodeData.save()
                 messages.success(request,'Order Placed.')
                 return redirect('/pendingRequest/')
             else:

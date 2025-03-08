@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import DeliveryRequest, Rider,BulkDeliveryPoint, BulkDeliveryRequest, CartItemRestaurant, CartRestaurant, RestaurantOrder, Side, SideOrder
+from .models import DeliveryRequest, Rider,BulkDeliveryPoint, BulkDeliveryRequest, CartItemRestaurant, QrIdent, CartRestaurant, RestaurantOrder, Side, SideOrder
 # Register your models here.
 
 admin.site.register(DeliveryRequest)
@@ -11,3 +11,4 @@ admin.site.register(CartRestaurant)
 admin.site.register(RestaurantOrder)
 admin.site.register(Side)
 admin.site.register(SideOrder)
+admin.site.register(QrIdent)
