@@ -52,7 +52,7 @@
             justify-content: space-between;
             text-align: center;
             width: 100%;
-            
+            aspect-ratio: 1 / 1;
             border-radius: 10px;
             overflow: hidden;
             transition: transform 0.2s ease-in-out;
@@ -110,18 +110,13 @@
         a {
             text-decoration: none;
         }
-
-        /* Ensure buttons have bottom padding on mobile */
-        @media (max-width: 576px) {
-            .btn {
-                margin-bottom: 20px !important;
-                padding-bottom: 15px !important;
+        @media screen and (max-width: 600px) {
+            .card {
+               aspect-ratio: none;
             }
-
-            .card-body {
-                padding-bottom: 30px !important;
-            }
+            
         }
+
     </style>
 </head>
 
