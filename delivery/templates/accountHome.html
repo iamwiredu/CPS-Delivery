@@ -53,7 +53,6 @@
             text-align: center;
             width: 100%;
             aspect-ratio: 1 / 1;
-            /* Ensures equal width and height */
             border-radius: 10px;
             overflow: hidden;
             transition: transform 0.2s ease-in-out;
@@ -70,7 +69,7 @@
         }
 
         .card-body {
-            padding: 15px;
+            padding: 20px !important;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -114,8 +113,12 @@
         /* Ensure buttons have bottom padding on mobile */
         @media (max-width: 576px) {
             .btn {
+                margin-bottom: 20px !important;
                 padding-bottom: 15px !important;
-                margin-bottom: 10px !important;
+            }
+
+            .card-body {
+                padding-bottom: 30px !important;
             }
         }
     </style>
@@ -148,7 +151,7 @@
                     <img src="{% static 'images/c4.jpg' %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <p class="card-text">Place Delivery Request</p>
-                        <div class="d-grid pb-3">
+                        <div class="mt-auto pb-4">
                             <input class="btn btn-primary w-100" type="button" value="Order">
                         </div>
                     </div>
@@ -160,7 +163,7 @@
                     <img src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <p class="card-text">Checkout our pharmacy.</p>
-                        <div class="d-grid pb-3">
+                        <div class="mt-auto pb-4">
                             <input class="btn btn-primary w-100" type="button" value="Pharmacy">
                         </div>
                     </div>
