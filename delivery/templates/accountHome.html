@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="UTF-8">
-        <!-- Bootstrap icons css -->
-        <link rel="stylesheet" href="{% static 'site/css/bootstrap-icons.min.css' %}">
+    <!-- Bootstrap icons css -->
+    <link rel="stylesheet" href="{% static 'site/css/bootstrap-icons.min.css' %}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -84,7 +84,6 @@
             padding: 10px;
             font-size: 1rem;
             font-weight: bold;
-            margin-bottom: 10px;
         }
 
         .btn:hover {
@@ -111,6 +110,14 @@
         a {
             text-decoration: none;
         }
+
+        /* Ensure buttons have bottom padding on mobile */
+        @media (max-width: 576px) {
+            .btn {
+                padding-bottom: 15px !important;
+                margin-bottom: 10px !important;
+            }
+        }
     </style>
 </head>
 
@@ -130,29 +137,6 @@
                         </path>
                     </g>
                 </svg><span style="color:white;">{{request.user}}</span>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
-                    aria-labelledby="offcanvasDarkNavbarLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">{{request.user}}</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
     </nav>
@@ -164,7 +148,9 @@
                     <img src="{% static 'images/c4.jpg' %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <p class="card-text">Place Delivery Request</p>
-                        <input class="btn btn-primary" type="button" value="Order">
+                        <div class="d-grid pb-3">
+                            <input class="btn btn-primary w-100" type="button" value="Order">
+                        </div>
                     </div>
                 </div>
             </a>
@@ -174,7 +160,9 @@
                     <img src="{% static 'images/c1.jpg' %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <p class="card-text">Checkout our pharmacy.</p>
-                        <input class="btn btn-primary" type="button" value="Pharmacy">
+                        <div class="d-grid pb-3">
+                            <input class="btn btn-primary w-100" type="button" value="Pharmacy">
+                        </div>
                     </div>
                 </div>
             </a>
@@ -184,10 +172,11 @@
     <footer>
         <p>©CPS Delivery, All rights reserved.</p>
         <ul class="list-unstyled d-flex justify-content-center">
-            <li class="ms-3"><a class="link-dark" href="#"><i  style="color: #1877F2;" class="bi bi-facebook"></i></a>
+            <li class="ms-3"><a class="link-dark" href="#"><i style="color: #1877F2;" class="bi bi-facebook"></i></a>
             </li>
-            <li class="ms-3"><a class="link-dark" href="#"><i style="color: #1DA1F2;" class="bi bi-twitter"></i></a></li>
-            <li class="ms-3"><a class="link-dark" href="#"><i style="color: #a52424;" class="bi bi-instagram"></i> </a>
+            <li class="ms-3"><a class="link-dark" href="#"><i style="color: #1DA1F2;" class="bi bi-twitter"></i></a>
+            </li>
+            <li class="ms-3"><a class="link-dark" href="#"><i style="color: #a52424;" class="bi bi-instagram"></i></a>
             </li>
             <li class="ms-3"><a href="#"><i style="color: #FFFC00;" class="bi bi-snapchat"></i></a></li>
             <li class="ms-3"><a href="#"><i class="bi bi-whatsapp" style="color: #075E54;"></i></a></li>
