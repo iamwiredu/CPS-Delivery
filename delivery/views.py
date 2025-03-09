@@ -174,7 +174,7 @@ def requestMod(request):
                 event.user = request.user
                 event.save()
                 print(event)
-                qrcodeData = QrIdent(deliveryRequest=event)
+                qrcodeData = QrIdent(deliveryRequest=event,requestType='single')
                 qrcodeData.save()
                 messages.success(request,'Order Placed.')
                 return redirect('/pendingRequest/')
@@ -193,3 +193,7 @@ def requestMod(request):
     }
     
     return render(request, 'requestMod.html', context)
+
+def receiptPage(request,unique_id):
+    
+    return render(request,'receipt.html')
