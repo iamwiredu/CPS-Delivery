@@ -8,6 +8,9 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Delivery Requests</title>
     {% load static %}
+    <!-- Bootstrap icons css -->
+    <link rel="stylesheet" href="{% static 'site/css/bootstrap-icons.min.css' %}">
+
     <style>
         @font-face {
             font-family: "CustomFont";
@@ -119,6 +122,18 @@
         .activeBox {
             display: flex;
         }
+        
+        footer {
+            background-color: #f8f9fa;
+            padding: 25px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
     </style>
 </head>
 
@@ -311,6 +326,25 @@
             </table>
         </div>
     </div>
+    <footer style="margin-top: 200px;">
+        <p>©CPS Delivery, All rights reserved.</p>
+        <ul class="list-unstyled d-flex justify-content-center">
+            <li class="ms-3"><a class="link-dark"
+                    href="https://www.facebook.com/profile.php?id=61574036997034&mibextid=LQQJ4d"><i style="color: #1877F2;"
+                        class="bi bi-facebook"></i></a>
+            </li>
+            <li class="ms-3"><a class="link-dark" href="https://x.com/cpsdeliveries"><i style="color: #1DA1F2;"
+                        class="bi bi-twitter"></i></a>
+            </li>
+            <li class="ms-3"><a class="link-dark" href="https://www.instagram.com/cps_deliveries" sna><i
+                        style="color: #a52424;" class="bi bi-instagram"></i></a>
+            </li>
+            <li class="ms-3"><a href="https://snapchat.com/t/RaUNGUz2"><i style="color: #FFFC00;"
+                        class="bi bi-snapchat"></i></a></li>
+            <li class="ms-3"><a href=" https://wa.me/+233534583364"><i class="bi bi-whatsapp"
+                        style="color: #075E54;"></i></a></li>
+        </ul>
+    </footer>
     <script>
         window.onload = () => {
             if (document.getElementById('sliderCheckbox').checked) {

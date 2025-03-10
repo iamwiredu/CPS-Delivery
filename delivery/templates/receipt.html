@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receipt</title>
+    <!-- Bootstrap icons css -->
+    <link rel="stylesheet" href="{% static 'site/css/bootstrap-icons.min.css' %}">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         body {
@@ -62,6 +65,18 @@
                 /* Hide buttons when printing */
             }
         }
+        
+        footer {
+            background-color: #f8f9fa;
+            padding: 25px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
     </style>
 </head>
 
