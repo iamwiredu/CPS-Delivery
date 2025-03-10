@@ -79,6 +79,11 @@ class SideOrder(models.Model):
 
 
 class DeliveryRequest(models.Model):
+    
+    class ProductChoices(models.TextChoices):
+        FOOD = 'Food', 'Food'
+        ITEM = 'item', 'item'
+
     class DeliveryLocations(models.TextChoices):
         ACCRA = 'Accra', 'Accra'
         KUMASI = 'Kumasi', 'Kumasi'
@@ -110,7 +115,7 @@ class DeliveryRequest(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     orderQuantity = models.PositiveIntegerField()
-    product = models.CharField(max_length=255,null=True,blank=True)
+    product = models.CharField(max_length=255,null=True,blank=True, choices=ProductChoices.choices,default=ProductChoices.ITEM)
     pickupNumber = models.PositiveIntegerField()
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.ACCRA)
     dropoffLocation = models.CharField(max_length=255,null=True)
@@ -124,9 +129,10 @@ class DeliveryRequest(models.Model):
     assigned = models.BooleanField(default=False)
     enroute = models.BooleanField(default=False)
     pickedUp = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='assignments',default=None,null=True,blank=True)
     restaurantOrder = models.OneToOneField(RestaurantOrder,default=None,null=True,blank=True,on_delete=models.CASCADE)
-
+    deliveryFee = models.CharField(max_length=255,null=True,blank=True)
     @property
     def id_curator(self):    
         id_value = str(self.id)
@@ -168,7 +174,7 @@ class ShopItem(models.Model):
     description = models.TextField()
     price = models.IntegerField()
     image = models.ImageField(upload_to='images/shopItems')
-    date = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -177,10 +183,16 @@ class BulkDeliveryRequest(models.Model):
     class PickupLocations(models.TextChoices):
         KUMASI = 'Kumasi', 'Kumasi'
 
+    class ProductChoices(models.TextChoices):
+        FOOD = 'Food', 'Food'
+        ITEM = 'item', 'item'
+
+
+
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     orderQuantity = models.PositiveIntegerField()
-    product = models.CharField(max_length=255,null=True)
+    product = models.CharField(max_length=255,null=True,blank=True, choices=ProductChoices.choices,default=ProductChoices.ITEM)
     pickupNumber = models.PositiveIntegerField()
     pickupPoint = models.CharField(max_length=10, choices=PickupLocations.choices,default=PickupLocations.KUMASI)
     pickupLocation = models.CharField(max_length=255,null=True)

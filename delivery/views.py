@@ -195,5 +195,9 @@ def requestMod(request):
     return render(request, 'requestMod.html', context)
 
 def receiptPage(request,unique_id):
+    deliveryRequest = DeliveryRequest.objects.get(unique_id=unique_id)
+    context ={
+        'deliveryRequest':deliveryRequest,
+    }
     
-    return render(request,'receipt.html')
+    return render(request,'receipt.html',context)

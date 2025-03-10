@@ -69,25 +69,26 @@
 
     <div class="receipt-container" id="receipt">
         <h2>Delivery Receipt</h2>
+       
 
-        <div class="section"><strong>Order No:</strong> {{ order.order_id }}</div>
-        <div class="section"><strong>Date:</strong> {{ order.date }}</div>
-        <div class="section"><strong>Product:</strong> {{ order.product }}</div>
+        <div class="section"><strong>Order No:</strong> {{deliveryRequest.id_curator }}</div>
+        <div class="section"><strong>Date:</strong> {{ deliveryRequest.date }}</div>
+        <div class="section"><strong>Product:</strong> {{ deliveryRequest.product }}</div>
 
         <div class="section">
-            <strong>Sender:</strong> {{ order.sender }} <br>
-            <strong>Pickup:</strong> {{ order.pickup }} <br>
-            <strong>Phone:</strong> {{ order.sender_phone }}
+            <strong>Pickup Point:</strong> {{ deliveryRequest.pickupPoint }} <br>
+            <strong>Pickup Location:</strong>{{deliveryRequest.pickupLocation}}<br>
+            <strong>Phone:</strong> {{ deliveryRequest.pickupNumber }}
         </div>
 
         <div class="section">
-            <strong>Receiver:</strong> {{ order.receiver }} <br>
-            <strong>Dropoff:</strong> {{ order.dropoff }} <br>
-            <strong>Phone:</strong> {{ order.receiver_phone }}
+            <strong>Receiver:</strong> {{ deliveryRequest.dropoffName }} <br>
+            <strong>Dropoff Point:</strong> {{ deliveryRequest.deliveryPoint }} <br>
+            <strong>Dropoff Location:</strong> {{ deliveryRequest.dropoffLocation }}
         </div>
 
-        <div class="section"><strong>Product Fee:</strong> GH₵{{ order.product_fee }}</div>
-        <div class="section"><strong>Delivery Fee:</strong> GH₵{{ order.delivery_fee }}</div>
+     
+        <div class="section"><strong>Delivery Fee:</strong> GH₵{{ deliveryRequest.deliveryFee }}</div>
 
         <div class="qr-code">
             <div id="qrcode"></div>
