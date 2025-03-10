@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap icons css -->
+    <link rel="stylesheet" href="{% static 'site/css/bootstrap-icons.min.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Rules & Policies</title>
+    <style>
+           @font-face {
+            font-family: "CustomFont";
+            src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+        .navbar {
+            background-color: #1c1e25;
+        }
+
+           .navbar-brand {
+            font-family: CustomFont;
+            color: #61b124;
+        }
+        .nav-link {
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #61b124;
+            border-color: #61b124;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a9e23;
+            border-color: #4a9e23;
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .content {
+            display: none;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .content.active {
+            display: block;
+        }
+        
+        footer {
+            background-color: #f8f9fa;
+            padding: 25px;
+            text-align: center;
+            margin-top: auto;
+            margin-top: 50px;
+        }
+          .nav-link{
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">CPS</a>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="#61b124" viewBox="0 0 24 24"
+                stroke="#61b124">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
+                    </path>
+                </g>
+            </svg><span style="color:white;">{{request.user}}</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">{{request.user}}</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'rulesPolicies' %}">Rules & Policies</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    <div class="toggle-container">
+        <button class="btn btn-primary" id="showRules">Rules</button>
+        <button class="btn btn-primary" id="showPolicies" style="margin-left: 10px;">Policies</button>
+    </div>
+
+    <div class="container">
+        <div id="rules" class="content active">
+            <h2>Rules</h2>
+            <p>1. Free Pickup in Kumasi – We offer free package pickup from your doorstep within Kumasi.</p>
+            <p>2. Extra Fee for Large Items – Packages that cannot be easily transported by motorcycle may incur an
+                additional fee.</p>
+            <p>3. Accurate Details & Availability – Customers must be available to receive their parcels, and all
+                provided details (both shared with us and on the parcel) must be accurate.</p>
+            <p>4. Return Costs – If a customer requests a parcel return, an additional fee will apply.</p>
+            <p>5. Weight Limit Charges – Packages exceeding 20kg will attract an extra fee.</p>
+            <p>6. Bulk Discounts – Customers sending bulk packages are eligible for a 10% discount.</p>
+            <p>7. Delivery Time Schedule:</p>
+            <ul>
+                <li>General Items: Deliveries take 6 to 12 hours as riders handle multiple orders, including yours.</li>
+                <li>Food Deliveries: Orders are processed and assigned to a rider immediately after booking or
+                    scheduling. However, we encourage vendors to check the rider’s availability or book through the
+                    website at least 30 minutes before the food is ready for pickup.</li>
+            </ul>
+        </div>
+
+        <div id="policies" class="content">
+            <h2>Policies</h2>
+            <p>1. REFUND FOR DAMAGE PACKAGES – To qualify for a refund on damaged packages, you must fully declare all
+                transported items. If you include fragile items without informing us and without a proper inspection by
+                the rider or attendant at pickup/entry, you forfeit your right to claim a refund for any damage.</p>
+            <p>2. CASH ON DELIVERY – For cash-on-delivery packages, payment must be sent to you within 24 hours of
+                delivery. If you do not receive payment within this timeframe, please contact our call center at
+                0534583364 immediately.</p>
+            <p>3. RETURNS – Return packages are not given priority over other deliveries, as returns are processed free
+                of charge. However, we can prioritize it if a client opts to pay for the return. Returns are scheduled
+                when we have other deliveries heading to the location of the sender, ensuring the efficiency and
+                sustainability of our operations.</p>
+            <p>4. Stay Safe – Avoid Scams! Never hand over valuable packages to riders—whether current or former—without
+                first booking through our website or calling our office.</p>
+            <p>• Do not contact a previously assigned rider directly to pick up your goods. This puts you at risk.</p>
+            <p>• Protect yourself. Always deal directly with our office.</p>
+            <p>5. Clear Payment Instructions Required – We are not responsible for a package’s product fee unless
+                informed in advance to collect it on your behalf. If you need us to handle cash collection, please
+                specify the exact amount. Vague instructions like “Call me first on delivery” are not acceptable for
+                product fee collection.</p>
+            <p>6. Avoid Duplicate Order Requests – Please do not submit the same delivery request multiple times in a
+                day. If your request has not been processed, contact customer care to reactivate your original order ID.
+                Each order should have a single order ID to ensure accurate tracking and verification.</p>
+            <p>7. No Cash Gifts or Unauthorized Payments – If a delivery rider requests extra payment, asks for a gift,
+                or attempts to extort money, report the incident immediately to our call center before making any
+                additional payment beyond the amount on your receipt. Refunds cannot be issued after payment, so it’s
+                crucial to report before paying.</p>
+            <p>8. Delivery Time Schedule:</p>
+            <ul>
+                <li>General Items: Deliveries take 6 to 12 hours as riders handle multiple orders, including yours.</li>
+                <li>Food Deliveries: Orders are processed and assigned to a rider immediately after booking or
+                    scheduling. However, we encourage vendors to check the rider’s availability or book through the
+                    website at least 30 minutes before the food is ready for pickup.</li>
+            </ul>
+            <p>9. For delivery requests, inquiries, or any assistance, please call 0534583364.</p>
+        </div>
+    </div>
+    <footer>
+        <p>©CPS Delivery, All rights reserved.</p>
+        <ul class="list-unstyled d-flex justify-content-center">
+            <li class="ms-3"><a class="link-dark"
+                    href="https://www.facebook.com/profile.php?id=61574036997034&mibextid=LQQJ4d"><i style="color: #1877F2;"
+                        class="bi bi-facebook"></i></a>
+            </li>
+            <li class="ms-3"><a class="link-dark" href="https://x.com/cpsdeliveries"><i style="color: #1DA1F2;"
+                        class="bi bi-twitter"></i></a>
+            </li>
+            <li class="ms-3"><a class="link-dark" href="https://www.instagram.com/cps_deliveries" sna><i
+                        style="color: #a52424;" class="bi bi-instagram"></i></a>
+            </li>
+            <li class="ms-3"><a href="https://snapchat.com/t/RaUNGUz2"><i style="color: #FFFC00;"
+                        class="bi bi-snapchat"></i></a></li>
+            <li class="ms-3"><a href=" https://wa.me/+233534583364"><i class="bi bi-whatsapp"
+                        style="color: #075E54;"></i></a></li>
+        </ul>
+    </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+
+    <script>
+        document.getElementById('showRules').addEventListener('click', function () {
+            document.getElementById('rules').classList.add('active');
+            document.getElementById('policies').classList.remove('active');
+        });
+
+        document.getElementById('showPolicies').addEventListener('click', function () {
+            document.getElementById('policies').classList.add('active');
+            document.getElementById('rules').classList.remove('active');
+        });
+    </script>
+</body>
+
+</html>

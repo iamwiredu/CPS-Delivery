@@ -201,3 +201,9 @@ def receiptPage(request,unique_id):
     }
     
     return render(request,'receipt.html',context)
+
+def rulesPolicies(request):
+    return render(request,'rulesPolicies.html')
+
+def settingsPage(request):
+    return render(request,'settingsPage.html')
