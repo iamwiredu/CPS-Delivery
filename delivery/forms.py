@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest, Side
-
+from django import forms
 
 
 class DeliveryRequestForm(ModelForm):
@@ -20,7 +20,9 @@ class DeliveryRequestForm(ModelForm):
             "deliverySpeed":"Delivery Speed:",
         }
         fields = ['orderQuantity','product','pickupNumber','pickupPoint','pickupLocation','dropoffName','dropoffNumber','deliveryPoint','dropoffLocation','deliverySpeed','additionalInfo']
-
+        widgets = {
+            'additionalInfo': forms.Textarea(attrs={'placeholder': 'Eg: Item is fragile / Cake'}),
+        }
 class BulkDeliveryRequestForm(ModelForm):
     class Meta:
         model = BulkDeliveryRequest
@@ -37,6 +39,9 @@ class BulkDeliveryPointForm(ModelForm):
     class Meta:
         model = BulkDeliveryPoint
         fields = ['dropoffNumber','dropoffName','deliveryPoint','deliveryLocation','deliverySpeed','additionalInfo']
+        widgets = {
+            'additionalInfo': forms.Textarea(attrs={'placeholder': 'Eg: Item is fragile / Cake'}),
+        }
 
 class SideForm(ModelForm):
     class Meta:
