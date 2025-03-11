@@ -246,6 +246,6 @@ class QrIdent(models.Model):
     deliveryRequest = models.OneToOneField(DeliveryRequest,on_delete=models.CASCADE,null=True,blank=True)
     bulkDeliveryRequest = models.OneToOneField(BulkDeliveryRequest,on_delete=models.CASCADE,null=True,blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    reqeustType = models.CharField(max_length=255,null=True,blank=True)
+    requestType = models.CharField(max_length=255,null=True,blank=True)
     def __str__(self):
         return f'{self.id}'
