@@ -133,7 +133,7 @@ class DeliveryRequest(models.Model):
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='assignments',default=None,null=True,blank=True)
     restaurantOrder = models.OneToOneField(RestaurantOrder,default=None,null=True,blank=True,on_delete=models.CASCADE)
     deliveryFee = models.CharField(max_length=255,null=True,blank=True)
-    date = models.DateTimeField(max_length=255,default='sdfsadf')
+    date = models.CharField(max_length=255,default='sdfsadf',null=True)
     @property
     def id_curator(self):    
         id_value = str(self.id)
@@ -170,15 +170,6 @@ def send_sms(sender,instance,created,**kwargs):
         data = response.json() 
         print(data,str(sender.pickupNumber))
 
-class ShopItem(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-    price = models.IntegerField()
-    image = models.ImageField(upload_to='images/shopItems')
-    date_created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.name}'
 
 class BulkDeliveryRequest(models.Model):
     class PickupLocations(models.TextChoices):

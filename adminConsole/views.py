@@ -4,8 +4,8 @@ from django.views.generic import TemplateView
 
 from django.shortcuts import render, redirect
 from delivery.models import DeliveryRequest,Rider, BulkDeliveryRequest, BulkDeliveryPoint
-from .forms import RiderForm, ShopItemForm, RequestStatusUpdateForm, RidersAssignmentForm, BulkRidersAssignmentForm, BulkRequestStatusUpdateForm
-from delivery.models import ShopItem
+from .forms import RiderForm, RequestStatusUpdateForm, RidersAssignmentForm, BulkRidersAssignmentForm, BulkRequestStatusUpdateForm
+
 from home.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -266,24 +266,6 @@ def riderUpdate(request,unique_id):
 
     return render(request,'html/riderUpdate.html',context)
 
-@login_required(login_url='/login/')
-def addShopItem(request):
-    ShopItemFormCreator = ShopItemForm()
-    ShopItems  = ShopItem.objects.all()
-    if request.method == 'POST': 
-        if 'addShopItem'  in request.POST:
-            form = ShopItemForm(request.POST, request.FILES)  
-            if form.is_valid():  
-                form.save()
-                return redirect(addShopItem)
-            else:
-                print('Error')
-        
-    context={
-        'ShopItemFormCreator':ShopItemFormCreator,
-        'ShopItems':ShopItems,
-    }
-    return render(request,'html/addShopItem.html',context)
 
 @login_required(login_url='/login/')
 def riderLoginAddition(request,unique_id):

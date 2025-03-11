@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 import json
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,17 +83,33 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cps.wsgi.application'
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': "verceldb",
+#         'URL_NO_SSL':"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb",
+#         "URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+#         "PRISMA_URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15",
+#         "URL_NON_POOLING":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+#         'USER': "default",
+#         'PASSWORD':"dN0ShxHPfqa9",
+#         "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
+#     }
+# }
+tmpPostgres = urlparse("postgresql://neondb_owner:npg_gbQ8DjAfp3KH@ep-misty-paper-a59qv5d9-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "verceldb",
-        'URL_NO_SSL':"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb",
-        "URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
-        "PRISMA_URL":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15",
-        "URL_NON_POOLING":"postgres://default:dN0ShxHPfqa9@ep-misty-feather-a4wery4g.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
-        'USER': "default",
-        'PASSWORD':"dN0ShxHPfqa9",
-        "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
+        'NAME': "neondb",
+        'URL_NO_SSL': f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}",
+        "URL": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require",
+        "PRISMA_URL": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require&pgbouncer=true&connect_timeout=15",
+        "URL_NON_POOLING": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require",
+        'USER': tmpPostgres.username,
+        'PASSWORD': tmpPostgres.password,
+        "HOST": tmpPostgres.hostname,
+        'PORT': 5432,  # Default PostgreSQL port
     }
 }
 
