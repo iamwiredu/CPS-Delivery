@@ -40,8 +40,11 @@ class RequestPage(LoginRequiredMixin,View):
                 DeliveryRequestFormCreator = DeliveryRequestForm(request.POST)
                 if DeliveryRequestFormCreator.is_valid():
                     event = DeliveryRequestFormCreator.save(commit=False)
-                    event.user = request.user
-                    event.save()
+                    if request.user.is_authenticated:
+                        event.user = request.user
+                        event.save()
+                    else:
+                        event.save()
                     return redirect('/deliveryRequest/')
                 else:
                     print('error')
@@ -53,9 +56,14 @@ class RequestPage(LoginRequiredMixin,View):
                 print(deliveryPoints, type(deliveryPoints))
                 if form.is_valid():
                     event = form.save(commit=False)
-                    event.user = request.user
-                    event.orderQuantity = int(quantity)
-                    event.save()
+                    if request.user.is_authenticated:
+                        event.user = request.user
+                        event.orderQuantity = int(quantity)
+                        event.save()
+                    else:
+                        event.orderQuantity = int(quantity)
+                        event.save()
+
                 for deliveryPoint in deliveryPoints:
                     deliveryPointObj = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=deliveryPoint[2],dropoffNumber=deliveryPoint[0],dropoffName=deliveryPoint[1],deliveryLocation=deliveryPoint[3],additionalInfo=deliveryPoint[4])
 
@@ -148,9 +156,11 @@ def requestMod(request):
           
             if bulksender.is_valid():
                 event = bulksender.save(commit=False)
-                event.user = request.user
-                event.orderQuantity = number_of_points
-                event.save()
+                if request.user.is_authenticated:
+                     event.user = request.user
+               
+                else:
+                    event.save()
                 print(number_of_points)
 
                 for i in range(1, number_of_points+2):
@@ -165,19 +175,28 @@ def requestMod(request):
                     point.save()
                 
                 messages.success(request,'Order Placed.')
-                return redirect('/pendingRequest/')
+                if request.user.is_authenticated:
+                    return redirect('/pendingRequest/')
+                else:
+                    return redirect('/quickPlaced/')
 
         if 'createRequest' in request.POST:
             DeliveryRequestFormCreator = DeliveryRequestForm(request.POST)
             if DeliveryRequestFormCreator.is_valid():
                 event = DeliveryRequestFormCreator.save(commit=False)
-                event.user = request.user
-                event.save()
+                if request.user.is_authenticated:
+                    event.user = request.user
+                    event.save()
+                else:
+                    event.save()
                 print(event)
                 qrcodeData = QrIdent(deliveryRequest=event,requestType='single')
                 qrcodeData.save()
                 messages.success(request,'Order Placed.')
-                return redirect('/pendingRequest/')
+                if request.user.is_authenticated:
+                    return redirect('/pendingRequest/')
+                else:
+                    return redirect('/quickPlaced/')
             else:
                 print('error')
                     # return redirect('/deliveryRequest/')  #pending Request
@@ -207,3 +226,6 @@ def rulesPolicies(request):
 
 def settingsPage(request):
     return render(request,'settingsPage.html')
+
+def quickPlaced(request):
+    return render(request,'quickPlaced.html')

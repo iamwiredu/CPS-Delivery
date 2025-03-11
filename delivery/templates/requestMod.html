@@ -194,7 +194,13 @@
                             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
                         </path>
                     </g>
-                </svg><span style="color:white;">{{request.user}}</span>
+                </svg><span style="color:white;">
+                    {% if request.user.is_authenticated %}
+                    {{request.user}}
+                    {% else %}
+                    Quick Delivery Request
+                    {% endif %}
+                </span>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
                     aria-label="Toggle navigation">
@@ -203,18 +209,26 @@
                 <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
                     aria-labelledby="offcanvasDarkNavbarLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">{{request.user}}</h5>
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+                            {% if request.user.is_authenticated %}
+                            {{request.user}}
+                            {% else %}
+                             Quick Delivery Request
+                            {% endif %}
+                        </h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                           {% if request.user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
                             </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'rulesPolicies' %}">Rules & Policies</a>
                             </li>
@@ -233,12 +247,14 @@
         </label>
         <span style="padding-left: 5px;">Bulk Request</span>
     </div>
+{% if request.user.is_authenticated %}
     <div class="container" style="text-align: center;">
         <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
             style="background-color: #61b124; color: white; border: none; margin: 5px;">Past Deliveries</a>
         <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
             style="background-color: #61b124; color: white; border: none; margin: 5px;">Pending Deliveries</a>
     </div>
+{% endif %}
 <form method="POST" class="uniForm">
     <div class="container mt-5 activeBox" id="single">
         <div class="row">
