@@ -133,6 +133,7 @@ class DeliveryRequest(models.Model):
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='assignments',default=None,null=True,blank=True)
     restaurantOrder = models.OneToOneField(RestaurantOrder,default=None,null=True,blank=True,on_delete=models.CASCADE)
     deliveryFee = models.CharField(max_length=255,null=True,blank=True)
+    date = models.DateTimeField(max_length=255,default='sdfsadf')
     @property
     def id_curator(self):    
         id_value = str(self.id)
