@@ -10,7 +10,15 @@ from home.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 import requests
-# Create your views here.
+
+# api imports
+from django.http import JsonResponse
+
+def get_active_orders(request):
+    single_orders = list(DeliveryRequest.objects.filter(delivered=False).values())
+    bulk_orders = list(BulkDeliveryRequest.objects.filter(delivered=False).values())
+
+    return JsonResponse({'single_orders': single_orders, 'bulk_orders': bulk_orders})
 
 @login_required(login_url='/login/')
 def adminConsole(request):

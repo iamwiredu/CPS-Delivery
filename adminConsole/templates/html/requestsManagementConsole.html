@@ -128,15 +128,18 @@ input:checked + .slider:before {
             </nav>
         <div class="container" style="display: flex; justify-content: center;">
             <div style="display: flex; justify-content: center; padding: 10px;">
-                <span style="padding-right: 5px;">Single Requests <span style="color: red;">{{DeliveryRequests.count}}</span></span>
+            <span>Single Requests <span style="color: red;" id="singleOrdersCount">{{ DeliveryRequests.count }}</span></span>
                 <label class="switch">
                     <input type="checkbox" id="sliderCheckbox">
                     <span class="slider round"></span>
                 </label>
-                <span style="padding-left: 5px;">Bulk Requests <span style="color: red;">{{BulkDeliveryRequests.count}}</span></span>
+            <span>Bulk Requests <span style="color: red;" id="bulkOrdersCount">{{ BulkDeliveryRequests.count }}</span></span>
             </div>
         </div>
     <div class="table-responsive container" style="margin-top: 30px;" id="single">
+        <div id="orderUpdateAlert" style="display:none; background: red; color: white; padding: 10px; text-align: center;">
+            Orders have been updated!
+        </div>
         <table class="table" >
             <thead class="table-light" style="text-align: center;">
                 <th>Delivery Id</th>
@@ -289,7 +292,8 @@ input:checked + .slider:before {
             {% endfor %}
         </tbody>
         </table>
-    </div>
+    </div>'
+    
 </body>
 <script>
             window.onload = () => {
@@ -320,7 +324,40 @@ input:checked + .slider:before {
                     }
                 });
             </script>
+            <script>
+               
+    function fetchActiveOrders() {
+        fetch("/api/active-orders/")
+            .then(response => response.json())
+            .then(data => {
+                let singleOrders = data.single_orders.length;
+                let bulkOrders = data.bulk_orders.length;
+                let alertBox = document.getElementById('orderUpdateAlert');
+
+                // Update counts in the UI
+                document.getElementById('singleOrdersCount').innerText = singleOrders;
+                document.getElementById('bulkOrdersCount').innerText = bulkOrders;
+
+                if (singleOrders > 0 || bulkOrders > 0) {
+                    alertBox.innerHTML = `New Updates: ${singleOrders} Single Orders, ${bulkOrders} Bulk Orders!`;
+                    alertBox.style.display = 'block';
+                } else {
+                    alertBox.style.display = 'none';
+                }
+            })
+            .catch(error => console.error("Error fetching orders:", error));
+    }
+
+    // Fetch data every 2 minutes (120000 milliseconds)
+    setInterval(fetchActiveOrders, 120000);
+
+    // Fetch immediately on page load
+    window.onload = fetchActiveOrders;
 </script>
+
+
+
+            </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
