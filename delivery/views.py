@@ -158,19 +158,25 @@ def requestMod(request):
                 event = bulksender.save(commit=False)
                 if request.user.is_authenticated:
                      event.user = request.user
+                     event.orderQuantity = number_of_points
+                     event.save()
                
                 else:
+                    event.orderQuantity = number_of_points
                     event.save()
-                print(number_of_points)
+                
+                
 
-                for i in range(1, number_of_points+2):
-                    print(i)
+                for i in range(1, number_of_points+1):
+                   
+                 
                     dropoff_number = request.POST.get(f'dropoffNumber_bulk_{i}')
                     dropoff_name = request.POST.get(f'id_dropoffName_bulk_{i}')
                     delivery_point = request.POST.get(f'deliveryPoint_bulk_{i}')
                     dropoff_area = request.POST.get(f'id_dropoffArea_bulk_{i}')
-                    additional_info = request.POST.get(f'additionalInfo_bulk_{i}')
                     delivery_speed = request.POST.get(f'delivery_speed_{i}')
+                    additional_info = request.POST.get(f'additionalInfo_bulk_{i}', '')
+                    print(dropoff_number,dropoff_name,delivery_point,dropoff_area,additional_info,delivery_speed)
                     point = BulkDeliveryPoint(bulkDeliveryRequest=event,deliveryPoint=delivery_point,dropoffNumber=dropoff_number,dropoffName=dropoff_name,deliveryLocation=dropoff_area,deliverySpeed=delivery_speed,additionalInfo=additional_info)
                     point.save()
                 

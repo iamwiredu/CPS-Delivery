@@ -161,7 +161,7 @@ input:checked + .slider:before {
             </thead>
             <tbody class="table" id="singleOrdersTableBody" style="text-align: center;">
                 {% for data in DeliveryRequests %}
-                <form action="" method="POST">
+               
                 <tr>
                     <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
                      <td>{{data.id_curator}}</td>
@@ -181,21 +181,41 @@ input:checked + .slider:before {
                         ✅
                         {% endif %}
                     </td>
-                    <td>
+                 
                         {% if data.rider %}
+                        <td>
                         {{data.rider}}
+                        </td>
+                        <td>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="request_id_rea" value={{data.unique_id}}>
+                            <input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
+                                                                                            border-radius: 0.5rem; color: white; "
+                                name="reassignSingleOrder" value="reassign">
+                        </form>
+                        </td>
                         {% else %}
-                    
-                        <select name="rider" id="">
-                            {% for rider in riders %}
-                            <option value="{{rider.unique_id}}">{{rider}}</option>
-                            {% endfor %}
-                        </select>
+                    <form action="" method="POST">
+                        
+                        {% csrf_token %}
+                        <input type="hidden" name="request_id" value={{data.unique_id}}>
+                        <td>
+                            <select name="rider" id="">
+                                {% for rider in riders %}
+                                <option value="{{rider.unique_id}}">{{rider}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
+                                                                border-radius: 0.5rem; color: white; " name="updateSingleOrder" value="submit">
+                        </td>
+                        </form>
                     
                         {% endif %}
-                    </td>
-                    <td><input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
-                                        border-radius: 0.5rem; color: white; " name="updateSingleOrder" value="submit"></td>
+                   
+                 
                     <td>
                         {% if data.pickedUp == False %}
                     ❌
@@ -213,7 +233,7 @@ input:checked + .slider:before {
                     </td>
                     
                     <td><a href="{% url 'managementUpdate' data.unique_id %}">details</a></td>
-                </form>
+               
                 </tr>
                 {% endfor %}
             </tbody>
@@ -246,44 +266,66 @@ input:checked + .slider:before {
                     <td>{{data.pickupLocation}}</td>
                     <td>0{{data.pickupNumber}}</td>
                    
-                    {% csrf_token %}
-                    <input type="hidden" name="request_id" value={{data.unique_id}}>
+                   
+                  
                     <td>
                         {% if data.assigned == False %}
-                        <input type="checkbox" name="assigned" disabled> off
-                        {% else %}
-                        <input type="checkbox" name="assigned" checked disabled style="background-color: blue;">on
-                        {% endif %}
+                    ❌
+                    {% else %}
+                    ✅
+                    {% endif %}
                     </td>
-                    <td>
+                  
                         {% if data.rider %}
+                        <td>
                         {{data.rider}}
+                        </td>
+                        <td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="request_id_bulk" value={{data.unique_id}}>
+                                <input type="submit"
+                                    style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
+                                                                                                                    border-radius: 0.5rem; color: white; "
+                                    name="reassignBulkOrder" value="reassign">
+                            </form>
+                        </td>
                         {% else %}
         
-                        <select name="rider" id="">
-                            {% for rider in riders %}
-                            <option value="{{rider.unique_id}}">{{rider}}</option>
-                            {% endfor %}
-                        </select>
+                    <form action="" method="POST">
+                    
+                        {% csrf_token %}
+                        <input type="hidden" name="request_id_bir" value={{data.unique_id}}>
+                        <td>
+                            <select name="rider" id="">
+                                {% for rider in riders %}
+                                <option value="{{rider.unique_id}}">{{rider}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
+                                                                                    border-radius: 0.5rem; color: white; "
+                                name="updateBulkOrder" value="submit">
+                        </td>
+                    </form>
         
                         {% endif %}
-                    </td>
-                    <td><input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
-                                                border-radius: 0.5rem; color: white; " name="updateBulkOrder" value="submit">
-                    </td>
+                    
+                    
                     <td>
                         {% if data.pickedUp == False %}
-                        <input type="checkbox" name="pickedUp">off
+                        ❌
                         {% else %}
-                        <input type="checkbox" name="pickedUp" checked>on
+                        ✅
                         {% endif %}
                     </td>
         
                     <td>
                         {% if data.delivered == False %}
-                        <input type="checkbox" name="delivered">off
+                        ❌
                         {% else %}
-                        <input type="checkbox" name="delivered" checked>on
+                        ✅
                         {% endif %}
                     </td>
         

@@ -183,7 +183,7 @@ class BulkDeliveryRequest(models.Model):
 
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     unique_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
-    orderQuantity = models.PositiveIntegerField()
+    orderQuantity = models.PositiveIntegerField(default=0)
     product = models.CharField(max_length=255,null=True,blank=True, choices=ProductChoices.choices,default=ProductChoices.ITEM)
     pickupNumber = models.PositiveIntegerField()
     pickupPoint = models.CharField(max_length=10, choices=PickupLocations.choices,default=PickupLocations.KUMASI)

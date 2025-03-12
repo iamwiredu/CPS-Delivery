@@ -83,7 +83,7 @@ def requestManagementConsole(request):
             return redirect('/requestmanagement/')
         if 'updateBulkOrder' in request.POST:
             
-            request_id = request.POST.get('request_id')
+            request_id = request.POST.get('request_id_bir')
             assigned = request.POST.get('assigned')
             pickedUp = request.POST.get('pickedUp')
             enroute = request.POST.get('enroute')
@@ -121,7 +121,24 @@ def requestManagementConsole(request):
                 request_bulk.assigned = True
             request_bulk.save()
 
+        if 'reassignSingleOrder' in request.POST:
+            # rir => request id reassign
+            rir = request.POST.get('request_id_rea')
+            request_single_rea = DeliveryRequest.objects.get(unique_id=rir)
 
+            request_single_rea.rider = None
+            request_single_rea.assigned = False
+            request_single_rea.save()
+        if 'reassignBulkOrder' in request.POST:
+            # bir => request id reassign
+            bir = request.POST.get('request_id_bulk')
+            request_bulk_rea = BulkDeliveryRequest.objects.get(unique_id=bir)
+
+            request_bulk_rea.rider = None
+            request_bulk_rea.assigned = False
+            request_bulk_rea.save()
+
+            return redirect('/requestmanagement/')
 
     return render(request,'html/requestsManagementConsole.html',context)
 
@@ -129,9 +146,14 @@ def requestManagementConsole(request):
 
 @login_required(login_url='/login/')
 def pastProcessedRequest(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(delivered=True).values()
+    DeliveryRequests = DeliveryRequest.objects.filter(delivered=True).order_by('id')
+    BulkDeliveryRequests = BulkDeliveryRequest.objects.filter(delivered=True).order_by('id')
+   
+    print(DeliveryRequests)
     context ={
         'DeliveryRequests':DeliveryRequests,
+        'BulkDeliveryRequests':BulkDeliveryRequests,
+   
 
     }
     return render(request,'html/pastProcessedRequest.html',context)
