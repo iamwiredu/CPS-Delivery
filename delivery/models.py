@@ -10,7 +10,7 @@ class Rider(models.Model):
     name = models.CharField(max_length=255)
     phone = models.PositiveIntegerField()
     assigned = models.BooleanField(default=False)
-    user = models.OneToOneField(User,on_delete=models.CASCADE,default=None,null=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,default=None,null=True,related_name='rider')
 
     def __str__(self):
         return f'{self.name}'
@@ -193,7 +193,7 @@ class BulkDeliveryRequest(models.Model):
     enroute = models.BooleanField(default=False)
     pickedUp = models.BooleanField(default=False)
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='bulk_assignments',default=None,null=True,blank=True)
-    deliveryFee = models.CharField(max_length=255,null=True,blank=True)
+    deliveryFee = models.CharField(max_length=255,null=True,blank=True,default=0)
 
     @property
     def id_curator(self):    

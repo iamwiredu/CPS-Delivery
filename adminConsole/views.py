@@ -49,6 +49,7 @@ def requestManagementConsole(request):
             enroute = request.POST.get('enroute')
             delivered = request.POST.get('delivered')
             selectedRider = request.POST.get('rider')
+            deliveryFee = request.POST.get('deliveryFee')
         
 
             # Fetch the delivery request based on the rider_id
@@ -74,11 +75,13 @@ def requestManagementConsole(request):
             else:
                 request_single.delivered = False
 
+            request_single.deliveryFee = deliveryFee
             # Save the updated request object to the database
             if not request_single.rider: 
                 rider = Rider.objects.get(unique_id=selectedRider)
                 request_single.rider = rider
                 request_single.assigned = True
+                
             request_single.save()
             return redirect('/requestmanagement/')
         if 'updateBulkOrder' in request.POST:
@@ -89,6 +92,7 @@ def requestManagementConsole(request):
             enroute = request.POST.get('enroute')
             delivered = request.POST.get('delivered')
             selectedRider = request.POST.get('rider')
+            deliveryFee = request.POST.get('deliveryFee')
         
 
             # Fetch the delivery request based on the rider_id
@@ -113,6 +117,8 @@ def requestManagementConsole(request):
                 request_bulk.delivered = True
             else:
                 request_bulk.delivered = False
+
+            request_bulk.deliveryFee = deliveryFee
 
             # Save the updated request object to the database
             if not request_bulk.rider: 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Order Update Form (Hidden by default) -->
+    <div id="orderUpdateSection" style="display: none;">
+        <h2>Update Order Status</h2>
+        <form id="orderUpdateForm" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="order_id" value="{{ deliveryRequest.unique_id }}">
+            <label><input type="checkbox" name="pickedUp"> Picked Up</label>
+            <label><input type="checkbox" name="delivered"> Delivered</label>
+            <button type="submit">Update Order</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import accountHome, requestMod, settingsPage,quickPlaced, rulesPolicies,receiptPage,bulkPendingDetails,comingSoon,logoutPage,RequestPage,pastDeliveries, pendingRequest, detailsPage
+from .views import accountHome, requestMod, settingsPage,quickPlaced, rulesPolicies,receiptPage,deliveryVal, update_order_single,bulkPendingDetails,comingSoon,logoutPage,RequestPage,pastDeliveries, pendingRequest, detailsPage
 
 urlpatterns = [
     path('accounthome/',accountHome.as_view(),name='accountHome'),
@@ -14,5 +14,7 @@ urlpatterns = [
     path('receipt/<str:unique_id>/',receiptPage,name='receiptPage'),
     path('rulesPolicies/',rulesPolicies,name='rulesPolicies'),
     path('settingsPage/',settingsPage,name='settingsPage'),
-    path('quickPlaced/',quickPlaced,name='quickPlaced')
+    path('quickPlaced/',quickPlaced,name='quickPlaced'),
+    path('updateSingle/<str:unique_id>/',update_order_single,name='updateSingle'),
+    path('deliveryVal/<str:unique_id>/',deliveryVal,name='deliveryVal'),
 ]

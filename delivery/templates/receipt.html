@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -113,17 +114,18 @@
     <div class="btn-container">
         <button onclick="printReceipt()">Print as PDF</button>
     </div>
+    <a href="" id="Verify">Verify</a>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let qrData = `Order: {{ order.order_id }} | Date: {{ order.date }} | Product: {{ order.product }} | Pickup: {{ order.pickup }} | Dropoff: {{ order.dropoff }}`;
-
+            let qrData = window.location.origin + `/deliveryVal/{{ deliveryRequest.unique_id }}/`;
             new QRCode(document.getElementById("qrcode"), {
                 text: qrData,
                 width: 150,
                 height: 150
             });
         });
+        document.getElementById('Verify').href =  window.location.origin + `/deliveryVal/{{ deliveryRequest.unique_id }}/`;
 
         function printReceipt() {
             window.print();

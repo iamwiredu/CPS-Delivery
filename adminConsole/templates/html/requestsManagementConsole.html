@@ -82,6 +82,26 @@ input:checked + .slider:before {
 .activeBox{
     display: flex;
 }
+.search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #searchBox {
+            width: 300px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #clearSearch {
+            margin-left: 10px;
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
 </style>
 </head>
 
@@ -136,10 +156,10 @@ input:checked + .slider:before {
             <span>Bulk Requests <span style="color: red;" id="bulkOrdersCount">{{ BulkDeliveryRequests.count }}</span></span>
             </div>
         </div>
-        <div class="search-container" style="display: flex; justify-content: center;">
-            <input type="text" id="searchBox" placeholder="Search by Delivery ID...">
-            <span style="padding: 2px 4px; background-color: #eee;" id="clearSearch">x</span>
-        </div>
+    <div class="search-container">
+        <input type="text" id="searchBox" placeholder="Search by Delivery ID..." class="form-control">
+        <button id="clearSearch">Clear</button>
+    </div>
     <div class="table-responsive container" style="margin-top: 30px;" id="single">
         <div id="orderUpdateAlert" style="display:none; background: red; color: white; padding: 10px; text-align: center;">
             Orders have been updated!
@@ -188,7 +208,9 @@ input:checked + .slider:before {
                  
                         {% if data.rider %}
                         <td>
-                        {{data.rider}}
+
+                        {{data.rider}}<br>
+                       Delivery Fee: GHS{{data.deliveryFee}}
                         </td>
                         <td>
                         <form method="POST">
@@ -210,6 +232,7 @@ input:checked + .slider:before {
                                 <option value="{{rider.unique_id}}">{{rider}}</option>
                                 {% endfor %}
                             </select>
+                            <input type="number" name="deliveryFee" placeholder="Delivery Fee">
                         </td>
                         <td>
                             <input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
@@ -235,8 +258,9 @@ input:checked + .slider:before {
                         ✅
                     {% endif %}
                     </td>
-                    
+                    <td><a href="{% url 'receiptPage' data.unique_id %}">receipt</a></td>
                     <td><a href="{% url 'managementUpdate' data.unique_id %}">details</a></td>
+           
                
                 </tr>
                 {% endfor %}
@@ -282,8 +306,9 @@ input:checked + .slider:before {
                   
                         {% if data.rider %}
                         <td>
-                        {{data.rider}}
-                        as
+                        {{data.rider}}<br>
+                        Delivery Fee: GHS{{data.deliveryFee}}
+                        
                         </td>
                         <td>
                             <form method="POST">
@@ -307,6 +332,7 @@ input:checked + .slider:before {
                                 <option value="{{rider.unique_id}}">{{rider}}</option>
                                 {% endfor %}
                             </select>
+                            <input type="number" name="deliveryFee" placeholder="Delivery Fee">
                         </td>
                         <td>
                             <input type="submit" style="background-color:#61b124; padding: 3px; border: 1px solid #61b124;
