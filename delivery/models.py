@@ -194,7 +194,7 @@ class BulkDeliveryRequest(models.Model):
     pickedUp = models.BooleanField(default=False)
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='bulk_assignments',default=None,null=True,blank=True)
     deliveryFee = models.CharField(max_length=255,null=True,blank=True,default=0)
-
+    date_created = models.DateTimeField(auto_now_add=True)
     @property
     def id_curator(self):    
         id_value = str(self.id)

@@ -4,14 +4,14 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
 from django.views import View
-from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest, QrIdent
+from .models import DeliveryRequest, BulkDeliveryPoint, BulkDeliveryRequest, QrIdent, Rider
 from .forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
 from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.forms import formset_factory
 from django.contrib.auth.forms import PasswordChangeForm
-
+from adminConsole.forms import RequestStatusUpdateForm, BulkRequestStatusUpdateForm
 # Create your views here.
 
 class accountHome(LoginRequiredMixin,View):
@@ -235,7 +235,7 @@ def receiptPageBulk(request,unique_id):
     context ={
         'deliveryRequest':deliveryRequest,
     }
-    return render(request,'receipt.html',context)
+    return render(request,'receiptBulk.html',context)
 
 def deliveryVal(request,unique_id):
     deliveryRequest = DeliveryRequest.objects.get(unique_id=unique_id)
@@ -247,29 +247,93 @@ def deliveryVal(request,unique_id):
         password = request.POST.get("password")
         
         user = authenticate(username=username, password=password)
-
-        if user  and user.rider:  # Check if user is a rider
+        rider = Rider.objects.get(user=user)
+        if user  and rider:  # Check if user is a rider
             login(request, user)  # Log the user in
-            return redirect(f'updateSingle/{unique_id}')
+            return redirect(f'/updateSingle/{unique_id}')
         
     return render(request, "deliveryVal.html",context)  # Render the HTML page
 
-def update_order_single(request,unique_id):
+def bulkDeliveryVal(request,unique_id):
+    deliveryRequest = BulkDeliveryRequest.objects.get(unique_id=unique_id)
+    context ={
+        'deliveryRequest':deliveryRequest,
+    }
     if request.method == "POST":
-        data = json.loads(request.body)
+        username = request.POST.get("username")
+        password = request.POST.get("password")
         
-        # Assuming rider is authenticated and order_id is sent
-        order = DeliveryRequest.objects.get(unique_id=unique_id)
+        user = authenticate(username=username, password=password)
+        rider = Rider.objects.get(user=user)
+        if user  and rider:  # Check if user is a rider
+            login(request, user)  # Log the user in
+            return redirect(f'/updateBulk/{unique_id}')
         
-        if data.get("pickedUp"):
-            order.status = "Picked Up"
-        if data.get("delivered"):
-            order.status = "Delivered"
-        
-        order.save()
-        return JsonResponse({"success": True})
-    return render(request,'updateSingle.html')
-        
+    return render(request, "bulkDeliveryVal.html",context)  # Render the HTML page
+
+
+
+def update_order_single(request,unique_id):
+    deliveryRequest = DeliveryRequest.objects.get(unique_id=unique_id)
+    requestStatusUpdateForm = RequestStatusUpdateForm(instance=deliveryRequest)
+
+    context ={
+        'requestStatusUpdateForm':requestStatusUpdateForm,
+    }
+    
+    if 'updateRequest' in request.POST:
+        form = RequestStatusUpdateForm(request.POST,instance=deliveryRequest)
+        if form.is_valid():
+            form.save()
+            print('saved')
+            if deliveryRequest.pickedUp == True:
+                deliveryRequest.enroute = True
+                deliveryRequest.save()
+            else:
+                deliveryRequest.enroute = False
+                deliveryRequest.save()
+            if deliveryRequest.delivered == True:
+                deliveryRequest.pickedUp = True
+                deliveryRequest.enroute = True
+                deliveryRequest.save()
+                
+            
+        else:
+            print('Error')
+        return redirect(update_order_single,unique_id)
+
+    return render(request,'updateSingle.html',context)
+
+def update_order_bulk(request,unique_id):
+    deliveryRequest = BulkDeliveryRequest.objects.get(unique_id=unique_id)
+    requestStatusUpdateForm = BulkRequestStatusUpdateForm(instance=deliveryRequest)
+
+    context ={
+        'requestStatusUpdateForm':requestStatusUpdateForm,
+    }
+    
+    if 'updateRequest' in request.POST:
+        form = RequestStatusUpdateForm(request.POST,instance=deliveryRequest)
+        if form.is_valid():
+            form.save()
+            print('saved')
+            if deliveryRequest.pickedUp == True:
+                deliveryRequest.enroute = True
+                deliveryRequest.save()
+            else:
+                deliveryRequest.enroute = False
+                deliveryRequest.save()
+            if deliveryRequest.delivered == True:
+                deliveryRequest.pickedUp = True
+                deliveryRequest.enroute = True
+                deliveryRequest.save()
+                
+            
+        else:
+            print('Error')
+        return redirect(update_order_bulk,unique_id)
+
+    return render(request,'updateBulk.html',context)
     
    
 

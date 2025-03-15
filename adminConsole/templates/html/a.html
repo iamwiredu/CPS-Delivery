@@ -1,0 +1,229 @@
+{% load static %}
+{% load adminConsole_extras %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Management</title>
+    <style>
+        @font-face {
+            font-family: "CustomFont";
+            src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+
+        #CPS {
+            font-family: 'CustomFont';
+            color: #61b124;
+        }
+
+        /* The switch - the container */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+        }
+
+        /* Slider before element */
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        /* When the checkbox is checked, change background color */
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        /* Move the slider to the right when checked */
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Rounded slider */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #searchBox {
+            width: 300px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #clearSearch {
+            margin-left: 10px;
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">CPS</a>
+        </div>
+    </nav>
+
+    <div class="container" style="display: flex; justify-content: center;">
+        <div style="display: flex; justify-content: center; padding: 10px;">
+            <span>Single Requests <span style="color: red;" id="singleOrdersCount">{{ DeliveryRequests.count
+                    }}</span></span>
+            <label class="switch">
+                <input type="checkbox" id="sliderCheckbox">
+                <span class="slider round"></span>
+            </label>
+            <span>Bulk Requests <span style="color: red;" id="bulkOrdersCount">{{ BulkDeliveryRequests.count
+                    }}</span></span>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" id="searchBox" placeholder="Search by Delivery ID..." class="form-control">
+        <button id="clearSearch">Clear</button>
+    </div>
+
+    <!-- Single Requests Table -->
+    <div class="table-responsive container" id="single">
+        <table class="table">
+            <thead class="table-light" style="text-align: center;">
+                <tr>
+                    <th>Delivery Id</th>
+                    <th>Pickup Point</th>
+                    <th>Pickup Location</th>
+                    <th>Sender's Number</th>
+                    <th>Dropoff Point</th>
+                    <th>Dropoff Location</th>
+                    <th>Receiver's Number</th>
+                    <th>Assigned</th>
+                    <th>Rider</th>
+                    <th>Picked Up</th>
+                    <th>Delivered</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody class="table" id="singleOrdersTableBody" style="text-align: center;">
+                {% for data in DeliveryRequests %}
+                <tr>
+                    <td>{{ data.id_curator }}</td>
+                    <td>{{ data.pickupPoint }}</td>
+                    <td>{{ data.pickupLocation }}</td>
+                    <td>{{ data.pickupNumber }}</td>
+                    <td>{{ data.deliveryPoint }}</td>
+                    <td>{{ data.dropoffLocation }}</td>
+                    <td>0{{ data.dropoffNumber }}</td>
+                    <td>{% if data.assigned %} ✅ {% else %} ❌ {% endif %}</td>
+                    <td>{% if data.rider %} {{ data.rider }} {% else %} - {% endif %}</td>
+                    <td>{% if data.pickedUp %} ✅ {% else %} ❌ {% endif %}</td>
+                    <td>{% if data.delivered %} ✅ {% else %} ❌ {% endif %}</td>
+                    <td><a href="{% url 'managementUpdate' data.unique_id %}">Details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bulk Requests Table -->
+    <div class="table-responsive container" style="display: none;" id="bulk">
+        <table class="table">
+            <thead class="table-light" style="text-align: center;">
+                <tr>
+                    <th>Delivery Id</th>
+                    <th>Order Count</th>
+                    <th>Pickup Point</th>
+                    <th>Pickup Location</th>
+                    <th>Sender's Number</th>
+                    <th>Assigned</th>
+                    <th>Rider</th>
+                    <th>Picked Up</th>
+                    <th>Delivered</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody class="table" id="bulkOrdersTableBody" style="text-align: center;">
+                {% for data in BulkDeliveryRequests %}
+                <tr>
+                    <td>{{ data.id_curator }}</td>
+                    <td>{{ data.orderQuantity }}</td>
+                    <td>{{ data.pickupPoint }}</td>
+                    <td>{{ data.pickupLocation }}</td>
+                    <td>0{{ data.pickupNumber }}</td>
+                    <td>{% if data.assigned %} ✅ {% else %} ❌ {% endif %}</td>
+                    <td>{% if data.rider %} {{ data.rider }} {% else %} - {% endif %}</td>
+                    <td>{% if data.pickedUp %} ✅ {% else %} ❌ {% endif %}</td>
+                    <td>{% if data.delivered %} ✅ {% else %} ❌ {% endif %}</td>
+                    <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">Details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('searchBox').addEventListener('keyup', function () {
+            let query = this.value.toLowerCase();
+            let isBulk = document.getElementById('sliderCheckbox').checked;
+            let table = isBulk ? 'bulkOrdersTableBody' : 'singleOrdersTableBody';
+            let rows = document.getElementById(table).getElementsByTagName('tr');
+
+            for (let row of rows) {
+                let id = row.getElementsByTagName('td')[0].innerText.toLowerCase();
+                row.style.display = id.includes(query) ? "" : "none";
+            }
+        });
+
+        document.getElementById('clearSearch').addEventListener('click', function () {
+            document.getElementById('searchBox').value = "";
+            document.getElementById('searchBox').dispatchEvent(new Event('keyup'));
+        });
+    </script>
+
+</body>
+
+</html>

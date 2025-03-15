@@ -16,7 +16,7 @@ class DeliveryRequestForm(ModelForm):
             "dropoffLocation":"Dropoff Location:",
             "pickupLocation":"Pickup Location:",
             "product": "Product:",
-            "dropoffName":"Reeceiver's Name:",
+            "dropoffName":"Receiver's Name:",
             "deliverySpeed":"Delivery Speed:",
         }
         fields = ['orderQuantity','product','pickupNumber','pickupPoint','pickupLocation','dropoffName','dropoffNumber','deliveryPoint','dropoffLocation','deliverySpeed','additionalInfo']
