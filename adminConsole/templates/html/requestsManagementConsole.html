@@ -137,9 +137,7 @@ input:checked + .slider:before {
                                     <li class="nav-item">
                                         <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
-                                    </li>
+                                
                                 </ul>
                             </div>
                         </div>
@@ -279,7 +277,8 @@ input:checked + .slider:before {
                 <th>Assign Rider</th>
                 <th></th>
                 <th>Picked Up</th>
-                <th>delivered</th>
+                <th>Delivered</th>
+                <th>Receipt</th>
                 <th></th>
                 <th></th>
             </thead>
@@ -359,6 +358,7 @@ input:checked + .slider:before {
                         ✅
                         {% endif %}
                     </td>
+                    <td><a href="{% url 'receiptPageBulk' data.unique_id %}">receipt</a></td>
         
                     <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">details</a></td>
             </form>
