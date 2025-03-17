@@ -85,24 +85,13 @@ class DeliveryRequest(models.Model):
         ITEM = 'item', 'item'
 
     class DeliveryLocations(models.TextChoices):
-        ACCRA = 'Accra', 'Accra'
         KUMASI = 'Kumasi', 'Kumasi'
-        CAPE_COAST = 'Cape Coast', 'Cape Coast'
+        ACCRA = 'Accra', 'Accra'
+        SUNYANI = 'Sunyani', 'Sunyani'
         TAKORADI = 'Takoradi', 'Takoradi'
         KOFORIDUA = 'Koforidua', 'Koforidua'
-        HO = 'Ho', 'Ho'
-        SUNYANI = 'Sunyani', 'Sunyani'
-        TARKWA = 'Tarkwa', 'Tarkwa'
-        OBUASI = 'Obuasi', 'Obuasi'
-        AKOSOMBO = 'Akosombo', 'Akosombo'
         TECHIMAN = 'Techiman', 'Techiman'
-        NSAWAM = 'Nsawam', 'Nsawam'
-        NKWAKAW = 'Nkwakaw', 'Nkwakaw'
-        WINNEBA = 'Winneba', 'Winneba'
-        MANKESSIM = 'Mankessim', 'Mankessim'
-        SUHUM = 'Suhum', 'Suhum'
-        KONONGO = 'Konongo', 'Konongo'
-      
+        TAMALE = 'Tamale', 'Tamale'
     
     class PickupLocations(models.TextChoices):
         KUMASI = 'Kumasi', 'Kumasi'
@@ -213,24 +202,14 @@ class BulkDeliveryPoint(models.Model):
         EXPRESS = 'Express delivery', 'Express delivery'
 
     class DeliveryLocations(models.TextChoices):
-        ACCRA = 'Accra' 'Accra'
         KUMASI = 'Kumasi', 'Kumasi'
-        CAPE_COAST = 'Cape Coast', 'Cape Coast'
+        ACCRA = 'Accra', 'Accra'
+        SUNYANI = 'Sunyani', 'Sunyani'
         TAKORADI = 'Takoradi', 'Takoradi'
         KOFORIDUA = 'Koforidua', 'Koforidua'
-        HO = 'Ho', 'Ho'
-        SUNYANI = 'Sunyani', 'Sunyani'
-        TARKWA = 'Tarkwa', 'Tarkwa'
-        OBUASI = 'Obuasi', 'Obuasi'
-        AKOSOMBO = 'Akosombo', 'Akosombo'
         TECHIMAN = 'Techiman', 'Techiman'
-        NSAWAM = 'Nsawam', 'Nsawam'
-        NKWAKAW = 'Nkwakaw', 'Nkwakaw'
-        WINNEBA = 'Winneba', 'Winneba'
-        MANKESSIM = 'Mankessim', 'Mankessim'
-        SUHUM = 'Suhum', 'Suhum'
-        KONONGO = 'Konongo', 'Konongo'
-       
+        TAMALE = 'Tamale', 'Tamale'
+    
     
     bulkDeliveryRequest = models.ForeignKey(BulkDeliveryRequest,related_name='indv_orders',on_delete=models.CASCADE,null=True,blank=True)
     deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.ACCRA)

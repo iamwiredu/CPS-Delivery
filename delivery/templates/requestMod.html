@@ -228,6 +228,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
                             </li>
+                                {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'loginPage' %}">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'signupPage' %}">Sign Up</a>
+                                </li>
                             {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'rulesPolicies' %}">Rules & Policies</a>
