@@ -1,6 +1,8 @@
 import ast
 import json
 import requests
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
@@ -388,7 +390,23 @@ def rulesPolicies(request):
     return render(request,'rulesPolicies.html')
 
 def settingsPage(request):
-    return render(request,'settingsPage.html')
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Prevents logout after password change
+            messages.success(request, '✅ Your password has been updated successfully!')
+            return redirect('settingsPage')  # Redirect back to settings page after success
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"❌ {error}")  # Display each error message
+
+    else:
+        form = PasswordChangeForm(request.user)
+
+    context = {'form': form}
+    return render(request, 'settingsPage.html', context)
 
 def quickPlaced(request):
     return render(request,'quickPlaced.html')

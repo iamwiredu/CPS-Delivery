@@ -123,6 +123,8 @@ class SignUp(View):
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
 
+def custom_csrf_failure_view(request, reason=""):
+    return render(request, '403_csrf.html', status=403)
 
 def settings(request):
     PasswordChangeFormCreator = PasswordChangeForm(request.user)

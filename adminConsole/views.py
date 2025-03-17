@@ -81,6 +81,7 @@ def requestManagementConsole(request):
                 rider = Rider.objects.get(unique_id=selectedRider)
                 request_single.rider = rider
                 request_single.assigned = True
+                AssignedRiderMsg(request_single,rider)
                 
             request_single.save()
             return redirect('/requestmanagement/')
