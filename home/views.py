@@ -104,6 +104,12 @@ class SignUp(View):
                 profile.phone = phone  # Assuming `Profile` has a `phone` field
                 profile.accountType = 'Nuser'
                 profile.save()
+
+                user = authenticate(username=username, password=password)
+                if user:
+                    login(request, user)
+
+                    return redirect('/accounthome/') 
             except CsrfViewMiddleware as csrf_error:
                 messages.error(request, 'Error. Please refresh the page and try again.')
                 return redirect('/signUp/') 

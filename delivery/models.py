@@ -106,7 +106,7 @@ class DeliveryRequest(models.Model):
     orderQuantity = models.PositiveIntegerField()
     product = models.CharField(max_length=255,null=True,blank=True, choices=ProductChoices.choices,default=ProductChoices.ITEM)
     pickupNumber = models.PositiveIntegerField()
-    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.ACCRA)
+    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.KUMASI)
     dropoffLocation = models.CharField(max_length=255,null=True)
     dropoffNumber = models.PositiveIntegerField()
     dropoffName = models.CharField(max_length=255,null=True)
@@ -212,7 +212,7 @@ class BulkDeliveryPoint(models.Model):
     
     
     bulkDeliveryRequest = models.ForeignKey(BulkDeliveryRequest,related_name='indv_orders',on_delete=models.CASCADE,null=True,blank=True)
-    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.ACCRA)
+    deliveryPoint = models.CharField(max_length=10,choices=DeliveryLocations.choices,default=DeliveryLocations.KUMASI)
     dropoffNumber = models.PositiveIntegerField()
     dropoffName = models.CharField(max_length=255)
     deliveryLocation = models.CharField(max_length=255)

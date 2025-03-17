@@ -365,24 +365,14 @@
         <label class="requiredField" for="id_deliveryPoint_bulk_${i + 1}">Dropoff Point</label>
         <div>
             <select name="deliveryPoint_bulk_${i + 1}" id="id_deliveryPoint_bulk_${i + 1}" class="select form-control">
-              
-                <option value="Accra">Accra</option>
                 <option value="Kumasi">Kumasi</option>
-                <option value="Cape Coast">Cape Coast</option>
+                <option value="Accra">Accra</option>
+                <option value="Sunyani">Sunyani</option>
                 <option value="Takoradi">Takoradi</option>
                 <option value="Koforidua">Koforidua</option>
-                <option value="Ho">Ho</option>
-                <option value="Sunyani">Sunyani</option>
-                <option value="Tarkwa">Tarkwa</option>
-                <option value="Obuasi">Obuasi</option>
-                <option value="Akosombo">Akosombo</option>
                 <option value="Techiman">Techiman</option>
-                <option value="Nsawam">Nsawam</option>
-                <option value="Nkwakaw">Nkwakaw</option>
-                <option value="Winneba">Winneba</option>
-                <option value="Mankessim">Mankessim</option>
-                <option value="Suhum">Suhum</option>
-                <option value="Konongo">Konongo</option>
+                <option value="Tamale">Tamale</option>
+              
                
             </select>
         </div>
@@ -460,73 +450,6 @@
             }
         });
 
-    </script>
-    <script>
-        const dataset = {
-            "KumasiAccra": 37,
-            "KumasiCape Coast": 37,
-            "KumasiTakoradi": 37,
-            "KumasiKoforidua": 40,
-            "KumasiHo": 40,
-            "KumasiSunyani": 40,
-            "KumasiTarkwa": 40,
-            "KumasiObuasi": 45,
-            "KumasiAkosombo": 40,
-            "KumasiTechiman": 40,
-            "KumasiNsawam": 40,
-            "KumasiNkwakaw": 40,
-            "KumasiWinneba": 40,
-            "KumasiMankessim": 40,
-            "KumasiSuhum": 40,
-            "KumasiKonongo": 37
-        };
-
-        const pickUpPoint = document.getElementById('id_pickupPoint');
-        const deliveryPoint = document.getElementById('id_deliveryPoint');
-        const price = document.getElementById('price');
-        const request = document.getElementById('createRequest');
-
-        pickUpPoint.onchange = () => {
-            const deliveryValue = deliveryPoint.value;
-            const pickUpValue = pickUpPoint.value;
-            if (dataset[pickUpValue + deliveryValue] === undefined) {
-                const text = pickUpValue + deliveryValue;
-                if (text.includes('Select')) {
-                    price.textContent = 'Choose a location other than Select.';
-                    request.disabled = true;
-                    request.style.backgroundColor = 'red';
-                } else {
-                    price.textContent = "We do not deliver from " + pickUpValue + " to " + deliveryValue;
-                    request.disabled = true;
-                    request.style.backgroundColor = 'red';
-                }
-            } else {
-                price.textContent = pickUpValue + " to " + deliveryValue + " is GHs" + dataset[pickUpValue + deliveryValue];
-                request.disabled = false;
-                request.style.backgroundColor = 'green';
-            }
-        }
-
-        deliveryPoint.onchange = () => {
-            const deliveryValue = deliveryPoint.value;
-            const pickUpValue = pickUpPoint.value;
-            if (dataset[pickUpValue + deliveryValue] === undefined) {
-                const text = pickUpPoint.value + deliveryPoint.value;
-                if (text.includes('Select')) {
-                    price.textContent = 'Choose a location other than Select.';
-                    request.disabled = true;
-                    request.style.backgroundColor = 'red';
-                } else {
-                    price.textContent = "We do not deliver from " + pickUpValue + " to " + deliveryValue;
-                    request.disabled = true;
-                    request.style.backgroundColor = 'red';
-                }
-            } else {
-                price.textContent = pickUpValue + " to " + deliveryValue + " is GHs" + dataset[pickUpValue + deliveryValue];
-                request.disabled = false;
-                request.style.backgroundColor = 'green';
-            }
-        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

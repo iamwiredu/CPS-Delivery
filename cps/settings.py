@@ -96,32 +96,32 @@ WSGI_APPLICATION = 'cps.wsgi.application'
 #         "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
 #     }
 # }
-# tmpPostgres = urlparse("postgresql://neondb_owner:npg_gbQ8DjAfp3KH@ep-misty-paper-a59qv5d9-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require")
+tmpPostgres = urlparse("postgresql://neondb_owner:npg_gbQ8DjAfp3KH@ep-misty-paper-a59qv5d9-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require")
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': "neondb",
-#         'URL_NO_SSL': f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}",
-#         "URL": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require",
-#         "PRISMA_URL": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require&pgbouncer=true&connect_timeout=15",
-#         "URL_NON_POOLING": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require",
-#         'USER': tmpPostgres.username,
-#         'PASSWORD': tmpPostgres.password,
-#         "HOST": tmpPostgres.hostname,
-#         'PORT': 5432,  # Default PostgreSQL port
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "neondb",
+        'URL_NO_SSL': f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}",
+        "URL": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require",
+        "PRISMA_URL": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require&pgbouncer=true&connect_timeout=15",
+        "URL_NON_POOLING": f"postgres://{tmpPostgres.username}:{tmpPostgres.password}@{tmpPostgres.hostname}:5432/{tmpPostgres.path.replace('/', '')}?sslmode=require",
+        'USER': tmpPostgres.username,
+        'PASSWORD': tmpPostgres.password,
+        "HOST": tmpPostgres.hostname,
+        'PORT': 5432,  # Default PostgreSQL port
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation

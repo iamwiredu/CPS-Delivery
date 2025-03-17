@@ -169,7 +169,7 @@ def AssignedRiderMsg(instance,rider):
     data = {
     'recipient[]': [str(instance.pickupNumber)],
     'sender': 'CPS',
-    'message': f'Your request for CPS deliveries service with ORDER ID: 00{instance.id} has been assigned to rider {rider.name} .Contact him on 0{rider.phone}',
+    'message': f'Your request with ORDER ID: {instance.id_curator} has been assigned to rider {rider.name} .Contact the office on 053 458 3364 for any enquiries.',
     'schedule_date': '',
     }
     url = endPoint + '?key=' + apiKey

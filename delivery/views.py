@@ -1,5 +1,6 @@
 import ast
 import json
+import requests
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
@@ -148,7 +149,19 @@ def requestMod(request):
     BulkDeliveryRequestFormCreator = BulkDeliveryRequestForm()
 
     # Formset for bulk delivery points
-
+    def SentMsg(pickupNumber,id_curator):
+        endPoint = 'https://api.mnotify.com/api/sms/quick'
+        apiKey = '	SncBkQH0xepW3ACOlCty3AjUX'
+        data = {
+        'recipient[]': [str(pickupNumber)],
+        'sender': 'CPS',
+        'message': f'Your request with ORDER ID: {id_curator} has been sent. A rider will be assigned to you shortly. For help call 0534583364',
+        'schedule_date': '',
+        }
+        url = endPoint + '?key=' + apiKey
+        response = requests.post(url, data)
+        data = response.json() 
+        print(data,str(pickupNumber))
 
     if request.method == 'POST':
         if 'addBulkRequest' in request.POST:
@@ -184,6 +197,7 @@ def requestMod(request):
                     point.save()
                 
                 messages.success(request,'Order Placed.')
+                SentMsg(event.pickupNumber,event.id_curator)
                 if request.user.is_authenticated:
                     return redirect('/pendingRequest/')
                 else:
@@ -202,6 +216,7 @@ def requestMod(request):
                 qrcodeData = QrIdent(deliveryRequest=event,requestType='single')
                 qrcodeData.save()
                 messages.success(request,'Order Placed.')
+                SentMsg(event.pickupNumber,event.id_curator)
                 if request.user.is_authenticated:
                     return redirect('/pendingRequest/')
                 else:
@@ -236,8 +251,22 @@ def receiptPageBulk(request,unique_id):
         'deliveryRequest':deliveryRequest,
     }
     return render(request,'receiptBulk.html',context)
+def ValSentMsg(pickupNumber,id_curator):
+    endPoint = 'https://api.mnotify.com/api/sms/quick'
+    apiKey = '	SncBkQH0xepW3ACOlCty3AjUX'
+    data = {
+    'recipient[]': [str(pickupNumber)],
+    'sender': 'CPS',
+    'message': f'Your package with ORDER ID: {id_curator} has been successfully delivered. Thank you for choosing CPS Delivery as your trusted service provider.',
+    'schedule_date': '',
+    }
+    url = endPoint + '?key=' + apiKey
+    response = requests.post(url, data)
+    data = response.json() 
+    print(data,str(pickupNumber))
 
 def deliveryVal(request,unique_id):
+   
     deliveryRequest = DeliveryRequest.objects.get(unique_id=unique_id)
     context ={
         'deliveryRequest':deliveryRequest,
@@ -296,6 +325,8 @@ def update_order_single(request,unique_id):
                 deliveryRequest.pickedUp = True
                 deliveryRequest.enroute = True
                 deliveryRequest.save()
+                ValSentMsg(deliveryRequest.pickupNumber,deliveryRequest.id_curator) 
+
                 
             
         else:
@@ -327,6 +358,7 @@ def update_order_bulk(request,unique_id):
                 deliveryRequest.pickedUp = True
                 deliveryRequest.enroute = True
                 deliveryRequest.save()
+                ValSentMsg(deliveryRequest.pickupNumber,deliveryRequest.id_curator)
                 
             
         else:
