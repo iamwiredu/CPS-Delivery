@@ -262,6 +262,7 @@
                     <th>enroute</th>
                     <th>delivered</th>
                     <th></th>
+                    <th></th>
 
                 </thead>
                 <tbody class="table" style="text-align: center;">
@@ -289,6 +290,13 @@
                             <input type="checkbox" name="assigned" checked>
                             {% endif %}
                         </td>
+                        <td>
+                            {% if data.enroute == False %}
+                            <input type="checkbox" name="assigned" disabled>
+                            {% else %}
+                            <input type="checkbox" name="assigned" checked>
+                            {% endif %}
+                        </td>
                      
                         <td>
                             {% if data.delivered == False %}
@@ -297,6 +305,7 @@
                             <input type="checkbox" name="assigned" checked>
                             {% endif %}
                         </td>
+                        <td><a href="{% url 'receiptPage' data.unique_id  %}">receipt</a></td>
                         <td><a href="{% url 'detailsPage' data.id %}">details</a></td>
 
                     </tr>
@@ -317,6 +326,8 @@
                         
                         <th>Status</th>
                         <th></th>
+                        <th></th>
+
                     </tr>
                 </thead>
                 <tbody style="text-align: center;">
@@ -325,6 +336,16 @@
                         <td>{{ data.id_curator }}</td>
                         <td>{{ data.product }}</td>
                         <td>{{ data.orderQuantity }}</td>
+                        <td>
+                            {% if data.delivered == False %}
+                            <input type="checkbox" name="assigned" disabled>
+                            {% else %}
+                            <input type="checkbox" name="assigned" checked>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'receiptPageBulk' data.unique_id %}">receipt</a>
+                        </td>
                         
                     
                         <td><a href="{% url 'bulkPendingDetails' data.unique_id %}">details</a></td>

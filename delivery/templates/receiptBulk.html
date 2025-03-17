@@ -136,7 +136,14 @@
         </div>
 
 
-        <div class="section"><strong>Delivery Fee:</strong> GH₵{{ deliveryRequest.deliveryFee }}</div>
+        <div class="section">
+            <strong>Delivery Fee:</strong>
+             {% if deliveryRequest.deliveryFee %}
+            GH₵{{ deliveryRequest.deliveryFee }}
+            {% else %}
+            Awaiting Assignment
+            {% endif %}
+            </div>
 
         <div class="qr-code">
             <div id="qrcode"></div>
@@ -146,7 +153,7 @@
     <div class="btn-container">
         <button onclick="printReceipt()">Print as PDF</button>
     </div>
-    <a href="" id="Verify">Verify</a>
+   
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
