@@ -1,0 +1,455 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Bootstrap icons css -->
+    <link rel="stylesheet" href="{% static 'site/css/bootstrap-icons.min.css' %}">
+
+    <title>Delivery Request</title>
+
+    <style>
+        @font-face {
+            font-family: "CustomFont";
+            src: url("{% static 'font/Boge.ttf' %}") format('truetype');
+        }
+
+        .asteriskField {
+            display: none;
+        }
+
+        .navbar {
+            background-color: #1c1e25;
+        }
+
+
+        .nav-link {
+            color: white;
+        }
+
+
+        .btn-primary {
+            background-color: #61b124;
+            border-color: #61b124;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a9e23;
+            border-color: #4a9e23;
+        }
+
+        .sidebar {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-item h5 {
+            color: #61b124;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            background-color: #61b124;
+        }
+
+        #CPS {
+            font-family: 'CustomFont';
+            color: #61b124;
+        }
+
+        .navbar-brand {
+            color: #61b124;
+        }
+
+        .form-group {
+            margin: 5px;
+        }
+
+        .activeBox {
+            display: block;
+        }
+
+        /* The switch - the container */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+        }
+
+        /* Slider before element */
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        /* When the checkbox is checked, change background color */
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        /* Move the slider to the right when checked */
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Rounded slider */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .mt-5,
+        .no_d {
+            display: none;
+        }
+
+        .activeBox {
+            display: block;
+        }
+
+        #AAPbox {
+            overflow: hidden;
+            /* Prevents content overflow during transition */
+            max-height: 0;
+            /* Initial state (hidden) */
+            transition: max-height 0.5s ease;
+            /* Animation for max-height */
+        }
+
+        #AAPbox.show {
+            max-height: 500px;
+            /* Adjust to a value greater than the form height */
+        }
+
+        .hidden {
+            display: none;
+            /* Completely hide the box when not shown */
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 25px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .nav-link {
+            color: #fff !important;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" id="CPS" style="color: #61b124;">CPS</a>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="#61b124" viewBox="0 0 24 24"
+                    stroke="#61b124">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
+                        </path>
+                    </g>
+                </svg><span style="color:white;">
+                    {% if request.user.is_authenticated %}
+                    {{request.user}}
+                    {% else %}
+                    Quick Delivery Request
+                    {% endif %}
+                </span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                    aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+                            {% if request.user.is_authenticated %}
+                            {{request.user}}
+                            {% else %}
+                            Quick Delivery Request
+                            {% endif %}
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            {% if request.user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'settingsPage' %}">Settings</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'loginPage' %}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'signupPage' %}">Sign Up</a>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'rulesPolicies' %}">Rules & Policies</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+ 
+    {% if request.user.is_authenticated %}
+    <div class="container" style="text-align: center;">
+        <a href="{% url 'pastDeliveries' %}" class="btn btn-primary"
+            style="background-color: #61b124; color: white; border: none; margin: 5px;">Past Deliveries</a>
+        <a href="{% url 'pendingRequests' %}" class="btn btn-primary"
+            style="background-color: #61b124; color: white; border: none; margin: 5px;">Pending Deliveries</a>
+    </div>
+    {% endif %}
+    <form method="POST" class="uniForm">
+        <div class="container mt-5 activeBox" id="single">
+            <div class="row">
+
+                <div>
+
+                    {% csrf_token %}
+                    {{DeliveryRequestFormCreator|crispy}}
+
+                    <div id="price"></div>
+                    <input type="submit" name="createRequest" id="createRequest" class="btn btn-primary"
+                        style="background-color: #61b124; color: white; border: none; float: right; margin: 5px 0 5px 0;"
+                        value="Send Request">
+    </form>
+    </div>
+
+    </div>
+    </div>
+
+    <div class="container mt-5" id="bulk">
+
+        <form action="" method="POST" id="baseForm">
+            {% csrf_token %}
+            <div style="display: flex; justify-content: space-between;">
+                <h3 style="color:black;">Sender Details</h3>
+
+                <input type="hidden" value="" id="objectInput" name="objectInput">
+
+
+            </div>
+
+            {{BulkDeliveryRequestFormCreator|crispy}}
+
+
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <label for="numberOfPoints" style="padding-right: 10px;">Number of Delivery Points:</label>
+                    <input type="number" id="numberOfPoints" min='2' name="numberOfPoints" min="1"
+                        style="width: 50px; text-align: center;">
+                </div>
+                <input type="button" value="Generate Forms" id="generateForms"
+                    style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
+            </div>
+
+            <div id="deliveryFormsContainer"></div>
+            <input type="submit" value="Send Request" name="addBulkRequest"
+                style="border: #61b124; background-color: #61b124; color: white; padding: 5px; border-radius: 10px;">
+        </form>
+
+
+
+
+    </div>
+    <footer style="margin-top: 50px;">
+        <p>©CPS Delivery, All rights reserved.</p>
+        <ul class="list-unstyled d-flex justify-content-center">
+            <li class="ms-3"><a class="link-dark"
+                    href="https://www.facebook.com/profile.php?id=61574036997034&mibextid=LQQJ4d"><i
+                        style="color: #1877F2;" class="bi bi-facebook"></i></a>
+            </li>
+            <li class="ms-3"><a class="link-dark" href="https://x.com/cpsdeliveries"><i style="color: #1DA1F2;"
+                        class="bi bi-twitter"></i></a>
+            </li>
+            <li class="ms-3"><a class="link-dark" href="https://www.instagram.com/cps_deliveries" sna><i
+                        style="color: #a52424;" class="bi bi-instagram"></i></a>
+            </li>
+            <li class="ms-3"><a href="https://snapchat.com/t/RaUNGUz2"><i style="color: #FFFC00;"
+                        class="bi bi-snapchat"></i></a></li>
+            <li class="ms-3"><a href=" https://wa.me/+233534583364"><i class="bi bi-whatsapp"
+                        style="color: #075E54;"></i></a></li>
+        </ul>
+    </footer>
+
+    <script>
+        document.getElementById('generateForms').addEventListener('click', function () {
+            const objectInput = document.getElementById('objectInput')
+            const numberOfPoints = document.getElementById('numberOfPoints').value;
+            const container = document.getElementById('deliveryFormsContainer');
+            container.innerHTML = ''; // Clear the container before generating new forms
+
+            objectInput.value = numberOfPoints
+            for (let i = 0; i < numberOfPoints; i++) {
+                // Create a new form for each delivery point
+                const formDiv = document.createElement('div');
+                formDiv.classList.add('bulk-delivery-point-form');
+                formDiv.innerHTML = `
+                <div class='DeliveryPoints'>
+    <h1>Dropoff ${i + 1}</h1>
+    <div class="form-group">
+        <label for="id_dropoffNumber_bulk_${i + 1}" class="requiredField">Receiver's Number</label>
+        <div>
+            <input type="number" name="dropoffNumber_bulk_${i + 1}" id="id_dropoffNumber_bulk_${i + 1}" class="numberinput form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="id_dropoffName_bulk_${i + 1}" class="requiredField">Receiver's Name</label>
+        <div>
+            <input type="text" name="id_dropoffName_bulk_${i + 1}" id="id_dropoffName_bulk_${i + 1}" class="textinput form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="requiredField" for="id_deliveryPoint_bulk_${i + 1}">Dropoff Point</label>
+        <div>
+            <select name="deliveryPoint_bulk_${i + 1}" id="id_deliveryPoint_bulk_${i + 1}" class="select form-control">
+                <option value="Kumasi">Kumasi</option>
+                <option value="Accra">Accra</option>
+                <option value="Sunyani">Sunyani</option>
+                <option value="Takoradi">Takoradi</option>
+                <option value="Koforidua">Koforidua</option>
+                <option value="Techiman">Techiman</option>
+                <option value="Tamale">Tamale</option>
+              
+               
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="id_dropoffArea_bulk_${i + 1}" class="requiredField">Drop Off Location</label>
+        <div>
+            <input type="text" name="id_dropoffArea_bulk_${i + 1}" id="id_dropoffArea_bulk_${i + 1}" class="textinput form-control">
+        </div>
+    </div>
+    <div class="form-group">
+    <label for="id_delivery_speed_${i + 1}" class="requiredField">Delivery Speed</label>
+    <div>
+        <select name="delivery_speed_${i + 1}" id="id_delivery_speed_${i + 1}" class="form-control">
+            <option value="Same day delivery">Same day delivery</option>
+            <option value="Next day delivery">Next day delivery</option>
+            <option value="Express delivery">Express delivery</option>
+        </select>
+    </div>
+</div>
+
+    <div class="form-group">
+        <label for="id_additionalInfo_bulk_${i + 1}" class="requiredField">Additional Info</label>
+        <textarea name="additionalInfo_bulk_${i + 1}" placeholder="Eg: Item is fragile / Cake" class="textarea form-control" id="id_additionalInfo_bulk_${i + 1}" rows="4"></textarea>
+    </div>
+</div>
+
+            `;
+                container.appendChild(formDiv);
+            }
+
+            // Add a hidden input to track the number of points submitted
+            const form = document.getElementById('baseForm');
+            if (!document.getElementById('numberOfPointsInput')) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.id = 'numberOfPointsInput';
+                input.name = 'numberOfPoints';
+                input.value = numberOfPoints;
+                form.appendChild(input);
+            } else {
+                document.getElementById('numberOfPointsInput').value = numberOfPoints;
+            }
+        });
+    </script>
+
+
+    <script>
+        document.getElementById('baseForm').onsubmit = () => {
+            sessionStorage.clear()
+        }
+        slider = document.getElementById('sliderCheckbox')
+        window.onload = () => {
+            if (slider.checked) {
+                slider.click()
+            }
+        }
+
+        single = document.getElementById('single')
+        bulk = document.getElementById('bulk')
+
+        document.getElementById('sliderCheckbox').addEventListener('change', function () {
+            const status = document.getElementById('status');
+
+            if (this.checked) {
+                bulk.classList.add('activeBox')
+
+                single.classList.remove('activeBox')
+
+            } else {
+                bulk.classList.remove('activeBox')
+
+                single.classList.add('activeBox')
+
+            }
+        });
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

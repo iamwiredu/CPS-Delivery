@@ -165,6 +165,21 @@ def requestMod(request):
         data = response.json() 
         print(data,str(pickupNumber))
 
+    def MMsg():
+        endPoint = 'https://api.mnotify.com/api/sms/quick'
+        apiKey = '	SncBkQH0xepW3ACOlCty3AjUX'
+        data = {
+        'recipient[]': ['0534583364'],
+        'sender': 'CPS',
+        'message': 'Order Placed Check Mangement Db.',
+        'schedule_date': '',
+        }
+        url = endPoint + '?key=' + apiKey
+        response = requests.post(url, data)
+        data = response.json() 
+        print(data)
+        
+
     if request.method == 'POST':
         if 'addBulkRequest' in request.POST:
             # Get the number of delivery points from the form
@@ -200,6 +215,7 @@ def requestMod(request):
                 
                 messages.success(request,'Order Placed.')
                 SentMsg(event.pickupNumber,event.id_curator)
+                MMsg()
                 if request.user.is_authenticated:
                     return redirect('/pendingRequest/')
                 else:
@@ -219,6 +235,7 @@ def requestMod(request):
                 qrcodeData.save()
                 messages.success(request,'Order Placed.')
                 SentMsg(event.pickupNumber,event.id_curator)
+                MMsg()
                 if request.user.is_authenticated:
                     return redirect('/pendingRequest/')
                 else:

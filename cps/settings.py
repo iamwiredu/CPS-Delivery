@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'cps.wsgi.application'
 #         'PASSWORD':"dN0ShxHPfqa9",
 #         "HOST":"ep-misty-feather-a4wery4g-pooler.us-east-1.aws.neon.tech"
 #     }
-# }
+# # }
 tmpPostgres = urlparse("postgresql://neondb_owner:npg_gbQ8DjAfp3KH@ep-misty-paper-a59qv5d9-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require")
 
 DATABASES = {
@@ -116,7 +116,7 @@ DATABASES = {
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-#DATABASES = {
+# DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',

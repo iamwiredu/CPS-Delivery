@@ -5,12 +5,12 @@ from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from delivery.models import DeliveryRequest,Rider, BulkDeliveryRequest, BulkDeliveryPoint
 from .forms import RiderForm, RequestStatusUpdateForm, RidersAssignmentForm, BulkRidersAssignmentForm, BulkRequestStatusUpdateForm
-
+from delivery.forms import DeliveryRequestForm, BulkDeliveryRequestForm, BulkDeliveryPointForm
 from home.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 import requests
-
 # api imports
 from django.http import JsonResponse
 
@@ -30,8 +30,8 @@ def adminConsole(request):
 
 @login_required(login_url='/login/')
 def requestManagementConsole(request):
-    DeliveryRequests = DeliveryRequest.objects.filter(delivered=False).order_by('id')
-    BulkDeliveryRequests = BulkDeliveryRequest.objects.filter(delivered=False).order_by('id')
+    DeliveryRequests = DeliveryRequest.objects.filter(delivered=False,canceled=False).order_by('id')
+    BulkDeliveryRequests = BulkDeliveryRequest.objects.filter(delivered=False,canceled=False).order_by('id')
     riders = Rider.objects.all()
     print(DeliveryRequests)
     context ={
@@ -146,10 +146,77 @@ def requestManagementConsole(request):
             request_bulk_rea.save()
 
             return redirect('/requestmanagement/')
+        if 'updateCanceledSingle' in request.POST:
+            canceled_id = request.POST.get('canceled_id')
+            canceled_obj = DeliveryRequest.objects.get(unique_id=canceled_id)
+
+            canceled_obj.canceled = True
+            canceled_obj.assigned = True
+            canceled_obj.enroute = True
+            canceled_obj.delivered = True
+            canceled_obj.save()
+            return redirect('/requestmanagement/')
+        
+        if 'updateCanceledBulk' in request.POST:
+            canceled_id = request.POST.get('canceled_id')
+            canceled_obj = BulkDeliveryRequest.objects.get(unique_id=canceled_id)
+
+            canceled_obj.canceled = True
+            canceled_obj.assigned = True
+            canceled_obj.enroute = True
+            canceled_obj.delivered = True
+            canceled_obj.save()
+            return redirect('/requestmanagement/')
+
 
     return render(request,'html/requestsManagementConsole.html',context)
 
 
+#This view is for the admin to edit what users type when requesting orders
+def editSingle(request,unique_id):
+    deliveryRequest=DeliveryRequest.objects.get(unique_id=unique_id)
+    DeliveryRequestFormCreator = DeliveryRequestForm(instance=deliveryRequest)
+    context={
+        'DeliveryRequestFormCreator':DeliveryRequestFormCreator,
+    }
+    if 'createRequest' in request.POST:
+        deliveryRequest = DeliveryRequestForm(request.POST,instance=deliveryRequest)
+        if deliveryRequest.is_valid():
+            deliveryRequest.save()
+            return redirect('/requestmanagement/')
+    return render(request,'html/editSingle.html',context)
+
+@login_required(login_url='/login/')
+def editBulk(request,unique_id):
+    bulkDeliveryRequest=BulkDeliveryRequest.objects.get(unique_id=unique_id)
+    bulkDeliveryRequestFormCreator = BulkDeliveryRequestForm(instance=bulkDeliveryRequest)
+    DeliveryRequested = bulkDeliveryRequest
+    context={
+        'bulkDeliveryRequestFormCreator':bulkDeliveryRequestFormCreator,
+        'DeliveryRequested':DeliveryRequested,
+    }
+    if 'updateBase' in request.POST:
+        bulkDeliveryRequest = BulkDeliveryRequestForm(request.POST,instance=bulkDeliveryRequest)
+        if bulkDeliveryRequest.is_valid():
+            bulkDeliveryRequest.save()
+            return redirect(editBulk,unique_id)
+    return render(request,'html/editBulk.html',context)
+
+@login_required(login_url='/login/')
+def editBulkPoint(request,unique_id):
+    bulkPoint = BulkDeliveryPoint.objects.get(id=unique_id)
+    bulkPointForm = BulkDeliveryPointForm(instance=bulkPoint)
+
+    context ={
+        'bulkPointForm':bulkPointForm,
+    }
+    if 'updatePoint' in request.POST:
+        bulkPointForm = BulkDeliveryPointForm(request.POST,instance=bulkPoint)
+        if bulkPointForm.is_valid():
+            bulkPointForm.save()
+            return redirect(editBulk,bulkPoint.bulkDeliveryRequest.unique_id)
+        
+    return render(request,'html/editBulkPoint.html',context)
 
 @login_required(login_url='/login/')
 def pastProcessedRequest(request):
@@ -177,6 +244,19 @@ def AssignedRiderMsg(instance,rider):
     response = requests.post(url, data)
     data = response.json() 
     print(data,str(instance.pickupNumber))
+def updateRiderMsg(instance,rider):
+    endPoint = 'https://api.mnotify.com/api/sms/quick'
+    apiKey = '	SncBkQH0xepW3ACOlCty3AjUX'
+    data = {
+    'recipient[]': [str(instance.pickupNumber)],
+    'sender': 'CPS',
+    'message': f'Pickup info:\n{instance.id_curator} has been assigned to rider {rider.name} .Contact the office on 053 458 3364 for any enquiries.',
+    'schedule_date': '',
+    }
+    url = endPoint + '?key=' + apiKey
+    response = requests.post(url, data)
+    data = response.json() 
+   
 
 @login_required(login_url='/login/')
 def managementUpdate(request,unique_id):
@@ -377,3 +457,31 @@ def managementUpdateBulk(request,unique_id):
         'BulkRidersAssignmentFormUpdater':BulkRidersAssignmentFormUpdater,
         }
     return render(request,'html/managementUpdateBulk.html',context)
+
+@login_required(login_url='/')
+def bulksms(request):
+    if request.method == 'POST':
+        message = request.POST.get('Message')
+        endPoint = 'https://api.mnotify.com/api/sms/group'
+        apiKey = '4Vrc1NP8PUeS4nB51QgHvkD4W'
+        
+        data = {
+            'group_id[]': [''],
+            'sender': 'Cps',
+            'message': str(message),
+            'message_id':10,
+            'is_schedule': "false",
+            'schedule_date': ''
+        }
+        url = endPoint + '?key=' + apiKey
+        try:
+            response = requests.post(url, data)
+            response.raise_for_status()  # Raises HTTPError if the HTTP request returned an unsuccessful status code
+            response_data = response.json()
+            print("Response Data:", response_data)
+        except requests.exceptions.RequestException as e:
+            print("An error occurred:", e)
+        except ValueError as e:
+            print("Error decoding JSON response:", e)
+
+    return render(request,'html/bulkSms.html')

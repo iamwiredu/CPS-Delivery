@@ -158,6 +158,9 @@ input:checked + .slider:before {
         <input type="text" id="searchBox" placeholder="Search by Delivery ID..." class="form-control">
         <button id="clearSearch">Clear</button>
     </div>
+    <div>
+        <a href="{% url 'requestPage' %}">Add a delivery Request</a>
+    </div>
     <div class="table-responsive container" style="margin-top: 30px;" id="single">
         <div id="orderUpdateAlert" style="display:none; background: red; color: white; padding: 10px; text-align: center;">
             Orders have been updated!
@@ -176,6 +179,8 @@ input:checked + .slider:before {
                 <th></th>
                 <th>Picked Up</th>
                 <th>delivered</th>
+                <th></th>
+                <th></th>
                 <th></th>
                 <th></th>
               
@@ -258,6 +263,14 @@ input:checked + .slider:before {
                     </td>
                     <td><a href="{% url 'receiptPage' data.unique_id %}">receipt</a></td>
                     <td><a href="{% url 'managementUpdate' data.unique_id %}">details</a></td>
+                    <td><a href="{% url 'editSingle' data.unique_id %}">Edit </a></td>
+                    <td>
+                        <form action="" method="POST">
+                            {% csrf_token  %}
+                            <input type="text" id="canceled_id" name="canceled_id" value="{{data.unique_id}}" style="display: none;">
+                            <input type="submit" name="updateCanceledSingle" value="Cancel">
+                        </form>
+                    </td>
            
                
                 </tr>
@@ -279,6 +292,7 @@ input:checked + .slider:before {
                 <th>Picked Up</th>
                 <th>Delivered</th>
                 <th>Receipt</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </thead>
@@ -360,8 +374,16 @@ input:checked + .slider:before {
                     </td>
                     <td><a href="{% url 'receiptPageBulk' data.unique_id %}">receipt</a></td>
         
-                    <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">details</a></td>
-            </form>
+                     <td><a href="{% url 'managementUpdateBulk' data.unique_id %}">details</a></td>
+                     <td><a href="{% url 'editBulk' data.unique_id %}">edit</a></td>    
+                </form>
+            <td>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="text" id="canceled_id" name="canceled_id" value="{{data.unique_id}}" style="display: none;">
+                        <input type="submit" name="updateCanceledBulk" value="Cancel">
+                    </form>
+            </td>
             </tr>
             {% endfor %}
         </tbody>

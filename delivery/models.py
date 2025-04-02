@@ -123,6 +123,7 @@ class DeliveryRequest(models.Model):
     restaurantOrder = models.OneToOneField(RestaurantOrder,default=None,null=True,blank=True,on_delete=models.CASCADE)
     deliveryFee = models.CharField(max_length=255,null=True,blank=True)
     date = models.CharField(max_length=255,default='sdfsadf',null=True)
+    canceled = models.BooleanField(default=False)
     @property
     def id_curator(self):    
         id_value = str(self.id)
@@ -184,6 +185,7 @@ class BulkDeliveryRequest(models.Model):
     rider = models.ForeignKey(Rider,on_delete=models.SET_DEFAULT,related_name='bulk_assignments',default=None,null=True,blank=True)
     deliveryFee = models.CharField(max_length=255,null=True,blank=True,default=0)
     date_created = models.DateTimeField(auto_now_add=True)
+    canceled = models.BooleanField(default=False)
     @property
     def id_curator(self):    
         id_value = str(self.id)

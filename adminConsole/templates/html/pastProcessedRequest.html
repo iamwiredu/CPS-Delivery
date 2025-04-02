@@ -107,6 +107,9 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+        .canceled td{
+            background-color: #cc9090 !important;
+        }
     </style>
 </head>
 
@@ -190,7 +193,7 @@
             <tbody class="table"  style="text-align: center;" id="singleOrdersTableBody">
                 {% for data in DeliveryRequests %}
                 <form action="" method="POST">
-                    <tr>
+                    <tr {% if data.canceled %} class="canceled" {% endif %}>
                         <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
                         <td>{{data.id_curator}}</td>
                         <td>{{data.pickupPoint}}</td>
@@ -261,11 +264,11 @@
                 <th>delivered</th>
                 <th></th>
                 <th></th>
-            </thead>
+            </thead> 
             <tbody class="table" style="text-align: center;" id="bulkOrdersTableBody">
                 {% for data in BulkDeliveryRequests %}
                 <form action="" method="POST">
-                    <tr>
+                    <tr {% if data.canceled %} class="canceled" {% endif %}>
                         <!-- <td>{{data.unique_id|stringformat:'s'|split:5}}...</td> -->
                         <td>{{data.id_curator}}</td>
                         <td>{{data.orderQuantity}}</td>
